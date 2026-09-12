@@ -1,0 +1,137 @@
+import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Image } from '@/components/ui/image';
+import { ArrowRight, Zap, Users, BarChart3, GitBranch } from 'lucide-react';
+
+const ABOUT_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/9afc11fa5_generated_a0480c32.jpg';
+
+const PILLARS = [
+  { icon: Zap, title: 'Marketing creates demand', desc: 'Ads, content, and campaigns fill the top of the funnel with inquiries.' },
+  { icon: GitBranch, title: 'Link works the opportunity', desc: 'We respond, qualify, follow up, and route the right conversations to your team.' },
+  { icon: Users, title: 'Sales closes the deal', desc: 'Your team spends time talking to qualified prospects — not chasing forms.' },
+];
+
+const VALUES = [
+  { title: 'Conversations over contacts', desc: 'A name on a list is not an opportunity. A real conversation is.' },
+  { title: 'Speed is a strategy', desc: 'The first business to respond usually wins. We make sure it is you.' },
+  { title: 'Measured by your definition', desc: 'Qualified means what you say it means — not a generic score.' },
+  { title: 'Follow-up is a system', desc: 'No lead is contacted once and forgotten. Follow-up is engineered, not hoped for.' },
+];
+
+export default function About() {
+  return (
+    <>
+      <section className="pt-36 pb-12 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid opacity-30" />
+        <div className="absolute inset-0 bg-radial-cyan" />
+        <Container className="relative">
+          <Reveal>
+            <SectionHeading
+              eyebrow="About Link"
+              title="We exist to close the gap between marketing and sales."
+              subtitle="Marketing creates demand. Link works the opportunity. Sales closes the deal."
+            />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="py-16">
+        <Container>
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <Reveal>
+              <div className="relative rounded-3xl overflow-hidden card-surface aspect-[4/3] glow-cyan">
+                <Image
+                  src={ABOUT_IMG}
+                  alt="A sleek dark glass bridge structure connecting two points at dusk"
+                  fittingType="fill"
+                  className="h-full w-full"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-transparent to-transparent" />
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div className="space-y-6">
+                <p className="text-lg text-[#cbd5e1] leading-relaxed">
+                  Most businesses do not have a lead problem. They have a lead response problem. Inquiries
+                  come in, but nobody answers fast, nobody qualifies them, and nobody follows up
+                  consistently.
+                </p>
+                <p className="text-lg text-[#cbd5e1] leading-relaxed">
+                  Link Marketing Solutions was built to fix that. We sit between your marketing and your
+                  sales team — responding to every inquiry, qualifying the opportunity, and delivering real
+                  conversations to the people who close them.
+                </p>
+                <p className="text-lg text-[#cbd5e1] leading-relaxed">
+                  The result: your sales team spends more time talking to qualified prospects and less time
+                  chasing forms, missed calls, and unanswered inquiries.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 border-t border-white/5 bg-[#0c1326]">
+        <Container>
+          <Reveal>
+            <SectionHeading eyebrow="The Flow" title="How the three pieces fit together" />
+          </Reveal>
+          <div className="mt-12 grid md:grid-cols-3 gap-5">
+            {PILLARS.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <Reveal key={p.title} delay={i * 0.08}>
+                  <div className="card-surface rounded-2xl p-8 h-full relative">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/20 mb-5">
+                      <Icon className="h-6 w-6 text-[#00E5FF]" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white mb-2">{p.title}</h3>
+                    <p className="text-sm text-[#94A3B8] leading-relaxed">{p.desc}</p>
+                    {i < PILLARS.length - 1 && (
+                      <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 text-[#00E5FF]/40" />
+                    )}
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 border-t border-white/5">
+        <Container>
+          <Reveal>
+            <SectionHeading eyebrow="What drives us" title="Principles we build every program around" />
+          </Reveal>
+          <div className="mt-12 grid sm:grid-cols-2 gap-5">
+            {VALUES.map((v, i) => (
+              <Reveal key={v.title} delay={(i % 2) * 0.08}>
+                <div className="card-surface rounded-2xl p-8 h-full">
+                  <h3 className="text-lg font-semibold text-white mb-2">{v.title}</h3>
+                  <p className="text-[#94A3B8] leading-relaxed">{v.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-24">
+        <Container>
+          <Reveal>
+            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-px pulse-line" />
+              <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl mx-auto">
+                Ready to stop chasing and start talking?
+              </h2>
+              <div className="mt-8 flex justify-center">
+                <CTAButton to="/get-started" size="lg">
+                  Build My Lead Program
+                </CTAButton>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+    </>
+  );
+}

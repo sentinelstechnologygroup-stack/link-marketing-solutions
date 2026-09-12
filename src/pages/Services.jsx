@@ -1,0 +1,71 @@
+import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { ArrowRight } from 'lucide-react';
+
+const SERVICES = [
+  { name: 'Lead Generation', desc: 'Targeted campaigns that fill your pipeline with inbound and outbound opportunities aligned to your ideal customer.' },
+  { name: 'Lead Response', desc: 'Every inquiry is contacted fast — within minutes, not hours — so interest never goes cold.' },
+  { name: 'Lead Qualification', desc: 'Each conversation is measured against your criteria so your team only spends time on real opportunities.' },
+  { name: 'Appointment Setting', desc: 'Qualified prospects are booked directly onto your sales team calendar.' },
+  { name: 'Live Call Transfers', desc: 'Hot, qualified prospects are transferred live to your team the moment they are ready to talk.' },
+  { name: 'Lead Nurturing', desc: 'Not-ready-yet leads stay in a structured follow-up sequence until the timing aligns.' },
+  { name: 'Database Reactivation', desc: 'Old, untouched leads are re-engaged and turned back into active opportunities.' },
+  { name: 'Customer Re-Engagement', desc: 'Past customers are reactivated for repeat business, upsells, and referrals.' },
+  { name: 'Lead Routing', desc: 'The right prospect is routed to the right person on your team based on your rules.' },
+  { name: 'Reporting', desc: 'Clear, measurable performance so you always know what is working and what is not.' },
+];
+
+export default function Services() {
+  return (
+    <>
+      <section className="pt-36 pb-12 relative">
+        <div className="absolute inset-0 bg-grid opacity-30" />
+        <Container className="relative">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Services"
+              title="Everything between a lead and a closed deal"
+              subtitle="Link works the opportunity end-to-end — from the moment an inquiry arrives to the moment your sales team is on a live, qualified call."
+            />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="pb-20">
+        <Container>
+          <div className="grid gap-5 md:grid-cols-2">
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.name} delay={(i % 2) * 0.08}>
+                <div className="card-surface rounded-2xl p-8 h-full group hover:border-[#00E5FF]/30 transition-all">
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-[#00E5FF] text-sm font-mono">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <ArrowRight className="h-5 w-5 text-[#94A3B8] group-hover:text-[#00E5FF] transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-3">{s.name}</h3>
+                  <p className="text-[#94A3B8] leading-relaxed">{s.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-24">
+        <Container>
+          <Reveal>
+            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-px pulse-line" />
+              <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl mx-auto">
+                Want a program built around your lead flow?
+              </h2>
+              <div className="mt-8 flex justify-center">
+                <CTAButton to="/get-started">Build My Lead Program</CTAButton>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+    </>
+  );
+}

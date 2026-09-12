@@ -1,0 +1,97 @@
+import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Check } from 'lucide-react';
+
+const FACTORS = [
+  { label: 'Industry', desc: 'Different markets have different conversation complexity.' },
+  { label: 'Qualification criteria', desc: 'The more detailed your definition of qualified, the more tailored the program.' },
+  { label: 'Lead source', desc: 'Inbound forms, calls, ads, and outbound each flow differently.' },
+  { label: 'Market', desc: 'Geography and competitive density shape the program.' },
+  { label: 'Volume', desc: 'Scale affects how the program is staffed and routed.' },
+  { label: 'Appointment vs. live transfer', desc: 'Booked meetings and real-time transfers are priced differently.' },
+  { label: 'Program complexity', desc: 'Custom routing, scripting, and integrations adjust scope.' },
+];
+
+export default function Pricing() {
+  return (
+    <>
+      <section className="pt-36 pb-12 relative">
+        <div className="absolute inset-0 bg-grid opacity-30" />
+        <Container className="relative">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Pricing"
+              title="Pay for qualified opportunities — not promises"
+              subtitle="No retainer. No setup fee. You pay for qualified opportunities delivered."
+            />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="pb-12">
+        <Container>
+          <Reveal>
+            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-px pulse-line" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-[#00E5FF] font-semibold mb-6">
+                Performance-based
+              </div>
+              <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-[1.05]">
+                NO RETAINER.
+                <br />
+                NO SETUP FEE.
+              </h2>
+              <p className="mt-6 text-xl text-[#00E5FF] font-medium">
+                Pay for qualified opportunities delivered.
+              </p>
+              <p className="mt-4 text-[#94A3B8] max-w-xl mx-auto">
+                You only pay when we deliver a conversation that matches your definition of a qualified
+                opportunity.
+              </p>
+              <div className="mt-8 flex justify-center">
+                <CTAButton to="/get-started" size="lg">
+                  Request Pricing
+                </CTAButton>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="py-20">
+        <Container>
+          <Reveal>
+            <SectionHeading eyebrow="What shapes pricing" title="Every program is built around your business" />
+          </Reveal>
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {FACTORS.map((f, i) => (
+              <Reveal key={f.label} delay={(i % 3) * 0.06}>
+                <div className="card-surface rounded-2xl p-6 h-full">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Check className="h-5 w-5 text-[#00E5FF]" />
+                    <h3 className="font-semibold text-white">{f.label}</h3>
+                  </div>
+                  <p className="text-sm text-[#94A3B8] leading-relaxed">{f.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16">
+        <Container className="max-w-3xl text-center">
+          <Reveal>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">Tell us about your lead flow.</h2>
+            <p className="mt-4 text-[#94A3B8]">
+              We will build a program and send pricing aligned to your industry, volume, and qualification
+              criteria.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <CTAButton to="/get-started">Request Pricing</CTAButton>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+    </>
+  );
+}

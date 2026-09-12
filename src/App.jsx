@@ -6,7 +6,17 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-// Add page imports here
+import Layout from '@/components/site/Layout';
+import Home from '@/pages/Home';
+import Services from '@/pages/Services';
+import HowItWorks from '@/pages/HowItWorks';
+import Industries from '@/pages/Industries';
+import IndustryDetail from '@/pages/IndustryDetail';
+import Pricing from '@/pages/Pricing';
+import About from '@/pages/About';
+import FAQ from '@/pages/FAQ';
+import GetStarted from '@/pages/GetStarted';
+import Legal from '@/pages/Legal';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -34,8 +44,22 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      {/* Add your page Route elements here */}
-      <Route path="*" element={<PageNotFound />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/industries" element={<Industries />} />
+        <Route path="/industries/:industry" element={<IndustryDetail />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/get-started" element={<GetStarted />} />
+        <Route path="/privacy" element={<Legal doc="privacy" />} />
+        <Route path="/terms" element={<Legal doc="terms" />} />
+        <Route path="/communications-policy" element={<Legal doc="communications" />} />
+        <Route path="/accessibility" element={<Legal doc="accessibility" />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Route>
     </Routes>
   );
 };
