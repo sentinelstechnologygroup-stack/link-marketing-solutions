@@ -24,12 +24,18 @@ const BTN_SIZES = {
   lg: 'px-8 py-4 text-base',
 };
 
-export function CTAButton({ to, href, onClick, type = 'button', variant = 'primary', size = 'md', className, children }) {
+export function CTAButton({ to, href, onClick, type = 'button', variant = 'primary', size = 'md', className, children, ...props }) {
   const classes = cn(BTN_BASE, BTN_VARIANTS[variant], BTN_SIZES[size], className);
-  if (to) return <Link to={to} className={classes}>{children}</Link>;
-  if (href) return <a href={href} className={classes}>{children}</a>;
+  const handleClick = (event) => {
+    window.dispatchEvent(new CustomEvent('link:cta-click', {
+      detail: { destination: to || href || 'form-action', label: event.currentTarget.textContent?.trim() || 'CTA' },
+    }));
+    onClick?.(event);
+  };
+  if (to) return <Link to={to} className={classes} onClick={handleClick} {...props}>{children}</Link>;
+  if (href) return <a href={href} className={classes} onClick={handleClick} {...props}>{children}</a>;
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={handleClick} className={classes} {...props}>
       {children}
     </button>
   );
