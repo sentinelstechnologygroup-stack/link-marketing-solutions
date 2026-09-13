@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,9 +26,9 @@
     --input: 175 25% 88%;
     --ring: 46 62% 53%;
     --radius: 0.5rem;
-    --font-heading: ui-sans-serif, system-ui, sans-serif;
-    --font-body: ui-sans-serif, system-ui, sans-serif;
-    --font-display: ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 }
@@ -41,6 +43,14 @@
   }
   html {
     scroll-behavior: smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+  ::selection {
+    background: rgba(212, 175, 55, 0.28);
+    color: #04181a;
   }
 }
 
@@ -67,9 +77,24 @@
     border: 1px solid rgba(212, 175, 55, 0.14);
   }
   .card-light {
-    background: #ffffff;
-    border: 1px solid rgba(0, 40, 45, 0.08);
-    box-shadow: 0 1px 3px rgba(0, 40, 45, 0.04), 0 12px 32px -16px rgba(0, 40, 45, 0.12);
+    background: #fbfaf7;
+    border: 1px solid rgba(0, 40, 45, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 40, 45, 0.04), 0 14px 36px -20px rgba(0, 40, 45, 0.18);
+  }
+  .editorial-kicker {
+    color: #d4af37;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .premium-rule {
+    height: 1px;
+    width: 2.5rem;
+    background: #d4af37;
+  }
+  .photo-overlay {
+    background: linear-gradient(90deg, rgba(0, 40, 45, 0.98) 0%, rgba(0, 40, 45, 0.78) 42%, rgba(0, 40, 45, 0.08) 78%);
   }
 }
 
