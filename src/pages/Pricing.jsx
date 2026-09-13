@@ -35,7 +35,7 @@ export default function Pricing() {
         </div>
       </PageHero>
 
-      <section className="pb-12">
+      <section className="py-16">
         <Container>
           <Reveal>
             <div className="card-surface rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
