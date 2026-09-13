@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Container } from './ui';
-import linkMarketingLogo from '@/assets/link-marketing-services-logo.png';
+import BrandLogo from './BrandLogo';
 
 const COLS = [
   {
@@ -45,14 +45,7 @@ const COLS = [
 ];
 
 function Wordmark() {
-  return (
-    <span
-      role="img"
-      aria-label="Link Marketing Services"
-      className="block h-[78px] w-[230px] bg-contain bg-left bg-no-repeat"
-      style={{ backgroundImage: `url("${linkMarketingLogo}")` }}
-    />
-  );
+  return <BrandLogo className="block h-[78px] w-[230px]" />;
 }
 
 export default function Footer() {
