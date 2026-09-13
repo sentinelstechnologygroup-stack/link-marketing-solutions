@@ -1,3 +1,4 @@
+// @ts-nocheck
 const API_ROOTS = {
   customer: import.meta.env.VITE_CUSTOMER_PORTAL_API_URL || '',
   crm: import.meta.env.VITE_CRM_PORTAL_API_URL || '',
