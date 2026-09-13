@@ -1,14 +1,14 @@
-import './brand-logo.css';
+import approvedLinkLogo from '@/assets/link-marketing-services-logo-opaque.jpg';
 
 export default function BrandLogo({ className = '' }) {
   return (
-    <span
-      role="img"
-      aria-label="Link Marketing Services"
-      title="Link Marketing Services"
-      className={`relative inline-block shrink-0 ${className}`}
-    >
-      <span className="brand-logo-art" aria-hidden="true" />
-    </span>
+    <img
+      src={approvedLinkLogo}
+      alt="Link Marketing Services"
+      width="900"
+      height="314"
+      className={`block shrink-0 object-contain ${className}`}
+      draggable="false"
+    />
   );
 }
