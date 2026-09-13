@@ -105,7 +105,16 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col justify-between gap-4 border-t border-white/10 pt-7 text-[11px] text-white/40 md:flex-row">
-          <p>Link Marketing Services is operated by Link Business Alliance LLC.</p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p>Link Marketing Services is operated by Link Business Alliance LLC.</p>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event('link:privacy-settings'))}
+              className="underline decoration-white/25 underline-offset-4 transition-colors hover:text-[#e0bd55]"
+            >
+              Privacy choices
+            </button>
+          </div>
           <p>&copy; {new Date().getFullYear()} Link Marketing Services. All rights reserved.</p>
         </div>
       </Container>
