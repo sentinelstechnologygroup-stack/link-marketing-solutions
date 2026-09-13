@@ -1,6 +1,6 @@
 import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
 import { Image } from '@/components/ui/image';
-import { ArrowRight, Zap, Users, BarChart3, GitBranch } from 'lucide-react';
+import { ArrowRight, Zap, Users, GitBranch } from 'lucide-react';
 
 const ABOUT_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/9afc11fa5_generated_a0480c32.jpg';
 
