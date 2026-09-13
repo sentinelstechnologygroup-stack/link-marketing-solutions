@@ -81,7 +81,7 @@ export default function Home() {
     <main className="overflow-hidden bg-[#f4f1ea]">
       <section className="relative min-h-[720px] overflow-hidden bg-[#062d32] pt-24 text-white">
         <div className="absolute inset-y-0 right-0 hidden w-[62%] lg:block">
-          <img src={HERO_REP} alt="Link representative speaking with a prospect" className="h-full w-full" />
+          <img src={HERO_REP} alt="Link representative speaking with a prospect" className="h-full w-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#063b40_0%,rgba(5,62,67,.97)_32%,rgba(4,45,50,.68)_57%,rgba(4,25,29,.12)_82%)]" />
         <div className="absolute inset-y-0 right-0 hidden w-[18%] border-l border-white/10 bg-[#071b1e]/45 lg:block" />
@@ -177,7 +177,7 @@ export default function Home() {
 
       <section className="relative min-h-[540px] overflow-hidden bg-[#071b1e] text-white">
         <div className="absolute inset-0 opacity-45">
-          <img src={TEAM_IMG} alt="Link engagement team" className="h-full w-full" />
+          <img src={TEAM_IMG} alt="Link engagement team" className="h-full w-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,23,27,.92),rgba(5,23,27,.77)_45%,rgba(5,23,27,.42))]" />
         <Container className="relative py-24">
@@ -259,7 +259,7 @@ export default function Home() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div className="relative min-h-[390px] overflow-hidden">
-              <img src={TEAM_IMG} alt="Representative following a client-approved conversation" className="absolute inset-0 h-full w-full" />
+              <img src={TEAM_IMG} alt="Representative following a client-approved conversation" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071b1e]/70 to-transparent" />
               <p className="absolute bottom-6 left-7 font-serif text-2xl text-white">Your prospect. Your brand. Our team.</p>
             </div>
@@ -283,7 +283,7 @@ export default function Home() {
 
       <section className="relative overflow-hidden bg-[#071b1e] text-white">
         <div className="absolute right-0 top-0 h-full w-[42%] opacity-45">
-          <img src={HERO_REP} alt="" className="h-full w-full" />
+          <img src={HERO_REP} alt="" className="h-full w-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#071b1e] via-[#071b1e]/95 to-[#071b1e]/40" />
         <Container className="relative py-16">
