@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Container, CTAButton, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { Plus, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -54,14 +55,17 @@ export default function FAQ() {
   const [open, setOpen] = useState(0);
   return (
     <>
-      <section className="pt-36 pb-12 relative">
-        <div className="absolute inset-0 bg-grid opacity-30" />
-        <Container className="relative max-w-3xl">
-          <Reveal>
-            <SectionHeading eyebrow="FAQ" title="Questions, answered" />
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Frequently Asked Questions"
+        title="Straight Answers About How Link Works"
+        subtitle="Understand the service, qualification process, handoff options, program structure, and what your team can expect."
+        image={LINK_MEDIA.representative}
+        imageAlt="Link representative answering a business inquiry"
+        imagePosition="65% center"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#e0bd55]">The short version</p>
+        <p className="mt-4 font-serif text-2xl leading-snug text-white">Your leads. Your criteria. Our trained engagement team.</p>
+      </PageHero>
 
       <section className="pb-24">
         <Container className="max-w-3xl">
