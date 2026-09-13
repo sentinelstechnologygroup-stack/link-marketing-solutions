@@ -1,25 +1,28 @@
+import { lazy, Suspense } from 'react';
 import { Toaster } from '@/components/ui/toaster';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import PageNotFound from './lib/PageNotFound';
 import ScrollToTop from './components/ScrollToTop';
 import Layout from '@/components/site/Layout';
-import Home from '@/pages/Home';
-import Services from '@/pages/Services';
-import HowItWorks from '@/pages/HowItWorks';
-import Industries from '@/pages/Industries';
-import IndustryDetail from '@/pages/IndustryDetail';
-import Pricing from '@/pages/Pricing';
-import About from '@/pages/About';
-import FAQ from '@/pages/FAQ';
-import GetStarted from '@/pages/GetStarted';
-import Legal from '@/pages/Legal';
+
+const Home = lazy(() => import('@/pages/Home'));
+const Services = lazy(() => import('@/pages/Services'));
+const HowItWorks = lazy(() => import('@/pages/HowItWorks'));
+const Industries = lazy(() => import('@/pages/Industries'));
+const IndustryDetail = lazy(() => import('@/pages/IndustryDetail'));
+const Pricing = lazy(() => import('@/pages/Pricing'));
+const About = lazy(() => import('@/pages/About'));
+const FAQ = lazy(() => import('@/pages/FAQ'));
+const GetStarted = lazy(() => import('@/pages/GetStarted'));
+const Legal = lazy(() => import('@/pages/Legal'));
+const PageNotFound = lazy(() => import('./lib/PageNotFound'));
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Routes>
-        <Route element={<Layout />}>
+      <Suspense fallback={<div className="min-h-screen bg-[#071b1e]" aria-label="Loading page" />}>
+        <Routes>
+          <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
@@ -34,8 +37,9 @@ function App() {
           <Route path="/communications-policy" element={<Legal doc="communications" />} />
           <Route path="/accessibility" element={<Legal doc="accessibility" />} />
           <Route path="*" element={<PageNotFound />} />
-        </Route>
-      </Routes>
+          </Route>
+        </Routes>
+      </Suspense>
       <Toaster />
     </Router>
   );
