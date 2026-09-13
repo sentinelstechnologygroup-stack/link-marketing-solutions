@@ -27,7 +27,7 @@ export default function HowItWorks() {
         <p className="font-serif text-2xl leading-tight text-white">Sales closes the deal.</p>
       </PageHero>
 
-      <section className="pb-24">
+      <section className="py-24">
         <Container>
           <div className="relative">
             <div className="absolute left-[27px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#d4af37]/40 to-transparent md:-translate-x-1/2" />
