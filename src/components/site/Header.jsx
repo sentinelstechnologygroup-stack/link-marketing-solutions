@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { CTAButton } from './ui';
 import { cn } from '@/lib/utils';
-import linkMarketingLogo from '@/assets/link-marketing-services-logo.png';
+import BrandLogo from './BrandLogo';
 
 const NAV = [
   { label: 'Solutions', to: '/services' },
@@ -16,14 +16,7 @@ const NAV = [
 ];
 
 function Wordmark() {
-  return (
-    <span
-      role="img"
-      aria-label="Link Marketing Services"
-      className="block h-[58px] w-[188px] bg-contain bg-left bg-no-repeat"
-      style={{ backgroundImage: `url("${linkMarketingLogo}")` }}
-    />
-  );
+  return <BrandLogo className="block h-[58px] w-[188px]" />;
 }
 
 export default function Header() {
