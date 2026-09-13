@@ -8,9 +8,9 @@ import {
 import { Container, CTAButton, Reveal } from '@/components/site/ui';
 import { INDUSTRIES } from '@/components/site/industries';
 
-const HERO_REP = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/a4bdc954e_generated_image.png';
-const TEAM_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/8a35b55aa_generated_image.png';
-const BRIDGE_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/9afc11fa5_generated_a0480c32.jpg';
+const HERO_REP = '/media/link-representative.png';
+const TEAM_IMG = '/media/link-engagement-team.png';
+const BRIDGE_IMG = '/media/link-business-bridge.jpg';
 
 const services = [
   {
