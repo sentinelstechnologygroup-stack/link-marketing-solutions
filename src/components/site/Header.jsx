@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { CTAButton } from './ui';
 import { cn } from '@/lib/utils';
@@ -14,65 +14,71 @@ const NAV = [
   { label: 'Resources', to: '/faq' },
 ];
 
+function Wordmark() {
+  return (
+    <span className="flex flex-col leading-none">
+      <span className="font-heading text-[1.7rem] font-semibold tracking-[0.12em] text-[#f7f5f0]">
+        LIN<span className="text-[#d4af37]">K</span>
+      </span>
+      <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-[#d4af37]">
+        Marketing Services
+      </span>
+    </span>
+  );
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  useEffect(() => setOpen(false), [location.pathname]);
   useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener('scroll', onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 14);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header
       className={cn(
-        'fixed top-0 inset-x-0 z-50 transition-all duration-300',
-        scrolled ? 'glass border-b border-[#00282d]/10 shadow-sm' : 'bg-transparent'
+        'fixed inset-x-0 top-0 z-50 border-b transition-all duration-300',
+        scrolled
+          ? 'border-[#d4af37]/15 bg-[#071b1e]/95 shadow-[0_12px_35px_rgba(0,0,0,0.18)] backdrop-blur-xl'
+          : 'border-white/10 bg-[#071b1e]/92 backdrop-blur-md'
       )}
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <div className="flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-60 animate-ping" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#d4af37]" />
-            </span>
-            <span className="text-lg font-bold tracking-tight text-[#04181a]">
-              LINK<span className="text-[#00838f]">.</span>
-            </span>
-            <span className="hidden sm:inline text-[11px] uppercase tracking-[0.2em] text-[#4a5a5c] ml-1">
-              Marketing Solutions
-            </span>
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+        <div className="flex h-[76px] items-center justify-between">
+          <Link to="/" aria-label="Link Marketing Services home" className="shrink-0">
+            <Wordmark />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="text-sm font-medium text-[#4a5a5c] hover:text-[#00838f] transition-colors"
+                className="text-[13px] font-medium text-[#dbe4e2] transition-colors hover:text-[#d4af37]"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden lg:block">
             <CTAButton to="/get-started" size="sm">
               Build My Lead Program
             </CTAButton>
           </div>
 
           <button
-            className="lg:hidden text-[#04181a] p-2 -mr-2"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
+            type="button"
+            className="p-2 text-white lg:hidden"
+            onClick={() => setOpen((value) => !value)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
           >
             {open ? <X /> : <Menu />}
           </button>
@@ -85,20 +91,20 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden glass border-t border-[#00282d]/10 overflow-hidden"
+            className="overflow-hidden border-t border-white/10 bg-[#071b1e] lg:hidden"
           >
-            <div className="px-6 py-6 flex flex-col gap-1">
+            <div className="flex flex-col px-6 py-5">
               {NAV.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="py-3 text-base font-medium text-[#04181a] hover:text-[#00838f] border-b border-[#00282d]/8"
+                  className="border-b border-white/10 py-3 text-sm font-medium text-[#dbe4e2] hover:text-[#d4af37]"
                 >
                   {item.label}
                 </Link>
               ))}
-              <CTAButton to="/get-started" className="mt-4">
-                Build My Program
+              <CTAButton to="/get-started" className="mt-5">
+                Build My Lead Program
               </CTAButton>
             </div>
           </motion.div>
