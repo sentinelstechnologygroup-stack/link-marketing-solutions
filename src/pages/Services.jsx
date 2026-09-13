@@ -1,4 +1,5 @@
-import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Container, CTAButton, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { ArrowRight } from 'lucide-react';
 
 const SERVICES = [
@@ -17,18 +18,24 @@ const SERVICES = [
 export default function Services() {
   return (
     <>
-      <section className="pt-36 pb-12 relative">
-        <div className="absolute inset-0 bg-grid opacity-30" />
-        <Container className="relative">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Services"
-              title="Everything between a lead and a closed deal"
-              subtitle="Link works the opportunity end-to-end — from the moment an inquiry arrives to the moment your sales team is on a live, qualified call."
-            />
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Services"
+        title="Everything Between a Lead and a Closed Deal"
+        subtitle="Link works the opportunity end-to-end—from the moment an inquiry arrives to the moment your sales team receives a qualified conversation."
+        image={LINK_MEDIA.representative}
+        imageAlt="Professional Link representative engaging a prospect"
+        imagePosition="62% center"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#e0bd55]">The engagement path</p>
+        <div className="mt-5 grid grid-cols-4 gap-2">
+          {['Respond', 'Qualify', 'Connect', 'Report'].map((label, i) => (
+            <div key={label} className="text-center">
+              <span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full border border-[#d4af37]/60 text-[10px] text-[#e0bd55]">{i + 1}</span>
+              <p className="mt-2 text-[9px] uppercase tracking-[.08em] text-white/65">{label}</p>
+            </div>
+          ))}
+        </div>
+      </PageHero>
 
       <section className="pb-20">
         <Container>
