@@ -5,7 +5,7 @@ import { FAQS } from '@/content/faqs';
 import { SITE_URL } from '@/lib/marketing';
 
 const BRAND = 'Link Marketing Services';
-const DEFAULT_IMAGE = `${SITE_URL}/brand/link-marketing-services-logo.png`;
+const DEFAULT_IMAGE = `${SITE_URL}/brand/link-marketing-services-social.jpg`;
 
 const PAGES = {
   '/': {
