@@ -1,9 +1,9 @@
 import { Container, Reveal } from './ui';
 
 export const LINK_MEDIA = {
-  representative: 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/a4bdc954e_generated_image.png',
-  team: 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/8a35b55aa_generated_image.png',
-  bridge: 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/9afc11fa5_generated_a0480c32.jpg',
+  representative: '/media/link-representative.png',
+  team: '/media/link-engagement-team.png',
+  bridge: '/media/link-business-bridge.jpg',
 };
 
 export default function PageHero({
