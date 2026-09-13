@@ -17,7 +17,7 @@ const PageNotFound = lazy(() => import('./lib/PageNotFound'));
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ScrollToTop />
       <Suspense fallback={<div className="min-h-screen bg-[#071b1e]" aria-label="Loading page" />}>
         <Routes>
