@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { INDUSTRIES } from './industries';
+import { FAQS } from '@/pages/FAQ';
 import { SITE_URL } from '@/lib/marketing';
 
 const BRAND = 'Link Marketing Services';
@@ -120,7 +121,7 @@ export default function SEO() {
         { '@type': 'ListItem', position: industry ? 3 : 2, name: industry?.name || page?.title || 'Page', item: canonicalUrl },
       ],
     };
-    const organization = pathname === '/' ? {
+    const organization = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       '@id': `${SITE_URL}/#organization`,
@@ -140,6 +141,15 @@ export default function SEO() {
       publisher: { '@id': `${SITE_URL}/#organization` },
       inLanguage: 'en-US',
     } : null;
+    const faq = pathname === '/faq' ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: FAQS.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    } : null;
     const service = industry ? {
       '@context': 'https://schema.org',
       '@type': 'Service',
@@ -151,7 +161,7 @@ export default function SEO() {
       url: canonicalUrl,
     } : null;
 
-    setStructuredData([organization, website, service, breadcrumb]);
+    setStructuredData([organization, website, faq, service, breadcrumb]);
   }, [canonicalUrl, description, industry, pathname, robots, title]);
 
   return null;
