@@ -6,12 +6,12 @@ import { CTAButton } from './ui';
 import { cn } from '@/lib/utils';
 
 const NAV = [
-  { label: 'How It Works', to: '/how-it-works' },
-  { label: 'Services', to: '/services' },
+  { label: 'Solutions', to: '/services' },
+  { label: 'Our Process', to: '/how-it-works' },
   { label: 'Industries', to: '/industries' },
-  { label: 'Pricing', to: '/pricing' },
+  { label: 'Why Link', to: '/#why' },
   { label: 'About', to: '/about' },
-  { label: 'FAQ', to: '/faq' },
+  { label: 'Resources', to: '/faq' },
 ];
 
 export default function Header() {
@@ -64,14 +64,8 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-5">
-            <span className="flex items-center gap-2 text-sm font-medium text-[#4a5a5c] cursor-not-allowed select-none">
-              Client Login
-              <span className="rounded-full bg-[#00282d]/8 px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#4a5a5c]">
-                Soon
-              </span>
-            </span>
             <CTAButton to="/get-started" size="sm">
-              Build My Program
+              Build My Lead Program
             </CTAButton>
           </div>
 
@@ -103,12 +97,6 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <div className="py-3 text-base font-medium text-[#4a5a5c] flex items-center gap-2">
-                Client Login
-                <span className="rounded-full bg-[#00282d]/8 px-2 py-0.5 text-[10px] uppercase tracking-wider">
-                  Soon
-                </span>
-              </div>
               <CTAButton to="/get-started" className="mt-4">
                 Build My Program
               </CTAButton>
