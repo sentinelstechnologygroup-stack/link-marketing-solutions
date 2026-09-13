@@ -10,6 +10,7 @@ import { INDUSTRIES } from '@/components/site/industries';
 
 const HERO_REP = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/a4bdc954e_generated_image.png';
 const TEAM_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/8a35b55aa_generated_image.png';
+const BRIDGE_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/9afc11fa5_generated_a0480c32.jpg';
 
 const services = [
   {
@@ -227,6 +228,28 @@ export default function Home() {
             </div>
           </div>
         </Container>
+      </section>
+
+      <section className="grid min-h-[330px] bg-[#071b1e] text-white md:grid-cols-3">
+        {[
+          [HERO_REP, '01', 'Respond', 'Prompt, professional outreach begins the engagement.'],
+          [TEAM_IMG, '02', 'Qualify', 'A real conversation tests fit, intent, and timing.'],
+          [BRIDGE_IMG, '03', 'Connect', 'The qualified opportunity reaches the right sales professional.']
+        ].map(([src, number, title, body], i) => (
+          <figure key={title} className="group relative min-h-[290px] overflow-hidden border-white/10 md:border-r">
+            <img src={src} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+            <div className={`absolute inset-0 ${i === 1 ? 'bg-[#003f46]/70' : 'bg-[#071b1e]/64'}`} />
+            <figcaption className="absolute inset-x-0 bottom-0 border-t border-[#d4af37]/35 bg-[#071b1e]/78 p-6 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <span className="font-serif text-3xl text-[#e0bd55]">{number}</span>
+                <div>
+                  <p className="font-serif text-2xl">{title}</p>
+                  <p className="mt-1 text-xs leading-5 text-white/62">{body}</p>
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+        ))}
       </section>
 
       <section className="relative bg-[#00616a] py-20 text-white">
