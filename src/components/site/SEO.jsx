@@ -88,7 +88,9 @@ export default function SEO() {
       }
     : PAGES[pathname];
   const isNotFound = !page;
-  const title = page ? `${page.title} | ${BRAND}`.replace(` | ${BRAND} | ${BRAND}`, ` | ${BRAND}`) : `Page Not Found | ${BRAND}`;
+  const title = page
+    ? (page.title.endsWith(BRAND) ? page.title : `${page.title} | ${BRAND}`)
+    : `Page Not Found | ${BRAND}`;
   const description = page?.description || 'The requested page could not be found.';
   const canonicalUrl = `${SITE_URL}${pathname === '/' ? '' : pathname}`;
   const robots = isNotFound ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
@@ -131,7 +133,7 @@ export default function SEO() {
       logo: DEFAULT_IMAGE,
       description: PAGES['/'].description,
       areaServed: { '@type': 'Country', name: 'United States' },
-    } : null;
+    };
     const website = pathname === '/' ? {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
