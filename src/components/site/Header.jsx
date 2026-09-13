@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { CTAButton } from './ui';
 import { cn } from '@/lib/utils';
+import linkMarketingLogo from '@/assets/link-marketing-services-logo.png';
 
 const NAV = [
   { label: 'Solutions', to: '/services' },
@@ -15,11 +16,25 @@ const NAV = [
 ];
 
 function Wordmark() {
+  const [logoFailed, setLogoFailed] = useState(false);
+
+  if (logoFailed) {
+    return (
+      <span className="flex flex-col leading-none text-white" aria-label="Link Marketing Services">
+        <span className="font-serif text-[28px] tracking-[0.08em]">LINK</span>
+        <span className="mt-1 text-[7px] font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
+          Marketing Services
+        </span>
+      </span>
+    );
+  }
+
   return (
     <img
-      src="/brand/link-marketing-services-logo.png"
+      src={linkMarketingLogo}
       alt="Link Marketing Services"
-      className="h-[48px] w-auto object-contain"
+      className="h-auto w-[150px] object-contain"
+      onError={() => setLogoFailed(true)}
     />
   );
 }
