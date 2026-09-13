@@ -37,6 +37,8 @@ async function request(portal, path, options = {}) {
 }
 
 export const customerPortalClient = {
+  isConfigured: () => Boolean(API_ROOTS.customer),
+  getSession: () => request('customer', '/auth/session'),
   signIn: (credentials) => request('customer', '/auth/session', {
     method: 'POST',
     body: JSON.stringify(credentials),
