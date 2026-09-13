@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -17,6 +17,9 @@ import About from '@/pages/About';
 import FAQ from '@/pages/FAQ';
 import GetStarted from '@/pages/GetStarted';
 import Legal from '@/pages/Legal';
+import CustomerPortalLogin from '@/pages/CustomerPortalLogin';
+import CustomerPortalDashboard from '@/pages/CustomerPortalDashboard';
+import CrmPortalLogin from '@/pages/CrmPortalLogin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -65,18 +68,30 @@ const AuthenticatedApp = () => {
 };
 
 
-function App() {
-
+function MarketingSite() {
   return (
     <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <ScrollToTop />
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
+      <AuthenticatedApp />
     </AuthProvider>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClientInstance}>
+      <Router>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/customer-portal" element={<Navigate to="/customer-portal/sign-in" replace />} />
+          <Route path="/customer-portal/sign-in" element={<CustomerPortalLogin />} />
+          <Route path="/customer-portal/dashboard" element={<CustomerPortalDashboard />} />
+          <Route path="/crm-portal" element={<Navigate to="/crm-portal/sign-in" replace />} />
+          <Route path="/crm-portal/sign-in" element={<CrmPortalLogin />} />
+          <Route path="/*" element={<MarketingSite />} />
+        </Routes>
+      </Router>
+      <Toaster />
+    </QueryClientProvider>
   )
 }
 
