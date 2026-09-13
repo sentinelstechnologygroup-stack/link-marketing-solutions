@@ -223,7 +223,7 @@ export const INDUSTRIES = [
     ],
     outcomes: ['Consultation scheduled', 'Intake completed', 'Qualified callback', 'Live transfer'],
     disclaimer:
-      'Link Marketing Solutions provides administrative intake and scheduling support only. We do not provide legal advice or representation.',
+      'Link Marketing Services provides administrative intake and scheduling support only. We do not provide legal advice or representation.',
     gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
@@ -244,7 +244,7 @@ export const INDUSTRIES = [
     ],
     outcomes: ['Quote appointment', 'Policy review scheduled', 'Qualified callback', 'Live transfer'],
     disclaimer:
-      'Link Marketing Solutions provides inquiry response and scheduling support. We do not perform licensed insurance activity or bind coverage.',
+      'Link Marketing Services provides inquiry response and scheduling support. We do not perform licensed insurance activity or bind coverage.',
     gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
@@ -265,7 +265,7 @@ export const INDUSTRIES = [
     ],
     outcomes: ['Appointment scheduled', 'Intake completed', 'Qualified callback', 'Live transfer'],
     disclaimer:
-      'Link Marketing Solutions provides administrative scheduling and intake support. We do not provide medical advice or clinical guidance.',
+      'Link Marketing Services provides administrative scheduling and intake support. We do not provide medical advice or clinical guidance.',
     gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
