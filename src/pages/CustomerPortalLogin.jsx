@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import PortalLoginShell from '@/components/portal/PortalLoginShell';
+import PortalMeta from '@/components/portal/PortalMeta';
 import { customerPortalClient, PortalConfigurationError } from '@/portals/portalClient';
 
 export default function CustomerPortalLogin() {
@@ -38,6 +39,7 @@ export default function CustomerPortalLogin() {
         </p>
       }
     >
+      <PortalMeta title="Customer Portal Sign In | Link Marketing Services" />
       <form onSubmit={submit} className="space-y-5">
         <div>
           <label htmlFor="customer-email" className="mb-2 block text-sm font-semibold">Business email</label>
