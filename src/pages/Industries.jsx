@@ -1,23 +1,27 @@
 import { Link } from 'react-router-dom';
-import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Container, CTAButton, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { INDUSTRIES } from '@/components/site/industries';
 import { ArrowRight } from 'lucide-react';
 
 export default function Industries() {
   return (
     <>
-      <section className="pt-36 pb-12 relative">
-        <div className="absolute inset-0 bg-grid opacity-30" />
-        <Container className="relative">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Industries"
-              title="Built for your market"
-              subtitle="We speak the language of your industry — and qualify opportunities the way your sales team needs them."
-            />
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Industries"
+        title="Qualification Built Around Your Market"
+        subtitle="Every industry has its own language, urgency, buying signals, and sales process. We build the conversation around yours."
+        image={LINK_MEDIA.team}
+        imageAlt="A professional team handling industry-specific prospect conversations"
+        imagePosition="54% center"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#e0bd55]">One operating standard</p>
+        <div className="mt-4 grid grid-cols-2 gap-px bg-white/15">
+          {['Your script', 'Your criteria', 'Your routing', 'Clear outcomes'].map(label => (
+            <div key={label} className="bg-[#071b1e]/80 px-3 py-4 text-center text-[10px] uppercase tracking-[.1em] text-white/70">{label}</div>
+          ))}
+        </div>
+      </PageHero>
 
       <section className="pb-20">
         <Container>
