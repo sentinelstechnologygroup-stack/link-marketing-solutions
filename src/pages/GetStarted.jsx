@@ -183,6 +183,7 @@ export default function GetStarted() {
                       type="button"
                       key={ind.slug}
                       onClick={() => set('industry', ind.name)}
+                      aria-pressed={active}
                       className={cn(
                         'flex items-center gap-3 rounded-xl p-4 text-left border transition-all',
                         active
@@ -199,7 +200,7 @@ export default function GetStarted() {
                 })}
               </div>
               <div className="mt-8 flex justify-end">
-                <CTAButton type="button" onClick={() => setStep(2)} className={cn(!canNext && 'opacity-40 pointer-events-none')}>
+                <CTAButton type="button" onClick={() => setStep(2)} disabled={!canNext}>
                   Continue <ArrowRight className="h-4 w-4" />
                 </CTAButton>
               </div>
@@ -217,6 +218,7 @@ export default function GetStarted() {
                     type="button"
                     key={v}
                     onClick={() => set('volume', v)}
+                    aria-pressed={form.volume === v}
                     className={cn(
                       'rounded-xl p-4 text-sm font-medium border transition-all',
                       form.volume === v
@@ -235,7 +237,7 @@ export default function GetStarted() {
                 <CTAButton
                   type="button"
                   onClick={() => setStep(3)}
-                  className={cn(!canNext && 'opacity-40 pointer-events-none')}
+                  disabled={!canNext}
                 >
                   Continue <ArrowRight className="h-4 w-4" />
                 </CTAButton>
@@ -274,6 +276,7 @@ export default function GetStarted() {
                       type="button"
                       key={s}
                       onClick={() => toggle('sources', s)}
+                      aria-pressed={form.sources.includes(s)}
                       className={cn(
                         'rounded-full px-4 py-2 text-sm border transition-all',
                         form.sources.includes(s)
@@ -295,6 +298,7 @@ export default function GetStarted() {
                       type="button"
                       key={s}
                       onClick={() => toggle('services', s)}
+                      aria-pressed={form.services.includes(s)}
                       className={cn(
                         'rounded-full px-4 py-2 text-sm border transition-all',
                         form.services.includes(s)
