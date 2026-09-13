@@ -81,10 +81,17 @@ export default function Home() {
   return (
     <main className="overflow-hidden bg-[#f4f1ea]">
       <section className="relative min-h-[720px] overflow-hidden bg-[#062d32] pt-24 text-white">
-        <div className="absolute inset-y-0 right-0 hidden w-[62%] lg:block">
-          <img src={HERO_REP} alt="Link representative speaking with a prospect" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 lg:inset-y-0 lg:left-auto lg:right-0 lg:w-[62%]">
+          <img
+            src={HERO_REP}
+            alt="Link representative speaking with a prospect"
+            className="h-full w-full object-cover object-[64%_center]"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#063b40_0%,rgba(5,62,67,.97)_32%,rgba(4,45,50,.68)_57%,rgba(4,25,29,.12)_82%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,45,50,.42)_0%,rgba(5,62,67,.74)_38%,#063b40_86%)] lg:bg-[linear-gradient(90deg,#063b40_0%,rgba(5,62,67,.97)_32%,rgba(4,45,50,.68)_57%,rgba(4,25,29,.12)_82%)]" />
         <div className="absolute inset-y-0 right-0 hidden w-[18%] border-l border-white/10 bg-[#071b1e]/45 lg:block" />
         <Container className="relative z-10 flex min-h-[620px] items-center py-16 lg:py-24">
           <div className="max-w-[680px]">
@@ -305,8 +312,8 @@ export default function Home() {
       </section>
 
       <section className="relative overflow-hidden bg-[#071b1e] text-white">
-        <div className="absolute right-0 top-0 h-full w-[42%] opacity-45">
-          <img src={HERO_REP} alt="" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 opacity-35 sm:opacity-45 lg:left-auto lg:w-[42%]">
+          <img src={HERO_REP} alt="" className="h-full w-full object-cover object-[65%_center]" loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#071b1e] via-[#071b1e]/95 to-[#071b1e]/40" />
         <Container className="relative py-16">
