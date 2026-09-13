@@ -79,7 +79,7 @@ function SectionIntro({ eyebrow, title, body, light = false, className = '' }) {
 
 export default function Home() {
   return (
-    <main className="overflow-hidden bg-[#f4f1ea]">
+    <div className="overflow-hidden bg-[#f4f1ea]">
       <section className="relative min-h-[720px] overflow-hidden bg-[#062d32] pt-24 text-white">
         <div className="absolute inset-0 lg:inset-y-0 lg:left-auto lg:right-0 lg:w-[62%]">
           <img
@@ -105,8 +105,8 @@ export default function Home() {
                 We respond, qualify, set appointments, and live-transfer high-intent prospects—so your team can focus on closing.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <CTAButton to="/GetStarted" size="lg">Build My Lead Program <ArrowRight size={17} /></CTAButton>
-                <Link to="/HowItWorks" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/55 px-6 text-sm font-semibold text-white transition hover:border-[#d4af37] hover:text-[#e0bd55]">
+                <CTAButton to="/get-started" size="lg">Build My Lead Program <ArrowRight size={17} /></CTAButton>
+                <Link to="/how-it-works" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/55 px-6 text-sm font-semibold text-white transition hover:border-[#d4af37] hover:text-[#e0bd55]">
                   See How It Works
                 </Link>
               </div>
@@ -185,7 +185,7 @@ export default function Home() {
 
       <section className="relative min-h-[540px] overflow-hidden bg-[#071b1e] text-white">
         <div className="absolute inset-0 opacity-45">
-          <img src={TEAM_IMG} alt="Link engagement team" className="h-full w-full object-cover" />
+          <img src={TEAM_IMG} alt="Link engagement team" className="h-full w-full object-cover" loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,23,27,.92),rgba(5,23,27,.77)_45%,rgba(5,23,27,.42))]" />
         <Container className="relative py-24">
@@ -244,7 +244,7 @@ export default function Home() {
           [BRIDGE_IMG, '03', 'Connect', 'The qualified opportunity reaches the right sales professional.']
         ].map(([src, number, title, body], i) => (
           <figure key={title} className="group relative min-h-[290px] overflow-hidden border-white/10 md:border-r">
-            <img src={src} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+            <img src={src} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" loading="lazy" decoding="async" />
             <div className={`absolute inset-0 ${i === 1 ? 'bg-[#003f46]/70' : 'bg-[#071b1e]/64'}`} />
             <figcaption className="absolute inset-x-0 bottom-0 border-t border-[#d4af37]/35 bg-[#071b1e]/78 p-6 backdrop-blur-sm">
               <div className="flex items-start gap-4">
@@ -272,7 +272,7 @@ export default function Home() {
               {INDUSTRIES.slice(0, 6).map((industry, i) => {
                 const Icon = industry.icon || Target;
                 return (
-                  <Link key={industry.slug || industry.name} to={industry.href || '/Industries'} className="group bg-[#004c54] p-6 transition hover:bg-[#073e44]">
+                  <Link key={industry.slug || industry.name} to={`/industries/${industry.slug}`} className="group bg-[#004c54] p-6 transition hover:bg-[#073e44]">
                     <Icon className="text-[#e0bd55]" size={23} strokeWidth={1.5} />
                     <p className="mt-7 font-serif text-xl text-white">{industry.name}</p>
                     <p className="mt-2 line-clamp-2 text-xs leading-5 text-white/55">{industry.shortDescription || industry.description}</p>
@@ -289,7 +289,7 @@ export default function Home() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div className="relative min-h-[390px] overflow-hidden">
-              <img src={TEAM_IMG} alt="Representative following a client-approved conversation" className="absolute inset-0 h-full w-full object-cover" />
+              <img src={TEAM_IMG} alt="Representative following a client-approved conversation" className="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071b1e]/70 to-transparent" />
               <p className="absolute bottom-6 left-7 font-serif text-2xl text-white">Your prospect. Your brand. Our team.</p>
             </div>
@@ -350,7 +350,7 @@ export default function Home() {
             body="The next valuable conversation may already be in your database. We re-engage past leads with personalized outreach to uncover renewed interest."
             light
           />
-          <CTAButton to="/Services" variant="outline" className="mt-8 border-white/55 text-white hover:bg-white hover:text-[#063b40]">Explore Reactivation <ArrowRight size={16} /></CTAButton>
+          <CTAButton to="/services" variant="outline" className="mt-8 border-white/55 text-white hover:bg-white hover:text-[#063b40]">Explore Reactivation <ArrowRight size={16} /></CTAButton>
         </div>
       </section>
 
@@ -406,9 +406,9 @@ export default function Home() {
             <p className="editorial-kicker">Let’s build a lead engagement program tailored to your business.</p>
             <h2 className="mt-3 max-w-3xl text-4xl leading-tight text-white sm:text-5xl">What Happens After Your Next Lead Comes In?</h2>
           </div>
-          <CTAButton to="/GetStarted" size="lg" className="shrink-0">Request a Program Review <ArrowRight size={17} /></CTAButton>
+          <CTAButton to="/get-started" size="lg" className="shrink-0">Request a Program Review <ArrowRight size={17} /></CTAButton>
         </Container>
       </section>
-    </main>
+    </div>
   );
 }
