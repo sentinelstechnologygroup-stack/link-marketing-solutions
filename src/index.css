@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 222 47% 9%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 13%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 186 100% 50%;
-    --primary-foreground: 222 47% 9%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 186 100% 50%;
-    --accent-foreground: 222 47% 9%;
+    --background: 210 20% 98%;
+    --foreground: 178 55% 7%;
+    --card: 176 100% 12%;
+    --card-foreground: 180 25% 94%;
+    --popover: 176 100% 10%;
+    --popover-foreground: 180 25% 94%;
+    --primary: 46 62% 53%;
+    --primary-foreground: 178 55% 7%;
+    --secondary: 210 16% 95%;
+    --secondary-foreground: 178 55% 7%;
+    --muted: 210 16% 95%;
+    --muted-foreground: 200 8% 38%;
+    --accent: 176 80% 18%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 215 28% 22%;
-    --input: 215 28% 22%;
-    --ring: 186 100% 50%;
-    --radius: 0.75rem;
+    --destructive-foreground: 0 0% 100%;
+    --border: 175 25% 88%;
+    --input: 175 25% 88%;
+    --ring: 46 62% 53%;
+    --radius: 0.5rem;
     --font-heading: ui-sans-serif, system-ui, sans-serif;
     --font-body: ui-sans-serif, system-ui, sans-serif;
     --font-display: ui-sans-serif, system-ui, sans-serif;
@@ -37,7 +37,7 @@
   }
   body {
     @apply text-foreground font-body antialiased;
-    background-color: #0A0F1E;
+    background-color: #f8f9fa;
   }
   html {
     scroll-behavior: smooth;
@@ -46,36 +46,41 @@
 
 @layer components {
   .glass {
-    background: rgba(15, 23, 42, 0.55);
+    background: rgba(248, 249, 250, 0.82);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
   }
   .pulse-line {
-    background: linear-gradient(90deg, transparent, #00E5FF, transparent);
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
   }
   .text-gradient {
-    background: linear-gradient(90deg, #F8FAFC 0%, #00E5FF 100%);
+    background: linear-gradient(90deg, #04181a 0%, #00838f 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .glow-cyan {
-    box-shadow: 0 0 40px -8px rgba(0, 229, 255, 0.45);
+    box-shadow: 0 0 40px -8px rgba(212, 175, 55, 0.35);
   }
   .card-surface {
-    background: linear-gradient(160deg, rgba(30, 41, 59, 0.55), rgba(15, 23, 42, 0.35));
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    background: linear-gradient(160deg, #004248, #00363b);
+    border: 1px solid rgba(212, 175, 55, 0.14);
+  }
+  .card-light {
+    background: #ffffff;
+    border: 1px solid rgba(0, 40, 45, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 40, 45, 0.04), 0 12px 32px -16px rgba(0, 40, 45, 0.12);
   }
 }
 
 @layer utilities {
   .bg-grid {
     background-image:
-      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+      linear-gradient(rgba(0, 40, 45, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 40, 45, 0.045) 1px, transparent 1px);
     background-size: 56px 56px;
   }
   .bg-radial-cyan {
-    background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 60%);
+    background: radial-gradient(circle at 50% 0%, rgba(0, 131, 143, 0.07), transparent 60%);
   }
 }

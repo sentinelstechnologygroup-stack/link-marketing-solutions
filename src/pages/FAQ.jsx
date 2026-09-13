@@ -68,16 +68,16 @@ export default function FAQ() {
           <div className="space-y-3">
             {FAQS.map((f, i) => (
               <Reveal key={i} delay={(i % 4) * 0.03}>
-                <div className="card-surface rounded-2xl overflow-hidden">
+                <div className="card-light rounded-xl overflow-hidden">
                   <button
                     onClick={() => setOpen(open === i ? -1 : i)}
                     className="w-full flex items-center justify-between p-6 text-left"
                   >
-                    <span className="text-lg font-semibold text-white pr-4">{f.q}</span>
+                    <span className="text-lg font-semibold text-[#04181a] pr-4">{f.q}</span>
                     {open === i ? (
-                      <Minus className="h-5 w-5 text-[#00E5FF] shrink-0" />
+                      <Minus className="h-5 w-5 text-[#d4af37] shrink-0" />
                     ) : (
-                      <Plus className="h-5 w-5 text-[#94A3B8] shrink-0" />
+                      <Plus className="h-5 w-5 text-[#9aa8a9] shrink-0" />
                     )}
                   </button>
                   <div
@@ -87,7 +87,7 @@ export default function FAQ() {
                     )}
                   >
                     <div className="overflow-hidden">
-                      <p className="px-6 pb-6 text-[#94A3B8] leading-relaxed">{f.a}</p>
+                      <p className="px-6 pb-6 text-[#4a5a5c] leading-relaxed">{f.a}</p>
                     </div>
                   </div>
                 </div>

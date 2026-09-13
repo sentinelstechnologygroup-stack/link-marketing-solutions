@@ -45,33 +45,33 @@ const COLS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#080d1a]">
+    <footer className="bg-[#00282d] border-t border-[#d4af37]/15">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div>
             <Link to="/" className="flex items-center gap-2.5">
               <span className="relative flex h-2.5 w-2.5">
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#00E5FF]" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#d4af37]" />
               </span>
               <span className="text-lg font-bold tracking-tight text-white">
-                LINK<span className="text-[#00E5FF]">.</span>
+                LINK<span className="text-[#d4af37]">.</span>
               </span>
             </Link>
-            <p className="mt-4 text-sm text-[#94A3B8] leading-relaxed max-w-xs">
+            <p className="mt-4 text-sm text-[#9fb3b3] leading-relaxed max-w-xs">
               We help businesses turn leads into real conversations and qualified opportunities.
             </p>
-            <p className="mt-6 text-sm font-medium text-white">LinkMarketingServices.com</p>
+            <p className="mt-6 text-sm font-medium text-[#d4af37]">LinkMarketingServices.com</p>
           </div>
 
           {COLS.map((col) => (
             <div key={col.title}>
-              <h4 className="text-xs uppercase tracking-[0.2em] text-[#94A3B8] font-semibold mb-4">
+              <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold mb-4">
                 {col.title}
               </h4>
               <ul className="space-y-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link to={l.to} className="text-sm text-[#cbd5e1] hover:text-[#00E5FF] transition-colors">
+                    <Link to={l.to} className="text-sm text-[#cddede] hover:text-[#d4af37] transition-colors">
                       {l.label}
                     </Link>
                   </li>
@@ -82,10 +82,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
-          <p className="text-xs text-[#94A3B8] leading-relaxed max-w-xl">
+          <p className="text-xs text-[#9fb3b3] leading-relaxed max-w-xl">
             Link Business Alliance LLC d/b/a Link Marketing Solutions. All rights reserved.
           </p>
-          <p className="text-xs text-[#94A3B8]">
+          <p className="text-xs text-[#9fb3b3]">
             &copy; {new Date().getFullYear()} Link Marketing Solutions
           </p>
         </div>

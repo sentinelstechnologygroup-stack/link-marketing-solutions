@@ -44,7 +44,7 @@ export const INDUSTRIES = [
       'Live transfer to an agent',
       'Callback scheduled',
     ],
-    gradient: 'from-blue-500/30 to-cyan-500/15',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'roofing',
@@ -70,7 +70,7 @@ export const INDUSTRIES = [
       'Decision-maker availability',
     ],
     outcomes: ['Inspection scheduled', 'Estimate appointment', 'Qualified callback', 'Live transfer'],
-    gradient: 'from-amber-500/25 to-orange-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'hvac',
@@ -96,7 +96,7 @@ export const INDUSTRIES = [
       'Decision-maker availability',
     ],
     outcomes: ['Service appointment', 'Replacement consultation', 'Qualified callback', 'Live transfer'],
-    gradient: 'from-sky-500/30 to-cyan-500/15',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'plumbing',
@@ -115,7 +115,7 @@ export const INDUSTRIES = [
       'Decision-maker availability',
     ],
     outcomes: ['Service appointment', 'Estimate scheduled', 'Qualified callback', 'Live transfer'],
-    gradient: 'from-indigo-500/25 to-blue-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'home-services',
@@ -140,7 +140,7 @@ export const INDUSTRIES = [
       'Decision-maker availability',
     ],
     outcomes: ['Service appointment', 'Estimate scheduled', 'Qualified callback', 'Live transfer'],
-    gradient: 'from-emerald-500/25 to-teal-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'dog-training',
@@ -172,7 +172,7 @@ export const INDUSTRIES = [
       'Consultation availability',
     ],
     outcomes: ['Consultation', 'Evaluation', 'Training appointment', 'Qualified callback', 'Live transfer'],
-    gradient: 'from-orange-500/25 to-amber-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'automotive',
@@ -198,7 +198,7 @@ export const INDUSTRIES = [
       'Decision-maker',
     ],
     outcomes: ['Showroom appointment', 'Service appointment', 'Qualified callback', 'Live transfer'],
-    gradient: 'from-red-500/25 to-rose-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'legal-professional',
@@ -224,7 +224,7 @@ export const INDUSTRIES = [
     outcomes: ['Consultation scheduled', 'Intake completed', 'Qualified callback', 'Live transfer'],
     disclaimer:
       'Link Marketing Solutions provides administrative intake and scheduling support only. We do not provide legal advice or representation.',
-    gradient: 'from-slate-400/25 to-slate-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'insurance',
@@ -245,7 +245,7 @@ export const INDUSTRIES = [
     outcomes: ['Quote appointment', 'Policy review scheduled', 'Qualified callback', 'Live transfer'],
     disclaimer:
       'Link Marketing Solutions provides inquiry response and scheduling support. We do not perform licensed insurance activity or bind coverage.',
-    gradient: 'from-cyan-500/25 to-blue-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'healthcare-wellness',
@@ -266,7 +266,7 @@ export const INDUSTRIES = [
     outcomes: ['Appointment scheduled', 'Intake completed', 'Qualified callback', 'Live transfer'],
     disclaimer:
       'Link Marketing Solutions provides administrative scheduling and intake support. We do not provide medical advice or clinical guidance.',
-    gradient: 'from-rose-500/25 to-pink-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'b2b',
@@ -291,7 +291,7 @@ export const INDUSTRIES = [
       'Business need',
     ],
     outcomes: ['Discovery call scheduled', 'Qualified meeting', 'Decision-maker conversation', 'Live transfer'],
-    gradient: 'from-violet-500/25 to-indigo-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
   {
     slug: 'custom-programs',
@@ -314,6 +314,6 @@ export const INDUSTRIES = [
       'Volume-based routing',
     ],
     outcomes: ['Custom qualified appointments', 'Live transfers per spec', 'Reporting per program'],
-    gradient: 'from-fuchsia-500/25 to-purple-500/10',
+    gradient: 'from-[#d4af37]/20 to-[#00838f]/10',
   },
 ];

@@ -18,12 +18,12 @@ const SERVICES = [
 ];
 
 const inputCls =
-  'w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-[#94A3B8]/60 focus:border-[#00E5FF] focus:outline-none transition-colors';
+  'w-full rounded-lg bg-white border border-[#00282d]/15 px-4 py-3 text-[#04181a] placeholder:text-[#9aa8a9] focus:border-[#d4af37] focus:outline-none transition-colors';
 
 function Field({ label, children }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-[#cbd5e1] mb-2">{label}</label>
+      <label className="block text-sm font-medium text-[#3a4a4c] mb-2">{label}</label>
       {children}
     </div>
   );
@@ -66,11 +66,11 @@ export default function GetStarted() {
         <div className="absolute inset-0 bg-grid opacity-30" />
         <Container className="relative">
           <Reveal className="text-center max-w-2xl mx-auto">
-            <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 glow-cyan">
-              <Check className="h-8 w-8 text-[#00E5FF]" />
+            <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 glow-cyan">
+              <Check className="h-8 w-8 text-[#d4af37]" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white">Request received.</h1>
-            <p className="mt-4 text-lg text-[#94A3B8]">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#04181a]">Request received.</h1>
+            <p className="mt-4 text-lg text-[#4a5a5c]">
               Our team is reviewing your {form.industry || 'business'} profile. Prepare for a conversation — we
               will be in touch within one business day.
             </p>
@@ -104,17 +104,17 @@ export default function GetStarted() {
               key={n}
               className={cn(
                 'h-1 flex-1 rounded-full transition-colors',
-                n <= step ? 'bg-[#00E5FF]' : 'bg-white/10'
+                n <= step ? 'bg-[#d4af37]' : 'bg-[#00282d]/10'
               )}
             />
           ))}
         </div>
-        <p className="mt-3 text-sm text-[#94A3B8]">Step {step} of 3</p>
+        <p className="mt-3 text-sm text-[#4a5a5c]">Step {step} of 3</p>
 
         <form onSubmit={submit} className="mt-8">
           {step === 1 && (
             <Reveal>
-              <label className="block text-lg font-semibold text-white mb-6">
+              <label className="block text-lg font-semibold text-[#04181a] mb-6">
                 Which industry are we scaling?
               </label>
               <div className="grid sm:grid-cols-2 gap-3">
@@ -127,14 +127,14 @@ export default function GetStarted() {
                       key={ind.slug}
                       onClick={() => set('industry', ind.name)}
                       className={cn(
-                        'flex items-center gap-3 rounded-2xl p-4 text-left border transition-all',
+                        'flex items-center gap-3 rounded-xl p-4 text-left border transition-all',
                         active
-                          ? 'border-[#00E5FF] bg-[#00E5FF]/10'
-                          : 'border-white/10 bg-white/5 hover:border-white/20'
+                          ? 'border-[#d4af37] bg-[#d4af37]/10'
+                          : 'border-[#00282d]/12 bg-white hover:border-[#00282d]/25'
                       )}
                     >
-                      <Icon className={cn('h-5 w-5', active ? 'text-[#00E5FF]' : 'text-[#94A3B8]')} />
-                      <span className={cn('text-sm font-medium', active ? 'text-white' : 'text-[#cbd5e1]')}>
+                      <Icon className={cn('h-5 w-5', active ? 'text-[#d4af37]' : 'text-[#9aa8a9]')} />
+                      <span className={cn('text-sm font-medium', active ? 'text-[#04181a]' : 'text-[#3a4a4c]')}>
                         {ind.name}
                       </span>
                     </button>
@@ -151,7 +151,7 @@ export default function GetStarted() {
 
           {step === 2 && (
             <Reveal>
-              <label className="block text-lg font-semibold text-white mb-6">
+              <label className="block text-lg font-semibold text-[#04181a] mb-6">
                 What is your approximate monthly lead volume?
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -161,10 +161,10 @@ export default function GetStarted() {
                     key={v}
                     onClick={() => set('volume', v)}
                     className={cn(
-                      'rounded-2xl p-4 text-sm font-medium border transition-all',
+                      'rounded-xl p-4 text-sm font-medium border transition-all',
                       form.volume === v
-                        ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white'
-                        : 'border-white/10 bg-white/5 text-[#cbd5e1] hover:border-white/20'
+                        ? 'border-[#d4af37] bg-[#d4af37]/10 text-[#04181a]'
+                        : 'border-[#00282d]/12 bg-white text-[#3a4a4c] hover:border-[#00282d]/25'
                     )}
                   >
                     {v}
@@ -210,7 +210,7 @@ export default function GetStarted() {
               </div>
 
               <div className="mt-6">
-                <p className="text-sm font-medium text-white mb-3">Current lead sources</p>
+                <p className="text-sm font-medium text-[#04181a] mb-3">Current lead sources</p>
                 <div className="flex flex-wrap gap-2">
                   {SOURCES.map((s) => (
                     <button
@@ -220,8 +220,8 @@ export default function GetStarted() {
                       className={cn(
                         'rounded-full px-4 py-2 text-sm border transition-all',
                         form.sources.includes(s)
-                          ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white'
-                          : 'border-white/15 text-[#94A3B8] hover:border-white/30'
+                          ? 'border-[#d4af37] bg-[#d4af37]/10 text-[#04181a]'
+                          : 'border-[#00282d]/15 text-[#4a5a5c] hover:border-[#00282d]/30'
                       )}
                     >
                       {s}
@@ -231,7 +231,7 @@ export default function GetStarted() {
               </div>
 
               <div className="mt-6">
-                <p className="text-sm font-medium text-white mb-3">Services you need</p>
+                <p className="text-sm font-medium text-[#04181a] mb-3">Services you need</p>
                 <div className="flex flex-wrap gap-2">
                   {SERVICES.map((s) => (
                     <button
@@ -241,8 +241,8 @@ export default function GetStarted() {
                       className={cn(
                         'rounded-full px-4 py-2 text-sm border transition-all',
                         form.services.includes(s)
-                          ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white'
-                          : 'border-white/15 text-[#94A3B8] hover:border-white/30'
+                          ? 'border-[#d4af37] bg-[#d4af37]/10 text-[#04181a]'
+                          : 'border-[#00282d]/15 text-[#4a5a5c] hover:border-[#00282d]/30'
                       )}
                     >
                       {s}

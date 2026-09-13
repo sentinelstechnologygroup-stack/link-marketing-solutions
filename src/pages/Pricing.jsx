@@ -30,9 +30,9 @@ export default function Pricing() {
       <section className="pb-12">
         <Container>
           <Reveal>
-            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+            <div className="card-surface rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px pulse-line" />
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-[#00E5FF] font-semibold mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold mb-6">
                 Performance-based
               </div>
               <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-[1.05]">
@@ -40,10 +40,10 @@ export default function Pricing() {
                 <br />
                 NO SETUP FEE.
               </h2>
-              <p className="mt-6 text-xl text-[#00E5FF] font-medium">
+              <p className="mt-6 text-xl text-[#d4af37] font-medium">
                 Pay for qualified opportunities delivered.
               </p>
-              <p className="mt-4 text-[#94A3B8] max-w-xl mx-auto">
+              <p className="mt-4 text-[#9fb3b3] max-w-xl mx-auto">
                 You only pay when we deliver a conversation that matches your definition of a qualified
                 opportunity.
               </p>
@@ -65,12 +65,12 @@ export default function Pricing() {
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {FACTORS.map((f, i) => (
               <Reveal key={f.label} delay={(i % 3) * 0.06}>
-                <div className="card-surface rounded-2xl p-6 h-full">
+                <div className="card-light rounded-xl p-6 h-full">
                   <div className="flex items-center gap-3 mb-3">
-                    <Check className="h-5 w-5 text-[#00E5FF]" />
-                    <h3 className="font-semibold text-white">{f.label}</h3>
+                    <Check className="h-5 w-5 text-[#d4af37]" />
+                    <h3 className="font-semibold text-[#04181a]">{f.label}</h3>
                   </div>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">{f.desc}</p>
+                  <p className="text-sm text-[#4a5a5c] leading-relaxed">{f.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -78,11 +78,11 @@ export default function Pricing() {
         </Container>
       </section>
 
-      <section className="py-16">
+      <section className="py-16 bg-[#00282d] border-t border-[#d4af37]/10">
         <Container className="max-w-3xl text-center">
           <Reveal>
             <h2 className="text-2xl md:text-3xl font-bold text-white">Tell us about your lead flow.</h2>
-            <p className="mt-4 text-[#94A3B8]">
+            <p className="mt-4 text-[#9fb3b3]">
               We will build a program and send pricing aligned to your industry, volume, and qualification
               criteria.
             </p>

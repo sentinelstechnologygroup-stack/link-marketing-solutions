@@ -33,20 +33,20 @@ export default function Header() {
     <header
       className={cn(
         'fixed top-0 inset-x-0 z-50 transition-all duration-300',
-        scrolled ? 'glass border-b border-white/10' : 'bg-transparent'
+        scrolled ? 'glass border-b border-[#00282d]/10 shadow-sm' : 'bg-transparent'
       )}
     >
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <div className="flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#00E5FF] opacity-60 animate-ping" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#00E5FF]" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-60 animate-ping" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#d4af37]" />
             </span>
-            <span className="text-lg font-bold tracking-tight text-white">
-              LINK<span className="text-[#00E5FF]">.</span>
+            <span className="text-lg font-bold tracking-tight text-[#04181a]">
+              LINK<span className="text-[#00838f]">.</span>
             </span>
-            <span className="hidden sm:inline text-[11px] uppercase tracking-[0.2em] text-[#94A3B8] ml-1">
+            <span className="hidden sm:inline text-[11px] uppercase tracking-[0.2em] text-[#4a5a5c] ml-1">
               Marketing Solutions
             </span>
           </Link>
@@ -56,7 +56,7 @@ export default function Header() {
               <Link
                 key={item.to}
                 to={item.to}
-                className="text-sm font-medium text-[#94A3B8] hover:text-white transition-colors"
+                className="text-sm font-medium text-[#4a5a5c] hover:text-[#00838f] transition-colors"
               >
                 {item.label}
               </Link>
@@ -64,9 +64,9 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-5">
-            <span className="flex items-center gap-2 text-sm font-medium text-[#94A3B8] cursor-not-allowed select-none">
+            <span className="flex items-center gap-2 text-sm font-medium text-[#4a5a5c] cursor-not-allowed select-none">
               Client Login
-              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#94A3B8]">
+              <span className="rounded-full bg-[#00282d]/8 px-2 py-0.5 text-[10px] uppercase tracking-wider text-[#4a5a5c]">
                 Soon
               </span>
             </span>
@@ -76,7 +76,7 @@ export default function Header() {
           </div>
 
           <button
-            className="lg:hidden text-white p-2 -mr-2"
+            className="lg:hidden text-[#04181a] p-2 -mr-2"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -91,21 +91,21 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden glass border-t border-white/10 overflow-hidden"
+            className="lg:hidden glass border-t border-[#00282d]/10 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-1">
               {NAV.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="py-3 text-base font-medium text-[#cbd5e1] hover:text-white border-b border-white/5"
+                  className="py-3 text-base font-medium text-[#04181a] hover:text-[#00838f] border-b border-[#00282d]/8"
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="py-3 text-base font-medium text-[#94A3B8] flex items-center gap-2">
+              <div className="py-3 text-base font-medium text-[#4a5a5c] flex items-center gap-2">
                 Client Login
-                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider">
+                <span className="rounded-full bg-[#00282d]/8 px-2 py-0.5 text-[10px] uppercase tracking-wider">
                   Soon
                 </span>
               </div>

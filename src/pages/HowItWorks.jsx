@@ -28,20 +28,20 @@ export default function HowItWorks() {
       <section className="pb-24">
         <Container>
           <div className="relative">
-            <div className="absolute left-[27px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#00E5FF]/30 to-transparent md:-translate-x-1/2" />
+            <div className="absolute left-[27px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#d4af37]/40 to-transparent md:-translate-x-1/2" />
             <div className="space-y-12">
               {STEPS.map((s, i) => (
                 <Reveal key={s.n} delay={(i % 2) * 0.05}>
                   <div className={`flex items-center gap-6 md:gap-10 ${i % 2 ? 'md:flex-row-reverse' : ''}`}>
                     <div className="hidden md:block flex-1" />
                     <div className="relative shrink-0">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#0A0F1E] border-2 border-[#00E5FF]/40 text-[#00E5FF] font-bold glow-cyan">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white border-2 border-[#d4af37]/50 text-[#00838f] font-bold glow-cyan">
                         {s.n}
                       </div>
                     </div>
-                    <div className="flex-1 card-surface rounded-2xl p-6 md:p-8">
-                      <h3 className="text-xl font-semibold text-white mb-2">{s.title}</h3>
-                      <p className="text-[#94A3B8] leading-relaxed">{s.desc}</p>
+                    <div className="flex-1 card-light rounded-xl p-6 md:p-8">
+                      <h3 className="text-xl font-semibold text-[#04181a] mb-2">{s.title}</h3>
+                      <p className="text-[#4a5a5c] leading-relaxed">{s.desc}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -51,10 +51,10 @@ export default function HowItWorks() {
         </Container>
       </section>
 
-      <section className="py-24">
+      <section className="py-24 bg-[#00282d] border-t border-[#d4af37]/10">
         <Container>
           <Reveal>
-            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+            <div className="card-surface rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px pulse-line" />
               <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl mx-auto">
                 Ready to define your qualified opportunity?

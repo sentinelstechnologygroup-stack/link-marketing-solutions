@@ -91,10 +91,10 @@ function LeadLeakCounter() {
 
   return (
     <div ref={ref} className="flex items-baseline gap-2">
-      <span className="text-4xl md:text-5xl font-bold text-[#00E5FF] tabular-nums">
+      <span className="text-4xl md:text-5xl font-bold text-[#d4af37] tabular-nums">
         ${count.toLocaleString()}
       </span>
-      <span className="text-sm text-[#94A3B8]">lost per second to slow lead response*</span>
+      <span className="text-sm text-[#4a5a5c]">lost per second to slow lead response*</span>
     </div>
   );
 }
@@ -103,28 +103,28 @@ export default function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-40" />
+      <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-[#00282d]">
+        <div className="absolute inset-0 bg-grid opacity-30" />
         <div className="absolute inset-0 bg-radial-cyan" />
-        <div className="absolute -top-40 -right-40 h-[36rem] w-[36rem] rounded-full bg-[#00E5FF]/10 blur-3xl" />
+        <div className="absolute -top-40 -right-40 h-[36rem] w-[36rem] rounded-full bg-[#d4af37]/8 blur-3xl" />
         <Container className="relative">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <Reveal>
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#d4af37]/25 bg-white/5 px-4 py-1.5 mb-8">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[#00E5FF] opacity-60 animate-ping" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00E5FF]" />
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-60 animate-ping" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d4af37]" />
                 </span>
-                <span className="text-xs uppercase tracking-[0.2em] text-[#94A3B8]">Link Marketing Solutions</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-[#cddede]">Link Marketing Solutions</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[0.98]">
                 STOP CHASING
                 <br />
                 LEADS.
                 <br />
-                <span className="text-gradient">START TALKING TO QUALIFIED PROSPECTS.</span>
+                <span className="text-[#d4af37]">START TALKING TO QUALIFIED PROSPECTS.</span>
               </h1>
-              <p className="mt-8 text-lg text-[#94A3B8] max-w-xl leading-relaxed">
+              <p className="mt-8 text-lg text-[#9fb3b3] max-w-xl leading-relaxed">
                 Link Marketing Solutions responds to your leads, qualifies the opportunity, follows up, and
                 connects the right prospects to your sales team.
               </p>
@@ -132,20 +132,20 @@ export default function Home() {
                 <CTAButton to="/get-started" size="lg">
                   Build My Lead Program
                 </CTAButton>
-                <CTAButton to="/how-it-works" variant="ghost" size="lg">
+                <CTAButton to="/how-it-works" variant="onDark" size="lg">
                   See How It Works
                 </CTAButton>
               </div>
             </Reveal>
             <Reveal delay={0.15}>
-              <div className="relative rounded-3xl overflow-hidden card-surface aspect-[4/3] glow-cyan">
+              <div className="relative rounded-2xl overflow-hidden card-surface aspect-[4/3] glow-cyan">
                 <Image
                   src={HERO_IMG}
                   alt="A glowing pulse of light traveling through a network of dark glass conduits"
                   fittingType="fill"
                   className="h-full w-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#00282d] via-transparent to-transparent" />
               </div>
             </Reveal>
           </div>
@@ -153,8 +153,7 @@ export default function Home() {
       </section>
 
       {/* PROBLEM */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-red-500/5 blur-3xl" />
+      <section className="py-24 border-t border-[#00282d]/8 relative overflow-hidden">
         <Container>
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <Reveal>
@@ -163,7 +162,7 @@ export default function Home() {
                 title="More leads are not always the answer."
                 align="left"
               />
-              <p className="mt-6 text-lg text-[#94A3B8] leading-relaxed">
+              <p className="mt-6 text-lg text-[#4a5a5c] leading-relaxed">
                 Most businesses already generate inquiries. The problem is what happens next — or what does
                 not happen at all.
               </p>
@@ -172,28 +171,27 @@ export default function Home() {
                   const Icon = p.icon;
                   return (
                     <div key={p.text} className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-500/10 border border-red-500/20 shrink-0">
-                        <Icon className="h-4 w-4 text-red-400" />
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#00282d]/5 border border-[#00282d]/10 shrink-0">
+                        <Icon className="h-4 w-4 text-[#00838f]" />
                       </div>
-                      <span className="text-[#cbd5e1]">{p.text}</span>
+                      <span className="text-[#3a4a4c]">{p.text}</span>
                     </div>
                   );
                 })}
               </div>
-              <div className="mt-10 pt-6 border-t border-white/10">
+              <div className="mt-10 pt-6 border-t border-[#00282d]/10">
                 <LeadLeakCounter />
-                <p className="mt-2 text-xs text-[#94A3B8]/70">*Illustrative. Based on industry averages for speed-to-lead impact.</p>
+                <p className="mt-2 text-xs text-[#4a5a5c]/70">*Illustrative. Based on industry averages for speed-to-lead impact.</p>
               </div>
             </Reveal>
             <Reveal delay={0.15}>
-              <div className="relative rounded-3xl overflow-hidden card-surface aspect-[4/3]">
+              <div className="relative rounded-2xl overflow-hidden border border-[#00282d]/10 shadow-xl aspect-[4/3] bg-white">
                 <Image
                   src={PROBLEM_IMG}
                   alt="Chaotic tangled wires representing disorganized lead flow"
                   fittingType="fill"
                   className="h-full w-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1E]/40 to-transparent" />
               </div>
             </Reveal>
           </div>
@@ -201,12 +199,13 @@ export default function Home() {
       </section>
 
       {/* SOLUTION FLOW */}
-      <section className="py-24 border-t border-white/5 bg-[#0c1326] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-20" />
+      <section className="py-24 border-t border-[#d4af37]/10 bg-[#00282d] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid opacity-15" />
         <Container className="relative">
           <Reveal>
             <SectionHeading
               eyebrow="The Solution"
+              onDark
               title="Link is the bridge between a lead and a conversation"
               subtitle="One clear flow — from the moment an inquiry arrives to the moment your sales team is talking to a qualified prospect."
             />
@@ -216,14 +215,14 @@ export default function Home() {
               {FLOW.map((f, i) => (
                 <Reveal key={f.label} delay={i * 0.08} className="flex-1">
                   <div className="relative h-full px-4">
-                    <div className="card-surface rounded-2xl p-6 h-full text-center hover:border-[#00E5FF]/30 transition-colors">
-                      <span className="text-[#00E5FF] text-sm font-mono block mb-3">
+                    <div className="card-surface rounded-xl p-6 h-full text-center hover:border-[#d4af37]/40 transition-colors">
+                      <span className="text-[#d4af37] text-sm font-mono block mb-3">
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="text-sm font-semibold text-white leading-snug block">{f.label}</span>
                     </div>
                     {i < FLOW.length - 1 && (
-                      <div className="hidden lg:flex absolute top-1/2 -right-2 -translate-y-1/2 text-[#00E5FF] z-10">
+                      <div className="hidden lg:flex absolute top-1/2 -right-2 -translate-y-1/2 text-[#d4af37] z-10">
                         <ArrowRight className="h-5 w-5" />
                       </div>
                     )}
@@ -236,7 +235,7 @@ export default function Home() {
       </section>
 
       {/* CORE SERVICES */}
-      <section className="py-24 border-t border-white/5">
+      <section className="py-24 border-t border-[#00282d]/8">
         <Container>
           <Reveal>
             <SectionHeading
@@ -248,9 +247,9 @@ export default function Home() {
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {CORE_SERVICES.map((s, i) => (
               <Reveal key={s.name} delay={(i % 4) * 0.05}>
-                <div className="card-surface rounded-2xl p-6 h-full hover:border-[#00E5FF]/30 transition-all">
+                <div className="card-surface rounded-xl p-6 h-full hover:border-[#d4af37]/40 transition-all">
                   <h3 className="text-base font-semibold text-white mb-2">{s.name}</h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">{s.desc}</p>
+                  <p className="text-sm text-[#9fb3b3] leading-relaxed">{s.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -264,12 +263,13 @@ export default function Home() {
       </section>
 
       {/* INDUSTRIES PREVIEW */}
-      <section className="py-24 border-t border-white/5 bg-[#0c1326] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-20" />
+      <section className="py-24 border-t border-[#d4af37]/10 bg-[#00282d] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid opacity-15" />
         <Container className="relative">
           <Reveal>
             <SectionHeading
               eyebrow="Industries"
+              onDark
               title="Built for the way your market sells"
               subtitle="We speak the language of your industry and qualify opportunities the way your team needs them."
             />
@@ -281,17 +281,17 @@ export default function Home() {
                 <Reveal key={ind.slug}>
                   <Link
                     to={`/industries/${ind.slug}`}
-                    className="group inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-5 py-3 hover:border-[#00E5FF]/40 hover:bg-[#00E5FF]/5 transition-all"
+                    className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-5 py-3 hover:border-[#d4af37]/50 hover:bg-[#d4af37]/5 transition-all"
                   >
-                    <Icon className="h-4 w-4 text-[#00E5FF]" />
-                    <span className="text-sm font-medium text-[#cbd5e1] group-hover:text-white">{ind.name}</span>
+                    <Icon className="h-4 w-4 text-[#d4af37]" />
+                    <span className="text-sm font-medium text-[#cddede] group-hover:text-white">{ind.name}</span>
                   </Link>
                 </Reveal>
               );
             })}
           </div>
           <div className="mt-10 text-center">
-            <CTAButton to="/industries" variant="outline">
+            <CTAButton to="/industries" variant="onDark">
               Explore all industries <ArrowRight className="h-4 w-4" />
             </CTAButton>
           </div>
@@ -299,7 +299,7 @@ export default function Home() {
       </section>
 
       {/* WHY LINK */}
-      <section className="py-24 border-t border-white/5">
+      <section className="py-24 border-t border-[#00282d]/8">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="Why Link" title="The advantages that move your pipeline" />
@@ -309,12 +309,12 @@ export default function Home() {
               const Icon = w.icon;
               return (
                 <Reveal key={w.title} delay={(i % 3) * 0.06}>
-                  <div className="card-surface rounded-2xl p-8 h-full">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/20 mb-5">
-                      <Icon className="h-6 w-6 text-[#00E5FF]" />
+                  <div className="card-light rounded-xl p-8 h-full">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00838f]/8 border border-[#00838f]/15 mb-5">
+                      <Icon className="h-6 w-6 text-[#00838f]" />
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{w.title}</h3>
-                    <p className="text-sm text-[#94A3B8] leading-relaxed">{w.desc}</p>
+                    <h3 className="text-lg font-semibold text-[#04181a] mb-2">{w.title}</h3>
+                    <p className="text-sm text-[#4a5a5c] leading-relaxed">{w.desc}</p>
                   </div>
                 </Reveal>
               );
@@ -324,25 +324,25 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-24 border-t border-white/5 bg-[#0c1326] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-20" />
+      <section className="py-24 border-t border-[#d4af37]/10 bg-[#00282d] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid opacity-15" />
         <Container className="relative">
           <Reveal>
-            <SectionHeading eyebrow="How It Works" title="Four steps to qualified conversations" />
+            <SectionHeading eyebrow="How It Works" onDark title="Four steps to qualified conversations" />
           </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s, i) => (
               <Reveal key={s.n} delay={(i % 4) * 0.06}>
-                <div className="relative card-surface rounded-2xl p-8 h-full">
-                  <span className="text-5xl font-bold text-[#00E5FF]/20 block mb-4">{s.n}</span>
+                <div className="relative card-surface rounded-xl p-8 h-full">
+                  <span className="text-5xl font-bold text-[#d4af37]/25 block mb-4">{s.n}</span>
                   <h3 className="text-lg font-semibold text-white mb-2">{s.title}</h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">{s.desc}</p>
+                  <p className="text-sm text-[#9fb3b3] leading-relaxed">{s.desc}</p>
                 </div>
               </Reveal>
             ))}
           </div>
           <div className="mt-10 text-center">
-            <CTAButton to="/how-it-works" variant="outline">
+            <CTAButton to="/how-it-works" variant="onDark">
               See the full process <ArrowRight className="h-4 w-4" />
             </CTAButton>
           </div>
@@ -353,14 +353,14 @@ export default function Home() {
       <section className="py-28">
         <Container>
           <Reveal>
-            <div className="relative card-surface rounded-3xl p-10 md:p-20 text-center overflow-hidden">
+            <div className="relative card-surface rounded-2xl p-10 md:p-20 text-center overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px pulse-line" />
-              <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#00E5FF]/15 blur-3xl" />
+              <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-[#d4af37]/12 blur-3xl" />
               <div className="relative">
                 <h2 className="text-3xl md:text-5xl font-bold text-white max-w-3xl mx-auto leading-[1.1]">
                   What happens after your next lead comes in?
                 </h2>
-                <p className="mt-6 text-lg text-[#94A3B8] max-w-2xl mx-auto leading-relaxed">
+                <p className="mt-6 text-lg text-[#9fb3b3] max-w-2xl mx-auto leading-relaxed">
                   If the answer depends on whether someone notices the notification, has time to call, and
                   remembers to follow up, there is a better system.
                 </p>

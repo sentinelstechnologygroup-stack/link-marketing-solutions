@@ -35,15 +35,15 @@ export default function Services() {
           <div className="grid gap-5 md:grid-cols-2">
             {SERVICES.map((s, i) => (
               <Reveal key={s.name} delay={(i % 2) * 0.08}>
-                <div className="card-surface rounded-2xl p-8 h-full group hover:border-[#00E5FF]/30 transition-all">
+                <div className="card-light rounded-xl p-8 h-full group hover:border-[#d4af37]/40 transition-all">
                   <div className="flex items-center justify-between mb-5">
-                    <span className="text-[#00E5FF] text-sm font-mono">
+                    <span className="text-[#00838f] text-sm font-mono">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <ArrowRight className="h-5 w-5 text-[#94A3B8] group-hover:text-[#00E5FF] transition-colors" />
+                    <ArrowRight className="h-5 w-5 text-[#9aa8a9] group-hover:text-[#d4af37] transition-colors" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-3">{s.name}</h3>
-                  <p className="text-[#94A3B8] leading-relaxed">{s.desc}</p>
+                  <h3 className="text-xl font-semibold text-[#04181a] mb-3">{s.name}</h3>
+                  <p className="text-[#4a5a5c] leading-relaxed">{s.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -51,10 +51,10 @@ export default function Services() {
         </Container>
       </section>
 
-      <section className="py-24">
+      <section className="py-24 bg-[#00282d] border-t border-[#d4af37]/10">
         <Container>
           <Reveal>
-            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+            <div className="card-surface rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px pulse-line" />
               <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl mx-auto">
                 Want a program built around your lead flow?

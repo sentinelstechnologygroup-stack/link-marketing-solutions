@@ -120,16 +120,16 @@ export default function Legal({ doc }) {
       <Container className="relative max-w-3xl">
         <Reveal>
           <div className="inline-flex items-center gap-2.5 mb-5">
-            <span className="h-px w-8 bg-[#00E5FF]" />
-            <span className="text-xs uppercase tracking-[0.25em] text-[#00E5FF] font-semibold">Legal</span>
+            <span className="h-px w-8 bg-[#d4af37]" />
+            <span className="text-xs uppercase tracking-[0.25em] text-[#00838f] font-semibold">Legal</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">{data.title}</h1>
-          <p className="mt-3 text-sm text-[#94A3B8]">{data.updated}</p>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#04181a]">{data.title}</h1>
+          <p className="mt-3 text-sm text-[#4a5a5c]">{data.updated}</p>
           <div className="mt-10 space-y-8">
             {data.sections.map((s) => (
               <div key={s.h}>
-                <h2 className="text-lg font-semibold text-white mb-2">{s.h}</h2>
-                <p className="text-[#94A3B8] leading-relaxed">{s.p}</p>
+                <h2 className="text-lg font-semibold text-[#04181a] mb-2">{s.h}</h2>
+                <p className="text-[#4a5a5c] leading-relaxed">{s.p}</p>
               </div>
             ))}
           </div>

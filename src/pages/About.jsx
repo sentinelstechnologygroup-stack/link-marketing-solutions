@@ -38,29 +38,28 @@ export default function About() {
         <Container>
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <Reveal>
-              <div className="relative rounded-3xl overflow-hidden card-surface aspect-[4/3] glow-cyan">
+              <div className="relative rounded-2xl overflow-hidden border border-[#00282d]/10 shadow-xl aspect-[4/3] bg-white">
                 <Image
                   src={ABOUT_IMG}
                   alt="A sleek dark glass bridge structure connecting two points at dusk"
                   fittingType="fill"
                   className="h-full w-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-transparent to-transparent" />
               </div>
             </Reveal>
             <Reveal delay={0.1}>
               <div className="space-y-6">
-                <p className="text-lg text-[#cbd5e1] leading-relaxed">
+                <p className="text-lg text-[#3a4a4c] leading-relaxed">
                   Most businesses do not have a lead problem. They have a lead response problem. Inquiries
                   come in, but nobody answers fast, nobody qualifies them, and nobody follows up
                   consistently.
                 </p>
-                <p className="text-lg text-[#cbd5e1] leading-relaxed">
+                <p className="text-lg text-[#3a4a4c] leading-relaxed">
                   Link Marketing Solutions was built to fix that. We sit between your marketing and your
                   sales team — responding to every inquiry, qualifying the opportunity, and delivering real
                   conversations to the people who close them.
                 </p>
-                <p className="text-lg text-[#cbd5e1] leading-relaxed">
+                <p className="text-lg text-[#3a4a4c] leading-relaxed">
                   The result: your sales team spends more time talking to qualified prospects and less time
                   chasing forms, missed calls, and unanswered inquiries.
                 </p>
@@ -70,24 +69,24 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="py-20 border-t border-white/5 bg-[#0c1326]">
+      <section className="py-20 border-t border-[#d4af37]/10 bg-[#00282d]">
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="The Flow" title="How the three pieces fit together" />
+            <SectionHeading eyebrow="The Flow" onDark title="How the three pieces fit together" />
           </Reveal>
           <div className="mt-12 grid md:grid-cols-3 gap-5">
             {PILLARS.map((p, i) => {
               const Icon = p.icon;
               return (
                 <Reveal key={p.title} delay={i * 0.08}>
-                  <div className="card-surface rounded-2xl p-8 h-full relative">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/20 mb-5">
-                      <Icon className="h-6 w-6 text-[#00E5FF]" />
+                  <div className="card-surface rounded-xl p-8 h-full relative">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#d4af37]/10 border border-[#d4af37]/25 mb-5">
+                      <Icon className="h-6 w-6 text-[#d4af37]" />
                     </div>
                     <h3 className="text-lg font-semibold text-white mb-2">{p.title}</h3>
-                    <p className="text-sm text-[#94A3B8] leading-relaxed">{p.desc}</p>
+                    <p className="text-sm text-[#9fb3b3] leading-relaxed">{p.desc}</p>
                     {i < PILLARS.length - 1 && (
-                      <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 text-[#00E5FF]/40" />
+                      <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 text-[#d4af37]/50" />
                     )}
                   </div>
                 </Reveal>
@@ -97,7 +96,7 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-[#00282d]/8">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="What drives us" title="Principles we build every program around" />
@@ -105,9 +104,9 @@ export default function About() {
           <div className="mt-12 grid sm:grid-cols-2 gap-5">
             {VALUES.map((v, i) => (
               <Reveal key={v.title} delay={(i % 2) * 0.08}>
-                <div className="card-surface rounded-2xl p-8 h-full">
-                  <h3 className="text-lg font-semibold text-white mb-2">{v.title}</h3>
-                  <p className="text-[#94A3B8] leading-relaxed">{v.desc}</p>
+                <div className="card-light rounded-xl p-8 h-full">
+                  <h3 className="text-lg font-semibold text-[#04181a] mb-2">{v.title}</h3>
+                  <p className="text-[#4a5a5c] leading-relaxed">{v.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -115,10 +114,10 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="py-24">
+      <section className="py-24 bg-[#00282d] border-t border-[#d4af37]/10">
         <Container>
           <Reveal>
-            <div className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+            <div className="card-surface rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px pulse-line" />
               <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl mx-auto">
                 Ready to stop chasing and start talking?
