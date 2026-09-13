@@ -4,9 +4,9 @@ import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { Plus, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const FAQS = [
+export const FAQS = [
   {
-    q: 'What does Link Marketing Solutions do?',
+    q: 'What does Link Marketing Services do?',
     a: 'We respond to your leads, qualify the opportunity, follow up, and connect qualified prospects to your sales team — through booked appointments or live transfers.',
   },
   {
