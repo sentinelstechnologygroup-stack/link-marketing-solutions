@@ -16,25 +16,12 @@ const NAV = [
 ];
 
 function Wordmark() {
-  const [logoFailed, setLogoFailed] = useState(false);
-
-  if (logoFailed) {
-    return (
-      <span className="flex flex-col leading-none text-white" aria-label="Link Marketing Services">
-        <span className="font-serif text-[28px] tracking-[0.08em]">LINK</span>
-        <span className="mt-1 text-[7px] font-semibold uppercase tracking-[0.28em] text-[#d4af37]">
-          Marketing Services
-        </span>
-      </span>
-    );
-  }
-
   return (
-    <img
-      src={linkMarketingLogo}
-      alt="Link Marketing Services"
-      className="h-auto w-[150px] object-contain"
-      onError={() => setLogoFailed(true)}
+    <span
+      role="img"
+      aria-label="Link Marketing Services"
+      className="block h-[58px] w-[188px] bg-contain bg-left bg-no-repeat"
+      style={{ backgroundImage: `url("${linkMarketingLogo}")` }}
     />
   );
 }
