@@ -3,8 +3,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import Layout from '@/components/site/Layout';
-
-const Home = lazy(() => import('@/pages/Home'));
+import Home from '@/pages/Home';
 const Services = lazy(() => import('@/pages/Services'));
 const HowItWorks = lazy(() => import('@/pages/HowItWorks'));
 const Industries = lazy(() => import('@/pages/Industries'));
