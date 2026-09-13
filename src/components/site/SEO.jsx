@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { INDUSTRIES } from './industries';
-import { FAQS } from '@/pages/FAQ';
+import { FAQS } from '@/content/faqs';
 import { SITE_URL } from '@/lib/marketing';
 
 const BRAND = 'Link Marketing Services';
