@@ -34,13 +34,6 @@ const COLS = [
     ],
   },
   {
-    title: 'Portals',
-    links: [
-      { label: 'Customer Portal', to: '/customer-portal/sign-in' },
-      { label: 'CRM Agent Portal', to: '/crm-portal/sign-in' },
-    ],
-  },
-  {
     title: 'Legal',
     links: [
       { label: 'Privacy Policy', to: '/privacy' },
@@ -59,7 +52,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-[#d4af37]/20 bg-[#061a1d] text-white">
       <Container className="py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_repeat(5,minmax(0,1fr))]">
+        <div className="grid gap-12 lg:grid-cols-[1.45fr_1fr_1fr_1fr_1fr]">
           <div>
             <Link to="/" aria-label="Link Marketing Services home"><Wordmark /></Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">

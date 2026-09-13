@@ -1,4 +1,3 @@
-// @ts-nocheck
 import approvedLinkLogo from '@/assets/link-marketing-services-logo-opaque.jpg';
 
 export default function BrandLogo({ className = '' }) {
