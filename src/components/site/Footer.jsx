@@ -45,14 +45,11 @@ const COLS = [
 
 function Wordmark() {
   return (
-    <span className="inline-flex flex-col leading-none">
-      <span className="font-serif text-[34px] tracking-[.04em] text-white">
-        LIN<span className="text-[#d4af37]">K</span>
-      </span>
-      <span className="mt-1 border-t border-[#d4af37]/60 pt-1 text-[7px] font-semibold uppercase tracking-[.28em] text-white/65">
-        Marketing Services
-      </span>
-    </span>
+    <img
+      src="/brand/link-marketing-services-logo.png"
+      alt="Link Marketing Services"
+      className="h-[76px] w-auto object-contain"
+    />
   );
 }
 
