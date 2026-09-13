@@ -23,10 +23,13 @@ export const AuthProvider = ({ children }) => {
       setAuthError(null);
       
       try {
-        const publicSettings = await base44.app.getPublicSettings();
-        setAppPublicSettings(publicSettings);
-        
-        // If we got the app public settings successfully, check if user is authenticated
+        // Temporary placeholder while Firebase backend is being connected.
+        setAppPublicSettings({
+          id: "placeholder-app",
+          public_settings: {
+            title: "FILLER: App configuration pending Firebase migration",
+          },
+        });
         if (appParams.token) {
           await checkUserAuth();
         } else {
@@ -34,37 +37,17 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(false);
           setAuthChecked(true);
         }
-        setIsLoadingPublicSettings(false);
       } catch (appError) {
         console.error('App state check failed:', appError);
-        
-        // Handle app-level errors
-        if (appError.status === 403 && appError.data?.extra_data?.reason) {
-          const reason = appError.data.extra_data.reason;
-          if (reason === 'auth_required') {
-            setAuthError({
-              type: 'auth_required',
-              message: 'Authentication required'
-            });
-          } else if (reason === 'user_not_registered') {
-            setAuthError({
-              type: 'user_not_registered',
-              message: 'User not registered for this app'
-            });
-          } else {
-            setAuthError({
-              type: reason,
-              message: appError.message
-            });
-          }
-        } else {
-          setAuthError({
-            type: 'unknown',
-            message: appError.message || 'Failed to load app'
-          });
-        }
-        setIsLoadingPublicSettings(false);
+        setAuthError({
+          type: 'backend_not_ready',
+          message: appError.message || 'Authentication backend not ready'
+        });
         setIsLoadingAuth(false);
+        setIsAuthenticated(false);
+        setAuthChecked(true);
+      } finally {
+        setIsLoadingPublicSettings(false);
       }
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -105,18 +88,15 @@ export const AuthProvider = ({ children }) => {
   const logout = (shouldRedirect = true) => {
     setUser(null);
     setIsAuthenticated(false);
-    
+
     if (shouldRedirect) {
-      // Use the SDK's logout method which handles token cleanup and redirect
       base44.auth.logout(window.location.href);
     } else {
-      // Just remove the token without redirect
       base44.auth.logout();
     }
   };
 
   const navigateToLogin = () => {
-    // Use the SDK's redirectToLogin method
     base44.auth.redirectToLogin(window.location.href);
   };
 

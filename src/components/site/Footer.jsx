@@ -3,12 +3,10 @@ import { Container } from './ui';
 import BrandLogo from './BrandLogo';
 
 const CUSTOMER_PORTAL_SIGN_IN =
-  import.meta.env.VITE_CUSTOMER_PORTAL_SIGN_IN_URL ||
-  'https://preview-sandbox--6aa62612c7156d0e1a36681d.base44-preview.app/sign-in';
+  import.meta.env.VITE_CUSTOMER_PORTAL_SIGN_IN_URL || '#';
 
 const AGENT_PORTAL_SIGN_IN =
-  import.meta.env.VITE_AGENT_PORTAL_SIGN_IN_URL ||
-  'https://preview-sandbox--6aa4a74cfd879f1dfb15da82.base44-preview.app/login';
+  import.meta.env.VITE_AGENT_PORTAL_SIGN_IN_URL || '#';
 
 const COLS = [
   {
@@ -64,12 +62,15 @@ function Wordmark() {
 }
 
 function FooterLink({ link }) {
-  const className = "text-xs text-white/60 transition-colors hover:text-[#e0bd55] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4af37]";
+  const isPlaceholder = link.href && link.href === '#';
+  const className = isPlaceholder
+    ? "text-xs text-pink-300 transition-colors hover:text-pink-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
+    : "text-xs text-white/60 transition-colors hover:text-[#e0bd55] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4af37]";
 
   if (link.href) {
     return (
-      <a href={link.href} className={className} rel="nofollow">
-        {link.label}
+    <a href={link.href} className={className} rel="nofollow">
+        {isPlaceholder ? `${link.label} (Set env URL)` : link.label}
       </a>
     );
   }

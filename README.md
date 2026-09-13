@@ -49,7 +49,7 @@ Optional marketing configuration:
 - XML sitemap: `public/sitemap.xml`
 - Crawler rules: `public/robots.txt`
 - Branded social image and favicons: `public/brand/`
-- Public marketing routes do not wait for Base44 authentication or public settings.
+- Public marketing routes do not wait for authentication checks.
 - Campaign query parameters are excluded from canonical URLs.
 
 When adding a public route, add it to all three places: `src/App.jsx`, the metadata map in `SEO.jsx`, and `public/sitemap.xml`. Add a matching exact rewrite in `vercel.json`.
