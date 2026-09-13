@@ -37,7 +37,7 @@ export default function Services() {
         </div>
       </PageHero>
 
-      <section className="pb-20">
+      <section className="py-20">
         <Container>
           <div className="grid gap-5 md:grid-cols-2">
             {SERVICES.map((s, i) => (
