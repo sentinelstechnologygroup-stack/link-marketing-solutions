@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -43,6 +41,30 @@
   }
   html {
     scroll-behavior: smooth;
+  }
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    border-radius: .375rem;
+    background: #d4af37;
+    color: #04181a;
+    padding: .75rem 1rem;
+    font-weight: 700;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
