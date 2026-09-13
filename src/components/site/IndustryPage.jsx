@@ -1,43 +1,35 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
 import { Container, CTAButton, SectionHeading, Reveal } from './ui';
+import PageHero, { LINK_MEDIA } from './PageHero';
 
 export default function IndustryPage({ industry }) {
   const Icon = industry.icon;
   return (
     <>
-      <section className="relative pt-36 pb-20 overflow-hidden bg-[#00282d]">
-        <div className="absolute inset-0 bg-grid opacity-25" />
-        <div
-          className={`absolute -top-20 right-0 h-96 w-96 rounded-full bg-gradient-to-br ${industry.gradient} blur-3xl opacity-50`}
-        />
-        <Container className="relative">
-          <Reveal>
-            <Link
-              to="/industries"
-              className="inline-flex items-center gap-2 text-sm text-[#9fb3b3] hover:text-[#d4af37] mb-8 transition-colors"
-            >
-              <ArrowRight className="h-4 w-4 rotate-180" /> All Industries
-            </Link>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d4af37]/10 border border-[#d4af37]/30">
-                <Icon className="h-7 w-7 text-[#d4af37]" />
-              </div>
-              <span className="text-sm uppercase tracking-[0.2em] text-[#9fb3b3]">{industry.name}</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white max-w-4xl leading-[1.05]">
-              {industry.headline}
-            </h1>
-            <p className="mt-6 text-lg text-[#9fb3b3] max-w-2xl leading-relaxed">{industry.intro}</p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <CTAButton to="/get-started">Build My Lead Program</CTAButton>
-              <CTAButton to="/how-it-works" variant="onDark">
-                See How It Works
-              </CTAButton>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow={industry.name}
+        title={industry.headline}
+        subtitle={industry.intro}
+        image={LINK_MEDIA.team}
+        imageAlt={`Professional Link representatives handling ${industry.name.toLowerCase()} inquiries`}
+        imagePosition="56% center"
+      >
+        <Link to="/industries" className="inline-flex items-center gap-2 text-xs uppercase tracking-[.14em] text-white/60 hover:text-[#e0bd55]">
+          <ArrowRight className="h-4 w-4 rotate-180" /> All Industries
+        </Link>
+        <div className="mt-6 flex items-center gap-4">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d4af37]/60 text-[#e0bd55]"><Icon className="h-6 w-6" /></span>
+          <div>
+            <p className="font-serif text-xl text-white">Built around your criteria</p>
+            <p className="mt-1 text-xs text-white/55">Qualified, documented, and routed</p>
+          </div>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <CTAButton to="/get-started" size="sm">Build My Program</CTAButton>
+          <CTAButton to="/how-it-works" variant="onDark" size="sm">See the Process</CTAButton>
+        </div>
+      </PageHero>
 
       <section className="py-20 border-t border-[#00282d]/8">
         <Container>
