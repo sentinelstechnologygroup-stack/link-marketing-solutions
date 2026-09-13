@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import PortalLoginShell from '@/components/portal/PortalLoginShell';
 import PortalMeta from '@/components/portal/PortalMeta';
 import { customerPortalClient, PortalConfigurationError } from '@/portals/portalClient';
 
 export default function CustomerPortalLogin() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: '', password: '', rememberDevice: false });
   const [status, setStatus] = useState('');
@@ -17,7 +18,11 @@ export default function CustomerPortalLogin() {
     setStatus('');
     try {
       const result = await customerPortalClient.signIn(form);
-      setStatus(result?.mfa_required ? 'Verification required. Continue with your configured MFA method.' : 'Secure session established.');
+      if (result?.mfa_required) {
+        setStatus('Verification required. Continue with your configured MFA method.');
+      } else {
+        navigate('/customer-portal/dashboard', { replace: true });
+      }
     } catch (error) {
       setStatus(error instanceof PortalConfigurationError
         ? 'Customer authentication is ready for connection to the production identity service. No credentials were transmitted.'
