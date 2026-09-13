@@ -24,7 +24,6 @@ export default function PageHero({
           className="h-full w-full object-cover"
           style={{ objectPosition: imagePosition }}
           loading="eager"
-          fetchpriority="high"
           decoding="async"
         />
       </div>
