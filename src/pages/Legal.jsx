@@ -7,7 +7,7 @@ const DOCS = {
     sections: [
       {
         h: 'Who we are',
-        p: 'Link Marketing Solutions is a trade name of Link Business Alliance LLC ("Link," "we," "us"). We provide lead response, qualification, appointment setting, and related marketing services to businesses.',
+        p: 'Link Marketing Services is a trade name of Link Business Alliance LLC ("Link," "we," "us"). We provide lead response, qualification, appointment setting, and related marketing services to businesses.',
       },
       {
         h: 'Information we collect',
@@ -37,7 +37,7 @@ const DOCS = {
     sections: [
       {
         h: 'Our services',
-        p: 'Link Marketing Solutions provides lead response, qualification, appointment setting, live transfers, nurturing, reactivation, and reporting services. Specific deliverables are defined in a separate agreement with each client.',
+        p: 'Link Marketing Services provides lead response, qualification, appointment setting, live transfers, nurturing, reactivation, and reporting services. Specific deliverables are defined in a separate agreement with each client.',
       },
       {
         h: 'No guarantee of sales',
@@ -57,7 +57,7 @@ const DOCS = {
       },
       {
         h: 'Entity',
-        p: 'These terms are governed by Link Business Alliance LLC d/b/a Link Marketing Solutions.',
+        p: 'These terms are governed by Link Business Alliance LLC d/b/a Link Marketing Services.',
       },
     ],
   },
@@ -67,7 +67,7 @@ const DOCS = {
     sections: [
       {
         h: 'Consent to contact',
-        p: 'By submitting your information through our forms, you consent to be contacted by Link Marketing Solutions by phone, email, and SMS regarding your inquiry and our services.',
+        p: 'By submitting your information through our forms, you consent to be contacted by Link Marketing Services by phone, email, and SMS regarding your inquiry and our services.',
       },
       {
         h: 'Frequency',
@@ -93,7 +93,7 @@ const DOCS = {
     sections: [
       {
         h: 'Our commitment',
-        p: 'Link Marketing Solutions is committed to making our website accessible to everyone, including people with disabilities. We aim to conform to WCAG 2.1 AA standards.',
+        p: 'Link Marketing Services is committed to making our website accessible to everyone, including people with disabilities. We aim to conform to WCAG 2.1 AA standards.',
       },
       {
         h: 'What we do',
