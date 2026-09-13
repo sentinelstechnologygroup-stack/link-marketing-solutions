@@ -163,7 +163,7 @@ export default function GetStarted() {
             <input
               id="company-url-check"
               name="_company_url_check"
-              tabIndex="-1"
+              tabIndex={-1}
               autoComplete="off"
               value={honeypot}
               onChange={(e) => setHoneypot(e.target.value)}
