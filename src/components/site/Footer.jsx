@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from './ui';
 import linkMarketingLogo from '@/assets/link-marketing-services-logo.png';
@@ -46,25 +45,12 @@ const COLS = [
 ];
 
 function Wordmark() {
-  const [logoFailed, setLogoFailed] = useState(false);
-
-  if (logoFailed) {
-    return (
-      <span className="flex flex-col leading-none text-white" aria-label="Link Marketing Services">
-        <span className="font-serif text-[34px] tracking-[0.08em]">LINK</span>
-        <span className="mt-1.5 text-[8px] font-semibold uppercase tracking-[0.3em] text-[#d4af37]">
-          Marketing Services
-        </span>
-      </span>
-    );
-  }
-
   return (
-    <img
-      src={linkMarketingLogo}
-      alt="Link Marketing Services"
-      className="h-auto w-[190px] object-contain"
-      onError={() => setLogoFailed(true)}
+    <span
+      role="img"
+      aria-label="Link Marketing Services"
+      className="block h-[78px] w-[230px] bg-contain bg-left bg-no-repeat"
+      style={{ backgroundImage: `url("${linkMarketingLogo}")` }}
     />
   );
 }
