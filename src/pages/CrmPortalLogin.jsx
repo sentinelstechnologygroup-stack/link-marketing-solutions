@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, EyeOff, Headphones } from 'lucide-react';
 import PortalLoginShell from '@/components/portal/PortalLoginShell';
 import PortalMeta from '@/components/portal/PortalMeta';
@@ -64,10 +63,7 @@ export default function CrmPortalLogin() {
           />
         </div>
         <div>
-          <div className="mb-2 flex items-center justify-between">
-            <label htmlFor="agent-password" className="text-sm font-semibold">Password</label>
-            <Link to="/crm-portal/recovery" className="text-xs font-semibold text-[#00747d]">Need access help?</Link>
-          </div>
+          <label htmlFor="agent-password" className="mb-2 block text-sm font-semibold">Password</label>
           <div className="relative">
             <input
               id="agent-password"
