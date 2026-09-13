@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Container, CTAButton, Reveal } from '@/components/site/ui';
 import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { INDUSTRIES } from '@/components/site/industries';
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getAttribution, trackLeadConversion } from '@/lib/marketing';
 
 const VOLUMES = ['Less than 50', '50–200', '200–500', '500–1,000', '1,000+'];
 const SOURCES = ['Web forms', 'PPC / Ads', 'SEO', 'Social media', 'Outbound', 'Referrals', 'Other'];
@@ -46,6 +47,9 @@ export default function GetStarted() {
     notes: '',
   });
   const [done, setDone] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const [submitState, setSubmitState] = useState({ pending: false, error: '' });
+  const startedAt = useRef(Date.now());
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const toggle = (k, v) =>
@@ -56,9 +60,40 @@ export default function GetStarted() {
 
   const canNext = step === 1 ? form.industry : step === 2 ? form.volume : form.name && form.email;
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    setDone(true);
+    if (submitState.pending) return;
+
+    if (honeypot) {
+      setDone(true);
+      return;
+    }
+
+    setSubmitState({ pending: true, error: '' });
+    try {
+      const endpoint = import.meta.env.VITE_LEAD_FORM_ENDPOINT || '/api/lead';
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          attribution: getAttribution(),
+          pageUrl: window.location.href,
+          formStartedAt: new Date(startedAt.current).toISOString(),
+          submittedAt: new Date().toISOString(),
+          _company_url_check: honeypot,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Submission failed');
+      trackLeadConversion({ form_name: 'program_review', industry: form.industry, lead_volume: form.volume });
+      setDone(true);
+    } catch {
+      setSubmitState({
+        pending: false,
+        error: 'We could not send your request. Please try again or email support@linkmarketingservices.com.',
+      });
+    }
   };
 
   if (done) {
@@ -122,7 +157,18 @@ export default function GetStarted() {
         </div>
         <p className="mt-3 text-sm text-[#4a5a5c]">Step {step} of 3</p>
 
-        <form onSubmit={submit} className="mt-8">
+        <form onSubmit={submit} className="mt-8" noValidate={false}>
+          <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+            <label htmlFor="company-url-check">Leave this field blank</label>
+            <input
+              id="company-url-check"
+              name="_company_url_check"
+              tabIndex="-1"
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
           {step === 1 && (
             <Reveal>
               <label className="block text-lg font-semibold text-[#04181a] mb-6">
@@ -201,22 +247,22 @@ export default function GetStarted() {
             <Reveal>
               <div className="grid sm:grid-cols-2 gap-5">
                 <Field label="Full Name *">
-                  <input required value={form.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
+                  <input name="name" autoComplete="name" required value={form.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
                 </Field>
                 <Field label="Company">
-                  <input value={form.company} onChange={(e) => set('company', e.target.value)} className={inputCls} />
+                  <input name="company" autoComplete="organization" value={form.company} onChange={(e) => set('company', e.target.value)} className={inputCls} />
                 </Field>
                 <Field label="Website">
-                  <input value={form.website} onChange={(e) => set('website', e.target.value)} className={inputCls} placeholder="https://" />
+                  <input name="website" type="url" inputMode="url" autoComplete="url" value={form.website} onChange={(e) => set('website', e.target.value)} className={inputCls} placeholder="https://" />
                 </Field>
                 <Field label="Email *">
-                  <input type="email" required value={form.email} onChange={(e) => set('email', e.target.value)} className={inputCls} />
+                  <input name="email" type="email" inputMode="email" autoComplete="email" required value={form.email} onChange={(e) => set('email', e.target.value)} className={inputCls} />
                 </Field>
                 <Field label="Phone">
-                  <input value={form.phone} onChange={(e) => set('phone', e.target.value)} className={inputCls} />
+                  <input name="phone" type="tel" inputMode="tel" autoComplete="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} className={inputCls} />
                 </Field>
                 <Field label="Market / Location">
-                  <input value={form.market} onChange={(e) => set('market', e.target.value)} className={inputCls} />
+                  <input name="market" autoComplete="address-level2" value={form.market} onChange={(e) => set('market', e.target.value)} className={inputCls} />
                 </Field>
               </div>
 
@@ -264,16 +310,24 @@ export default function GetStarted() {
 
               <div className="mt-6">
                 <Field label="Notes">
-                  <textarea rows={4} value={form.notes} onChange={(e) => set('notes', e.target.value)} className={inputCls} />
+                  <textarea name="notes" rows={4} maxLength={2000} value={form.notes} onChange={(e) => set('notes', e.target.value)} className={inputCls} />
                 </Field>
               </div>
 
-              <div className="mt-8 flex justify-between">
-                <CTAButton type="button" variant="ghost" onClick={() => setStep(2)}>
+              <p className="mt-6 text-xs leading-5 text-[#647275]">
+                By submitting, you agree that Link Marketing Services may contact you about this inquiry by phone, email, or SMS. Message and data rates may apply. Consent is not a condition of purchase. See our <a href="/communications-policy" className="underline">communications policy</a> and <a href="/privacy" className="underline">privacy policy</a>.
+              </p>
+              {submitState.error && (
+                <p className="mt-4 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+                  {submitState.error}
+                </p>
+              )}
+              <div className="mt-8 flex justify-between gap-4">
+                <CTAButton type="button" variant="ghost" onClick={() => setStep(2)} disabled={submitState.pending}>
                   <ArrowLeft className="h-4 w-4" /> Back
                 </CTAButton>
-                <CTAButton type="submit">
-                  Request Program Review <ArrowRight className="h-4 w-4" />
+                <CTAButton type="submit" disabled={submitState.pending || !canNext}>
+                  {submitState.pending ? 'Sending…' : 'Request Program Review'} {!submitState.pending && <ArrowRight className="h-4 w-4" />}
                 </CTAButton>
               </div>
             </Reveal>
