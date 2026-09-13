@@ -1,4 +1,5 @@
 import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { Image } from '@/components/ui/image';
 import { ArrowRight, Zap, Users, GitBranch } from 'lucide-react';
 
@@ -20,19 +21,26 @@ const VALUES = [
 export default function About() {
   return (
     <>
-      <section className="pt-36 pb-12 relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-30" />
-        <div className="absolute inset-0 bg-radial-cyan" />
-        <Container className="relative">
-          <Reveal>
-            <SectionHeading
-              eyebrow="About Link"
-              title="We exist to close the gap between marketing and sales."
-              subtitle="Marketing creates demand. Link works the opportunity. Sales closes the deal."
-            />
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="About Link"
+        title="We Close the Gap Between Marketing and Sales"
+        subtitle="Marketing creates demand. Link works the opportunity. Your sales team takes the qualified conversation forward."
+        image={LINK_MEDIA.bridge}
+        imageAlt="A modern illuminated bridge symbolizing the connection between marketing and sales"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#e0bd55]">Our role in the revenue journey</p>
+        <div className="mt-5 flex items-center gap-3">
+          {['Demand', 'Engagement', 'Sales'].map((label, i) => (
+            <div key={label} className="flex flex-1 items-center gap-2">
+              <div>
+                <span className="block text-lg font-serif text-white">0{i + 1}</span>
+                <span className="text-[9px] uppercase tracking-[.1em] text-white/55">{label}</span>
+              </div>
+              {i < 2 && <span className="h-px flex-1 bg-[#d4af37]/50" />}
+            </div>
+          ))}
+        </div>
+      </PageHero>
 
       <section className="py-16">
         <Container>
