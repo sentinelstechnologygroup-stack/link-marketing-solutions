@@ -11,11 +11,19 @@ const DOCS = {
       },
       {
         h: 'Information we collect',
-        p: 'We collect information you submit through our forms — including your name, company, website, email, phone, industry, market, lead volume, lead sources, and any notes you provide. We may also collect basic analytics data about how you use this website.',
+        p: 'We collect information you submit through our forms — including your name, company, website, email, phone, industry, market, lead volume, lead sources, and any notes you provide. When you arrive from a campaign, we may also collect first- and last-touch attribution details such as UTM parameters, referring page, landing page, and advertising click identifiers.',
       },
       {
         h: 'How we use your information',
-        p: 'We use your information to respond to your inquiry, evaluate a potential engagement, communicate with you about our services, and improve our website. We do not sell your personal information.',
+        p: 'We use your information to respond to your inquiry, evaluate a potential engagement, communicate with you about our services, attribute inquiries to campaigns, measure advertising performance, prevent abuse, and improve our website. We do not sell your personal information.',
+      },
+      {
+        h: 'Cookies and measurement',
+        p: 'Optional analytics and advertising technologies are disabled until you accept them through the privacy choices banner. If accepted, measurement providers may receive page, campaign, device, and conversion-event information under their own privacy terms. You may change your choice at any time using the Privacy choices link in the footer.',
+      },
+      {
+        h: 'Retention and security',
+        p: 'We retain inquiry and campaign information only as long as reasonably necessary for the purposes described above, contractual requirements, security, and applicable law. We use reasonable administrative and technical safeguards, but no internet transmission or storage system can be guaranteed completely secure.',
       },
       {
         h: 'Sharing',
