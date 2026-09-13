@@ -67,7 +67,7 @@ export default function FAQ() {
         <p className="mt-4 font-serif text-2xl leading-snug text-white">Your leads. Your criteria. Our trained engagement team.</p>
       </PageHero>
 
-      <section className="pb-24">
+      <section className="py-20">
         <Container className="max-w-3xl">
           <div className="space-y-3">
             {FAQS.map((f, i) => (
