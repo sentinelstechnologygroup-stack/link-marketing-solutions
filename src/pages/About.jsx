@@ -3,7 +3,7 @@ import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { Image } from '@/components/ui/image';
 import { ArrowRight, Zap, Users, GitBranch } from 'lucide-react';
 
-const ABOUT_IMG = 'https://media.base44.com/images/public/6aa5d302d571973897221ea3/9afc11fa5_generated_a0480c32.jpg';
+const ABOUT_IMG = '/media/link-business-bridge.jpg';
 
 const PILLARS = [
   { icon: Zap, title: 'Marketing creates demand', desc: 'Ads, content, and campaigns fill the top of the funnel with inquiries.' },
