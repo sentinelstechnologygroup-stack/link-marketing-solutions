@@ -16,14 +16,11 @@ const NAV = [
 
 function Wordmark() {
   return (
-    <span className="flex flex-col leading-none">
-      <span className="font-heading text-[1.7rem] font-semibold tracking-[0.12em] text-[#f7f5f0]">
-        LIN<span className="text-[#d4af37]">K</span>
-      </span>
-      <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-[#d4af37]">
-        Marketing Services
-      </span>
-    </span>
+    <img
+      src="/brand/link-marketing-services-logo.png"
+      alt="Link Marketing Services"
+      className="h-[48px] w-auto object-contain"
+    />
   );
 }
 
