@@ -3,7 +3,7 @@ import { Container } from './ui';
 
 const COLS = [
   {
-    title: 'Services',
+    title: 'Solutions',
     links: [
       { label: 'Lead Response', to: '/services' },
       { label: 'Lead Qualification', to: '/services' },
@@ -19,61 +19,63 @@ const COLS = [
       { label: 'Roofing', to: '/industries/roofing' },
       { label: 'HVAC', to: '/industries/hvac' },
       { label: 'Dog Training', to: '/industries/dog-training' },
-      { label: 'All Industries', to: '/industries' },
+      { label: 'More Industries', to: '/industries' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'How It Works', to: '/how-it-works' },
-      { label: 'About', to: '/about' },
-      { label: 'Pricing', to: '/pricing' },
-      { label: 'FAQ', to: '/faq' },
-      { label: 'Get Started', to: '/get-started' },
+      { label: 'About Us', to: '/about' },
+      { label: 'Why Link', to: '/about' },
+      { label: 'Our Process', to: '/how-it-works' },
+      { label: 'Resources', to: '/faq' },
+      { label: 'Contact', to: '/get-started' },
     ],
   },
   {
     title: 'Legal',
     links: [
-      { label: 'Privacy', to: '/privacy' },
-      { label: 'Terms', to: '/terms' },
+      { label: 'Privacy Policy', to: '/privacy' },
+      { label: 'Terms of Service', to: '/terms' },
       { label: 'Communications Policy', to: '/communications-policy' },
       { label: 'Accessibility', to: '/accessibility' },
     ],
   },
 ];
 
+function Wordmark() {
+  return (
+    <span className="inline-flex flex-col leading-none">
+      <span className="font-serif text-[34px] tracking-[.04em] text-white">
+        LIN<span className="text-[#d4af37]">K</span>
+      </span>
+      <span className="mt-1 border-t border-[#d4af37]/60 pt-1 text-[7px] font-semibold uppercase tracking-[.28em] text-white/65">
+        Marketing Services
+      </span>
+    </span>
+  );
+}
+
 export default function Footer() {
   return (
-    <footer className="bg-[#00282d] border-t border-[#d4af37]/15">
-      <Container className="py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+    <footer className="border-t border-[#d4af37]/20 bg-[#061a1d] text-white">
+      <Container className="py-14">
+        <div className="grid gap-12 lg:grid-cols-[1.45fr_1fr_1fr_1fr_1fr]">
           <div>
-            <Link to="/" className="flex items-center gap-2.5">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#d4af37]" />
-              </span>
-              <span className="text-lg font-bold tracking-tight text-white">
-                LINK<span className="text-[#d4af37]">.</span>
-              </span>
-            </Link>
-            <p className="mt-4 text-sm text-[#9fb3b3] leading-relaxed max-w-xs">
-              We help businesses turn leads into real conversations and qualified opportunities.
+            <Link to="/" aria-label="Link Marketing Services home"><Wordmark /></Link>
+            <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">
+              We help businesses turn new inquiries and existing databases into qualified conversations.
             </p>
-            <p className="mt-6 text-sm font-medium text-[#d4af37]">LinkMarketingServices.com</p>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[.15em] text-[#d4af37]">LinkMarketingServices.com</p>
           </div>
 
           {COLS.map((col) => (
             <div key={col.title}>
-              <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold mb-4">
-                {col.title}
-              </h4>
-              <ul className="space-y-3">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <Link to={l.to} className="text-sm text-[#cddede] hover:text-[#d4af37] transition-colors">
-                      {l.label}
-                    </Link>
+              <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[.22em] text-[#d4af37]">{col.title}</h4>
+              <ul className="space-y-2.5">
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    <Link to={link.to} className="text-xs text-white/60 transition-colors hover:text-[#e0bd55]">{link.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -81,13 +83,9 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
-          <p className="text-xs text-[#9fb3b3] leading-relaxed max-w-xl">
-            Link Business Alliance LLC d/b/a Link Marketing Solutions. All rights reserved.
-          </p>
-          <p className="text-xs text-[#9fb3b3]">
-            &copy; {new Date().getFullYear()} Link Marketing Solutions
-          </p>
+        <div className="mt-12 flex flex-col justify-between gap-4 border-t border-white/10 pt-7 text-[11px] text-white/40 md:flex-row">
+          <p>Link Marketing Services is operated by Link Business Alliance LLC.</p>
+          <p>&copy; {new Date().getFullYear()} Link Marketing Services. All rights reserved.</p>
         </div>
       </Container>
     </footer>
