@@ -1,4 +1,5 @@
-import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Container, CTAButton, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 
 const STEPS = [
   { n: '01', title: 'Discovery', desc: 'We learn your business, market, lead sources, and current sales process.' },
@@ -12,18 +13,19 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <>
-      <section className="pt-36 pb-12 relative">
-        <div className="absolute inset-0 bg-grid opacity-30" />
-        <Container className="relative">
-          <Reveal>
-            <SectionHeading
-              eyebrow="How It Works"
-              title="From discovery to scale in six steps"
-              subtitle="A clear, measured process that turns raw inquiries into qualified conversations your sales team can close."
-            />
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="How It Works"
+        title="From Discovery to Scale in Six Steps"
+        subtitle="A measured operating process that turns raw inquiries into qualified conversations your sales team can advance."
+        image={LINK_MEDIA.bridge}
+        imageAlt="Architectural bridge representing the connection between marketing and sales"
+      >
+        <p className="font-serif text-2xl leading-tight text-white">Marketing creates demand.</p>
+        <div className="my-4 h-px bg-[#d4af37]/45" />
+        <p className="font-serif text-2xl leading-tight text-[#e0bd55]">Link works the opportunity.</p>
+        <div className="my-4 h-px bg-[#d4af37]/45" />
+        <p className="font-serif text-2xl leading-tight text-white">Sales closes the deal.</p>
+      </PageHero>
 
       <section className="pb-24">
         <Container>
