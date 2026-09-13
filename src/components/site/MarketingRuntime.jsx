@@ -15,5 +15,11 @@ export default function MarketingRuntime() {
     });
   }, [location.pathname, location.search]);
 
+  useEffect(() => {
+    const onCtaClick = (event) => trackEvent('cta_click', event.detail);
+    window.addEventListener('link:cta-click', onCtaClick);
+    return () => window.removeEventListener('link:cta-click', onCtaClick);
+  }, []);
+
   return null;
 }
