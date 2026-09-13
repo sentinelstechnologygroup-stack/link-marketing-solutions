@@ -87,7 +87,7 @@ export default function Home() {
             alt="Link representative speaking with a prospect"
             className="h-full w-full object-cover object-[64%_center]"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             decoding="async"
           />
         </div>
