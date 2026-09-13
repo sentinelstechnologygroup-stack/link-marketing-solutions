@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import { Container, CTAButton, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { INDUSTRIES } from '@/components/site/industries';
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -86,19 +87,29 @@ export default function GetStarted() {
   }
 
   return (
-    <section className="pt-36 pb-24 relative">
-      <div className="absolute inset-0 bg-grid opacity-30" />
+    <>
+      <PageHero
+        eyebrow="Program Review"
+        title="Let’s Build the Right Lead Program"
+        subtitle="Tell us about your market, lead flow, and definition of a qualified opportunity. We’ll use it to shape the right engagement model."
+        image={LINK_MEDIA.representative}
+        imageAlt="Link representative preparing a customized lead engagement program"
+        imagePosition="64% center"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#e0bd55]">A focused three-step review</p>
+        <div className="mt-5 space-y-3">
+          {['Your market', 'Your lead volume', 'Your qualification needs'].map((label, i) => (
+            <div key={label} className="flex items-center gap-3">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[#d4af37]/60 text-[10px] font-bold text-[#e0bd55]">{i + 1}</span>
+              <span className="text-sm text-white/72">{label}</span>
+            </div>
+          ))}
+        </div>
+      </PageHero>
+      <section className="relative py-20">
+      <div className="absolute inset-0 bg-grid opacity-20" />
       <Container className="relative max-w-3xl">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Get Started"
-            title="Request your program review"
-            subtitle="Tell us about your business and lead flow. We will build a program around your definition of a qualified opportunity."
-            align="left"
-          />
-        </Reveal>
-
-        <div className="mt-10 flex items-center gap-2">
+        <div className="flex items-center gap-2">
           {[1, 2, 3].map((n) => (
             <div
               key={n}
@@ -270,5 +281,6 @@ export default function GetStarted() {
         </form>
       </Container>
     </section>
+    </>
   );
 }
