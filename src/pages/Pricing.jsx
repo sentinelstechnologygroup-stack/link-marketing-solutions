@@ -1,4 +1,5 @@
 import { Container, CTAButton, SectionHeading, Reveal } from '@/components/site/ui';
+import PageHero, { LINK_MEDIA } from '@/components/site/PageHero';
 import { Check } from 'lucide-react';
 
 const FACTORS = [
@@ -14,18 +15,25 @@ const FACTORS = [
 export default function Pricing() {
   return (
     <>
-      <section className="pt-36 pb-12 relative">
-        <div className="absolute inset-0 bg-grid opacity-30" />
-        <Container className="relative">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Pricing"
-              title="Pay for qualified opportunities — not promises"
-              subtitle="No retainer. No setup fee. You pay for qualified opportunities delivered."
-            />
-          </Reveal>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Performance-aligned pricing"
+        title="Pay for Qualified Opportunities—not Promises"
+        subtitle="No retainer. No setup fee. Your program is priced around the qualified opportunities delivered to your team."
+        image={LINK_MEDIA.team}
+        imageAlt="Professional engagement team handling business conversations"
+        imagePosition="58% center"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#e0bd55]">What your price reflects</p>
+        <div className="mt-5 space-y-3">
+          {['Conversation complexity', 'Qualification standard', 'Handoff method', 'Program volume'].map((label, i) => (
+            <div key={label} className="flex items-center gap-3 text-sm text-white/75">
+              <span className="text-xs font-bold text-[#e0bd55]">0{i + 1}</span>
+              <div className="h-px flex-1 bg-white/15" />
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </PageHero>
 
       <section className="pb-12">
         <Container>
