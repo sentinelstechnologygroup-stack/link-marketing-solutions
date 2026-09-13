@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import {
   Activity, ArrowRight, BarChart3, Bell, CalendarDays, Check, ChevronRight,
   CircleDollarSign, CreditCard, Download, FileText, Headphones, HelpCircle,
@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import BrandLogo from '@/components/site/BrandLogo';
 import PortalMeta from '@/components/portal/PortalMeta';
+import { customerPortalClient } from '@/portals/portalClient';
 
 const NAV = [
   ['overview', 'Overview', LayoutDashboard],
@@ -366,12 +367,33 @@ export default function CustomerPortalDashboard() {
   const requested = params.get('view') || 'overview';
   const active = VIEW_COMPONENTS[requested] ? requested : 'overview';
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [access, setAccess] = useState(customerPortalClient.isConfigured() ? 'checking' : 'preview');
   const ActiveView = VIEW_COMPONENTS[active];
+
+  useEffect(() => {
+    if (!customerPortalClient.isConfigured()) return undefined;
+    let mounted = true;
+    customerPortalClient.getSession()
+      .then(() => mounted && setAccess('authorized'))
+      .catch(() => mounted && setAccess('denied'));
+    return () => { mounted = false; };
+  }, []);
 
   const choose = (key) => {
     setParams(key === 'overview' ? {} : { view: key });
     setDrawerOpen(false);
   };
+
+  if (access === 'checking') {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#071b1e] text-white">
+        <PortalMeta title="Customer Portal | Link Marketing Services" />
+        <div className="text-center"><div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-[#d4af37]" /><p className="mt-4 text-xs text-white/60">Verifying secure session…</p></div>
+      </div>
+    );
+  }
+
+  if (access === 'denied') return <Navigate to="/customer-portal/sign-in" replace />;
 
   const Sidebar = ({ mobile = false }) => (
     <aside className={`${mobile ? 'flex' : 'hidden lg:flex'} h-full w-[278px] shrink-0 flex-col border-r border-white/8 bg-[#071b1e] text-white`}>
