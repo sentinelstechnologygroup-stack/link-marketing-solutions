@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, EyeOff, Headphones } from 'lucide-react';
 import PortalLoginShell from '@/components/portal/PortalLoginShell';
+import PortalMeta from '@/components/portal/PortalMeta';
 import { crmPortalClient, PortalConfigurationError } from '@/portals/portalClient';
 
 export default function CrmPortalLogin() {
@@ -39,6 +40,7 @@ export default function CrmPortalLogin() {
         </div>
       }
     >
+      <PortalMeta title="CRM Agent Sign In | Link Marketing Services" />
       <form onSubmit={submit} className="space-y-5">
         <div>
           <label htmlFor="agent-username" className="mb-2 block text-sm font-semibold">Agent email or username</label>
