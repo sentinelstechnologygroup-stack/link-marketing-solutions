@@ -2,6 +2,14 @@ import { Link } from 'react-router-dom';
 import { Container } from './ui';
 import BrandLogo from './BrandLogo';
 
+const CUSTOMER_PORTAL_SIGN_IN =
+  import.meta.env.VITE_CUSTOMER_PORTAL_SIGN_IN_URL ||
+  'https://preview-sandbox--6aa62612c7156d0e1a36681d.base44-preview.app/sign-in';
+
+const AGENT_PORTAL_SIGN_IN =
+  import.meta.env.VITE_AGENT_PORTAL_SIGN_IN_URL ||
+  'https://preview-sandbox--6aa4a74cfd879f1dfb15da82.base44-preview.app/login';
+
 const COLS = [
   {
     title: 'Solutions',
@@ -34,6 +42,13 @@ const COLS = [
     ],
   },
   {
+    title: 'Portal Access',
+    links: [
+      { label: 'Customer Portal', href: CUSTOMER_PORTAL_SIGN_IN },
+      { label: 'Agent Portal', href: AGENT_PORTAL_SIGN_IN },
+    ],
+  },
+  {
     title: 'Legal',
     links: [
       { label: 'Privacy Policy', to: '/privacy' },
@@ -48,12 +63,26 @@ function Wordmark() {
   return <BrandLogo className="block h-[78px] w-[230px]" />;
 }
 
+function FooterLink({ link }) {
+  const className = "text-xs text-white/60 transition-colors hover:text-[#e0bd55] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4af37]";
+
+  if (link.href) {
+    return (
+      <a href={link.href} className={className} rel="nofollow">
+        {link.label}
+      </a>
+    );
+  }
+
+  return <Link to={link.to} className={className}>{link.label}</Link>;
+}
+
 export default function Footer() {
   return (
     <footer className="border-t border-[#d4af37]/20 bg-[#061a1d] text-white">
       <Container className="py-14">
-        <div className="grid gap-12 lg:grid-cols-[1.45fr_1fr_1fr_1fr_1fr]">
-          <div>
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.45fr_repeat(5,minmax(0,1fr))]">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/" aria-label="Link Marketing Services home"><Wordmark /></Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">
               We help businesses turn new inquiries and existing databases into qualified conversations.
@@ -67,7 +96,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link to={link.to} className="text-xs text-white/60 transition-colors hover:text-[#e0bd55]">{link.label}</Link>
+                    <FooterLink link={link} />
                   </li>
                 ))}
               </ul>
