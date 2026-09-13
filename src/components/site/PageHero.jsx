@@ -17,15 +17,18 @@ export default function PageHero({
 }) {
   return (
     <section className="relative min-h-[520px] overflow-hidden bg-[#071b1e] pt-24 text-white">
-      <div className="absolute inset-y-0 right-0 w-full opacity-35 md:w-[58%] md:opacity-100">
+      <div className="absolute inset-0 opacity-60 md:inset-y-0 md:left-auto md:right-0 md:w-[58%] md:opacity-100">
         <img
           src={image}
           alt={imageAlt}
           className="h-full w-full object-cover"
           style={{ objectPosition: imagePosition }}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,#071b1e_0%,rgba(7,27,30,.98)_36%,rgba(7,27,30,.72)_62%,rgba(7,27,30,.24)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,30,.28)_0%,rgba(7,27,30,.74)_44%,#071b1e_88%)] md:bg-[linear-gradient(90deg,#071b1e_0%,rgba(7,27,30,.98)_36%,rgba(7,27,30,.72)_62%,rgba(7,27,30,.24)_100%)]" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/70 to-transparent" />
       <Container className="relative z-10 grid min-h-[425px] items-center gap-10 py-16 lg:grid-cols-[1.15fr_.85fr]">
         <Reveal>
