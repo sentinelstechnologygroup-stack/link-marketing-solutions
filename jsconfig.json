@@ -17,5 +17,5 @@
     "types": ["vite/client"]
   },
   "include": ["src/components/**/*.js", "src/pages/**/*.jsx", "src/Layout.jsx", "src/vite-env.d.ts"],
-  "exclude": ["node_modules", "dist", "src/vite-plugins", "src/api", "src/lib", "src/pages/ForgotPassword.jsx", "src/pages/Login.jsx", "src/pages/OAuthConsent.jsx", "src/pages/Register.jsx", "src/pages/ResetPassword.jsx"]
+  "exclude": ["node_modules", "dist", "src/vite-plugins", "src/api", "src/lib"]
 }
