@@ -5,6 +5,7 @@ import { INDUSTRIES } from '@/components/site/industries';
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getAttribution, trackLeadConversion } from '@/lib/marketing';
+import { PROGRAM_REVIEW_CONSENT_VERSION } from '@/lib/programReviewConsent';
 
 const VOLUMES = ['Less than 50', '50–200', '200–500', '500–1,000', '1,000+'];
 const SOURCES = ['Web forms', 'PPC / Ads', 'SEO', 'Social media', 'Outbound', 'Referrals', 'Other'];
@@ -81,6 +82,8 @@ export default function GetStarted() {
           pageUrl: window.location.href,
           formStartedAt: new Date(startedAt.current).toISOString(),
           submittedAt: new Date().toISOString(),
+          consentVersion: PROGRAM_REVIEW_CONSENT_VERSION,
+          consentAccepted: true,
           _company_url_check: honeypot,
         }),
       });

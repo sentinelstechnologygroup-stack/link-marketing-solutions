@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+/** @param {{className?: string, children?: import('react').ReactNode}} props */
 export function Container({ className, children }) {
   return <div className={cn('mx-auto w-full max-w-7xl px-6 md:px-10', className)}>{children}</div>;
 }
@@ -24,6 +25,7 @@ const BTN_SIZES = {
   lg: 'px-8 py-4 text-base',
 };
 
+/** @param {{to?: string, href?: string, onClick?: (event: any) => void, type?: 'button'|'submit'|'reset', variant?: 'primary'|'ghost'|'outline'|'onDark', size?: 'sm'|'md'|'lg', className?: string, children?: import('react').ReactNode, [key: string]: any}} props */
 export function CTAButton({ to, href, onClick, type = 'button', variant = 'primary', size = 'md', className, children, ...props }) {
   const classes = cn(BTN_BASE, BTN_VARIANTS[variant], BTN_SIZES[size], className);
   const handleClick = (event) => {
@@ -41,6 +43,7 @@ export function CTAButton({ to, href, onClick, type = 'button', variant = 'prima
   );
 }
 
+/** @param {{eyebrow?: string, title: string, subtitle?: string, align?: 'center'|'left', onDark?: boolean, className?: string}} props */
 export function SectionHeading({ eyebrow, title, subtitle, align = 'center', onDark = false, className }) {
   const titleCls = onDark ? 'text-white' : 'text-[#04181a]';
   const subCls = onDark ? 'text-[#9fb3b3]' : 'text-[#4a5a5c]';
@@ -59,6 +62,7 @@ export function SectionHeading({ eyebrow, title, subtitle, align = 'center', onD
   );
 }
 
+/** @param {{children?: import('react').ReactNode, delay?: number, className?: string}} props */
 export function Reveal({ children, delay = 0, className }) {
   return (
     <motion.div

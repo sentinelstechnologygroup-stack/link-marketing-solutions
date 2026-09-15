@@ -44,6 +44,17 @@ const process = [
   ['06', 'Client sales team']
 ];
 
+/** @typedef {import('react').ComponentType<import('lucide-react').LucideProps>} IconComponent */
+
+/** @type {Array<[string, string, IconComponent]>} */
+const benefits = [
+  ['Faster Response', 'Prompt, professional outreach', TimerReset],
+  ['Better Qualification', 'Your criteria guide the conversation', Target],
+  ['Smarter Connections', 'The right prospect, routed correctly', Route],
+  ['Consistent Follow-Up', 'A structured multi-channel cadence', MessageSquareText],
+];
+
+/** @type {Array<[string, string, IconComponent]>} */
 const differentiators = [
   ['Human Conversations', 'Every interaction is handled by a trained representative—not an automated script alone.', UsersRound],
   ['Customized Qualification', 'Your criteria, terminology, routing rules, and expectations guide the engagement.', Target],
@@ -53,6 +64,7 @@ const differentiators = [
   ['Scalable Operations', 'A flexible engagement team supports changing lead volume without sacrificing quality.', Sparkles]
 ];
 
+/** @param {{icon: IconComponent}} props */
 function GoldIcon({ icon: Icon }) {
   return (
     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/70 text-[#e0bd55]">
@@ -61,6 +73,7 @@ function GoldIcon({ icon: Icon }) {
   );
 }
 
+/** @param {{eyebrow: string, title: string, body?: string, light?: boolean, className?: string}} props */
 function SectionIntro({ eyebrow, title, body, light = false, className = '' }) {
   return (
     <div className={className}>
@@ -123,12 +136,7 @@ export default function Home() {
       <section className="border-y border-[#d4af37]/20 bg-[#071b1e] text-white">
         <Container>
           <div className="grid md:grid-cols-2 lg:grid-cols-4">
-            {[
-              ['Faster Response', 'Prompt, professional outreach', TimerReset],
-              ['Better Qualification', 'Your criteria guide the conversation', Target],
-              ['Smarter Connections', 'The right prospect, routed correctly', Route],
-              ['Consistent Follow-Up', 'A structured multi-channel cadence', MessageSquareText]
-            ].map(([title, text, Icon], i) => (
+            {benefits.map(([title, text, Icon], i) => (
               <div key={title} className={`flex gap-4 py-7 lg:px-7 ${i ? 'border-t border-white/10 md:border-t-0 md:border-l' : ''}`}>
                 <GoldIcon icon={Icon} />
                 <div>

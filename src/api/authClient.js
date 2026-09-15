@@ -1,4 +1,4 @@
-export const base44 = {
+export const authClient = {
   app: {
     async getPublicSettings() {
       throw new Error("Firebase backend not configured yet. PUBLIC_SETTINGS_PENDING")

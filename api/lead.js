@@ -1,3 +1,5 @@
+import { PROGRAM_REVIEW_CONSENT_TEXT, PROGRAM_REVIEW_CONSENT_VERSION } from '../src/lib/programReviewConsent.js';
+
 const requests = new Map();
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 5;
@@ -57,6 +59,9 @@ export default async function handler(req, res) {
   const elapsed = Date.now() - started;
 
   if (!name || !email || !industry || !volume) return res.status(400).json({ error: 'Required fields are missing' });
+  if (body.consentVersion !== PROGRAM_REVIEW_CONSENT_VERSION || body.consentAccepted !== true) {
+    return res.status(400).json({ error: 'Consent is required' });
+  }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email' });
   if (!Number.isFinite(elapsed) || elapsed < 1500 || elapsed > 86400000) return res.status(400).json({ error: 'Invalid form session' });
 
@@ -74,6 +79,12 @@ export default async function handler(req, res) {
     notes: text(body.notes, 2000),
     pageUrl: text(body.pageUrl, 500),
     submittedAt: new Date().toISOString(),
+    consent: {
+      accepted: true,
+      version: PROGRAM_REVIEW_CONSENT_VERSION,
+      text: PROGRAM_REVIEW_CONSENT_TEXT,
+      capturedAt: new Date().toISOString(),
+    },
     attribution: body.attribution && typeof body.attribution === 'object' ? body.attribution : {},
   };
 

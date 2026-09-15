@@ -5,6 +5,7 @@ const CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'msclkid', 'fbclid'];
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id'];
 const ALLOWED_PARAMS = [...UTM_KEYS, ...CLICK_IDS];
 
+/** @param {'localStorage'|'sessionStorage'} type @returns {Storage|null} */
 function safeStorage(type) {
   try {
     return window[type];
