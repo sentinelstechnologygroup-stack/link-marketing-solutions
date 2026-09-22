@@ -6,6 +6,7 @@ const { defineSecret } = require('firebase-functions/params');
 const { onDocumentCreated, onDocumentUpdated } = require('firebase-functions/v2/firestore');
 const { HttpsError, onCall, onRequest } = require('firebase-functions/v2/https');
 const { canonicalLead } = require('./bridge-contract.cjs');
+const { buildDefaultWorkflowArtifacts } = require('./workflow-defaults.cjs');
 
 if (!getApps().length) initializeApp();
 const db = getFirestore();
@@ -137,12 +138,22 @@ exports.provisionClient = onCall({ enforceAppCheck: true }, async (request) => {
     assignedAgentUids: Array.isArray(input.assignedAgentUids) ? input.assignedAgentUids.filter(Boolean) : [],
     status: 'active', createdAt: now, updatedAt: now, createdBy: caller.uid,
   };
+  const workflowArtifacts = buildDefaultWorkflowArtifacts({
+    tenantId, brandId, brandName, industryId,
+    scriptSetId: route.scriptSetId,
+    qualificationFormId: route.qualificationFormId,
+    actorUid: caller.uid,
+    timestamp: now,
+    beta: input.status === 'beta',
+  });
   const batch = db.batch();
   batch.set(tenantRef, { tenantId, name: clientName, legalName: clean(input.legalName || clientName, 200), status: input.status === 'beta' ? 'beta' : 'active', environment: 'production', industry: industryId, vertical: industryId, demo: false, createdAt: now, updatedAt: now, createdBy: caller.uid });
   batch.set(db.doc(`tenants/${tenantId}/organizations/default`), { tenantId, name: clientName, status: 'active', settings: { timezone: clean(input.timezone || 'America/Chicago', 80), domain: clean(input.domain, 300) }, createdAt: now, updatedAt: now });
   batch.set(db.doc(`tenants/${tenantId}/brands/${brandId}`), { tenantId, brandId, name: brandName, status: 'active', domain: clean(input.domain, 300), industryId, createdAt: now, updatedAt: now });
   batch.set(db.doc(`tenants/${tenantId}/leadSources/${route.sourceId}`), { tenantId, brandId, name: 'Website', type: 'website', status: 'active', createdAt: now, updatedAt: now });
-  batch.set(db.doc(`tenants/${tenantId}/campaigns/${route.campaignId}`), { tenantId, brandId, name: 'Initial program', status: 'active', startDate: new Date().toISOString().slice(0, 10), endDate: null, createdAt: now, updatedAt: now });
+  batch.set(db.doc(`tenants/${tenantId}/campaigns/${route.campaignId}`), { tenantId, brandId, name: 'Initial program', status: 'active', startDate: new Date().toISOString().slice(0, 10), endDate: null, defaultScriptId: route.scriptSetId, default_script_id: route.scriptSetId, defaultQualificationFormId: route.qualificationFormId, default_qualification_form_id: route.qualificationFormId, createdAt: now, updatedAt: now });
+  batch.set(db.doc(`tenants/${tenantId}/scripts/${route.scriptSetId}`), workflowArtifacts.script);
+  batch.set(db.doc(`tenants/${tenantId}/qualificationForms/${route.qualificationFormId}`), workflowArtifacts.qualificationForm);
   batch.set(db.doc(`tenants/${tenantId}/routingRules/${route.routingProfileId}`), { tenantId, brandId, name: 'Default client contact rotation', status: 'active', priority: 1, conditions: [], destination: { type: 'client_contact_rotation' }, createdAt: now, updatedAt: now });
   batch.set(db.doc(`tenants/${tenantId}/config/workflow`), { ...route, notificationChannels: input.notificationChannels || ['in_app', 'email'], retentionDays: Number(input.retentionDays) || 2555, createdAt: now, updatedAt: now });
   batch.set(db.doc(`industryConfigs/${industryId}`), { industryId, workflowVersion: route.workflowVersion, scriptSetId: route.scriptSetId, qualificationFormId: route.qualificationFormId, routingProfileId: route.routingProfileId, consentPolicyId: route.consentPolicyId, retentionPolicyId: route.retentionPolicyId, updatedAt: now, updatedBy: caller.uid }, { merge: true });

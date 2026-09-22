@@ -1,6 +1,7 @@
 const { getApps, initializeApp, applicationDefault } = require('firebase-admin/app');
 const { getAuth } = require('firebase-admin/auth');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const { buildDefaultWorkflowArtifacts } = require('../workflow-defaults.cjs');
 
 if (!getApps().length) initializeApp({ credential: applicationDefault(), projectId: process.env.GCLOUD_PROJECT || 'linkmarketing-agent-portal-crm' });
 const db = getFirestore();
@@ -16,6 +17,8 @@ async function main() {
   const lmsTenantId = 'tenant-lms-sales';
   const lmsBrandId = 'brand-link-marketing-services';
   const lmsRoute = { routeKey: 'lms-website', tenantId: lmsTenantId, brandId: lmsBrandId, industryId: 'business-services', sourceId: 'source-lms-website', campaignId: 'campaign-lms-website', routingProfileId: 'routing-lms-sales', workflowVersion: '1.0', scriptSetId: 'script-lms-sales', qualificationFormId: 'qualification-lms-sales', consentPolicyId: 'consent-standard', retentionPolicyId: 'retention-standard', notificationProfileId: 'notification-default', status: 'active', assignedAgentUids: [], createdAt: now, updatedAt: now, createdBy: 'server:beta-bootstrap' };
+  const goldenCrossWorkflow = buildDefaultWorkflowArtifacts({ tenantId, brandId, brandName: 'Golden Cross Realty', industryId: route.industryId, scriptSetId: route.scriptSetId, qualificationFormId: route.qualificationFormId, actorUid: 'server:beta-bootstrap', timestamp: now, beta: true });
+  const lmsWorkflow = buildDefaultWorkflowArtifacts({ tenantId: lmsTenantId, brandId: lmsBrandId, brandName: 'Link Marketing Services', industryId: lmsRoute.industryId, scriptSetId: lmsRoute.scriptSetId, qualificationFormId: lmsRoute.qualificationFormId, actorUid: 'server:beta-bootstrap', timestamp: now });
   const agents = await db.collection('agentUsers').where('status', '==', 'active').get();
   route.assignedAgentUids = agents.docs.map((item) => item.id);
   lmsRoute.assignedAgentUids = route.assignedAgentUids;
@@ -28,7 +31,9 @@ async function main() {
   batch.set(db.doc(`tenants/${tenantId}/organizations/default`), { tenantId, name: 'Golden Cross Realty', status: 'active', settings: { timezone: 'America/Chicago' }, createdAt: now, updatedAt: now }, { merge: true });
   batch.set(db.doc(`tenants/${tenantId}/brands/${brandId}`), { tenantId, brandId, name: 'Golden Cross Realty', status: 'active', domain: '', industryId: 'real-estate', createdAt: now, updatedAt: now }, { merge: true });
   batch.set(db.doc(`tenants/${tenantId}/leadSources/${route.sourceId}`), { tenantId, brandId, name: 'Golden Cross pilot', type: 'website', status: 'active', createdAt: now, updatedAt: now }, { merge: true });
-  batch.set(db.doc(`tenants/${tenantId}/campaigns/${route.campaignId}`), { tenantId, brandId, name: 'Golden Cross beta pilot', status: 'active', startDate: new Date().toISOString().slice(0, 10), endDate: null, createdAt: now, updatedAt: now }, { merge: true });
+  batch.set(db.doc(`tenants/${tenantId}/campaigns/${route.campaignId}`), { tenantId, brandId, name: 'Golden Cross beta pilot', status: 'active', startDate: new Date().toISOString().slice(0, 10), endDate: null, defaultScriptId: route.scriptSetId, default_script_id: route.scriptSetId, defaultQualificationFormId: route.qualificationFormId, default_qualification_form_id: route.qualificationFormId, createdAt: now, updatedAt: now }, { merge: true });
+  batch.set(db.doc(`tenants/${tenantId}/scripts/${route.scriptSetId}`), goldenCrossWorkflow.script, { merge: true });
+  batch.set(db.doc(`tenants/${tenantId}/qualificationForms/${route.qualificationFormId}`), goldenCrossWorkflow.qualificationForm, { merge: true });
   batch.set(db.doc(`tenants/${tenantId}/routingRules/${route.routingProfileId}`), { tenantId, brandId, name: 'Golden Cross client contact rotation', status: 'active', priority: 1, conditions: [], destination: { type: 'client_contact_rotation' }, createdAt: now, updatedAt: now }, { merge: true });
   batch.set(db.doc(`tenants/${tenantId}/config/workflow`), { ...route, notificationChannels: ['in_app', 'email'], retentionDays: 2555 }, { merge: true });
   batch.set(db.doc(`industryConfigs/real-estate`), { industryId: 'real-estate', workflowVersion: route.workflowVersion, scriptSetId: route.scriptSetId, qualificationFormId: route.qualificationFormId, routingProfileId: route.routingProfileId, consentPolicyId: route.consentPolicyId, retentionPolicyId: route.retentionPolicyId, updatedAt: now, updatedBy: 'server:beta-bootstrap' }, { merge: true });
@@ -44,7 +49,9 @@ async function main() {
   batch.set(db.doc(`tenants/${lmsTenantId}/organizations/default`), { tenantId: lmsTenantId, name: 'Link Marketing Services Sales', status: 'active', settings: { timezone: 'America/Chicago', domain: 'linkmarketingservices.co' }, createdAt: now, updatedAt: now }, { merge: true });
   batch.set(db.doc(`tenants/${lmsTenantId}/brands/${lmsBrandId}`), { tenantId: lmsTenantId, brandId: lmsBrandId, name: 'Link Marketing Services', status: 'active', domain: 'linkmarketingservices.co', industryId: 'business-services', createdAt: now, updatedAt: now }, { merge: true });
   batch.set(db.doc(`tenants/${lmsTenantId}/leadSources/${lmsRoute.sourceId}`), { tenantId: lmsTenantId, brandId: lmsBrandId, name: 'LMS website', type: 'website', status: 'active', createdAt: now, updatedAt: now }, { merge: true });
-  batch.set(db.doc(`tenants/${lmsTenantId}/campaigns/${lmsRoute.campaignId}`), { tenantId: lmsTenantId, brandId: lmsBrandId, name: 'LMS website inquiries', status: 'active', startDate: new Date().toISOString().slice(0, 10), endDate: null, createdAt: now, updatedAt: now }, { merge: true });
+  batch.set(db.doc(`tenants/${lmsTenantId}/campaigns/${lmsRoute.campaignId}`), { tenantId: lmsTenantId, brandId: lmsBrandId, name: 'LMS website inquiries', status: 'active', startDate: new Date().toISOString().slice(0, 10), endDate: null, defaultScriptId: lmsRoute.scriptSetId, default_script_id: lmsRoute.scriptSetId, defaultQualificationFormId: lmsRoute.qualificationFormId, default_qualification_form_id: lmsRoute.qualificationFormId, createdAt: now, updatedAt: now }, { merge: true });
+  batch.set(db.doc(`tenants/${lmsTenantId}/scripts/${lmsRoute.scriptSetId}`), lmsWorkflow.script, { merge: true });
+  batch.set(db.doc(`tenants/${lmsTenantId}/qualificationForms/${lmsRoute.qualificationFormId}`), lmsWorkflow.qualificationForm, { merge: true });
   batch.set(db.doc(`tenants/${lmsTenantId}/routingRules/${lmsRoute.routingProfileId}`), { tenantId: lmsTenantId, brandId: lmsBrandId, name: 'LMS sales queue', status: 'active', priority: 1, conditions: [], destination: { type: 'agent_pool' }, createdAt: now, updatedAt: now }, { merge: true });
   batch.set(db.doc(`tenants/${lmsTenantId}/config/workflow`), { ...lmsRoute, notificationChannels: ['in_app', 'email'], retentionDays: 2555 }, { merge: true });
   batch.set(db.doc('ingestionRoutes/lms-website'), lmsRoute, { merge: true });

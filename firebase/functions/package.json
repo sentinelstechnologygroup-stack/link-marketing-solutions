@@ -10,6 +10,7 @@
     "test:rules": "firebase emulators:exec --only auth,firestore,storage --project demo-linkmarketing-local \"npm run test:rules:raw\"",
     "test:rules:raw": "node --test tests/*.test.cjs",
     "provision:golden-cross": "node scripts/provision-golden-cross-beta.cjs",
+    "backfill:golden-cross-workflow": "node scripts/backfill-golden-cross-workflow.cjs",
     "provision:client-supervisor": "node scripts/provision-client-supervisor.cjs",
     "provision:lms-super-admin": "node scripts/provision-lms-super-admin.cjs",
     "provision:agent-supervisor": "node scripts/provision-agent-supervisor.cjs",
