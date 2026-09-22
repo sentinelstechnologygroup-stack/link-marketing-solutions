@@ -70,19 +70,20 @@ export default function LeadDetail() {
           <SectionCard title="Conversation timeline" subtitle={`${lead.outreachAttempts} outreach attempt${lead.outreachAttempts !== 1 ? "s" : ""}`}>
             <ol className="relative pl-6">
               <span className="absolute left-2 top-1 bottom-1 w-px" style={{ background: "var(--line)" }} />
-              {lead.timeline.map((t, i) => (
+              {(lead.timeline || []).map((t, i) => (
                 <li key={i} className="relative pb-4 last:pb-0">
                   <span className="absolute -left-[18px] top-1 w-2.5 h-2.5 rounded-full border-2" style={{ background: "#fff", borderColor: "var(--teal)" }} />
                   <div className="text-[13px] font-medium" style={{ color: "var(--shell)" }}>{t.event}</div>
                   <div className="text-[11.5px]" style={{ color: "var(--muted-ink)" }}>{fmtDateTime(t.at)}</div>
                 </li>
               ))}
+              {!lead.timeline?.length && <li className="text-[13px]" style={{ color: "var(--muted-ink)" }}>No conversation activity recorded yet.</li>}
             </ol>
           </SectionCard>
 
           {/* Qualification */}
           <SectionCard title="Qualification answers" subtitle={lead.score != null ? `Qualification score ${lead.score}/100` : "Qualification in progress"}>
-            {lead.qualificationAnswers.length ? (
+            {lead.qualificationAnswers?.length ? (
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {lead.qualificationAnswers.map((a) => (
                   <div key={a.q} className="p-3 rounded-lg border" style={{ borderColor: "var(--line-2)", background: "var(--offwhite)" }}>
@@ -122,12 +123,13 @@ export default function LeadDetail() {
           {/* Event history */}
           <Collapsible title="Complete event history" defaultOpen={false}>
             <ol className="space-y-2.5">
-              {lead.events.map((e, i) => (
+              {(lead.events || []).map((e, i) => (
                 <li key={i} className="flex items-start gap-3 text-[12.5px]">
                   <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: "var(--teal)" }} />
                   <div><span style={{ color: "var(--shell)" }} className="font-medium">{e.action}</span> <span style={{ color: "var(--muted-ink)" }}>— {e.actor} · {fmtDateTime(e.at)}</span></div>
                 </li>
               ))}
+              {!lead.events?.length && <li className="text-[13px]" style={{ color: "var(--muted-ink)" }}>No additional events recorded yet.</li>}
             </ol>
           </Collapsible>
         </div>

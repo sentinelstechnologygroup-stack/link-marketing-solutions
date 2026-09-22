@@ -121,7 +121,12 @@ const mergeShape = (shape, value) => {
   return value === undefined || value === null ? emptyFromShape(shape) : value;
 };
 const normalizeLive = (shape, value) => mergeShape(emptyFromShape(shape), value);
-const normalizeDashboard = (value) => normalizeLive(sampleDashboard, value);
+const normalizeDashboard = (value) => {
+  const normalized = normalizeLive(sampleDashboard, value);
+  normalized.recentLeads = (value?.recentLeads || []).map(normalizeLeadRow);
+  normalized.upcomingAppointments = (value?.upcomingAppointments || []).map(normalizeAppointmentRow);
+  return normalized;
+};
 const normalizeReports = (value) => {
   const normalized = normalizeLive(sampleReports, value);
   normalized.metrics = Object.fromEntries(Object.entries(normalized.metrics).map(([key, metric]) => [key, typeof metric === "number" ? { value: metric, change: 0 } : { value: metric?.value ?? 0, change: metric?.change ?? 0 }]));
@@ -150,6 +155,55 @@ const normalizeLeadRow = (row) => ({
 const normalizeAppointmentRow = (row) => {
   const status = String(row.attendance || row.status || "upcoming").toLowerCase();
   return { ...row, prospect: row.prospect || row.leadName || row.title || "Appointment", when: asIso(row.when || row.scheduledStart || row.startAt), type: row.type || row.title || "Appointment", salesperson: row.salesperson || row.assignedToName || row.assignedTo || "Unassigned", confirmation: row.confirmation || (status === "confirmed" ? "Confirmed" : "Pending"), attendance: row.attendance || (['completed', 'show', 'no-show', 'cancelled', 'canceled'].includes(status) ? (status === 'completed' ? 'Show' : status === 'no-show' ? 'No-show' : status) : 'Upcoming'), acceptance: row.acceptance || "Pending", reschedule: row.reschedule || "None" };
+};
+const fieldLabel = (value) => String(value || "").replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+const normalizeLeadDetail = (row, activities = [], appointments = []) => {
+  const lead = normalizeLeadRow(row);
+  const qualificationData = row.qualificationData || row.qualification_data || {};
+  const qualificationAnswers = Array.isArray(row.qualificationAnswers)
+    ? row.qualificationAnswers
+    : Object.entries(qualificationData).map(([question, answer]) => ({ q: fieldLabel(question), a: fieldLabel(answer) || "—" }));
+  const activityRows = (activities || [])
+    .filter((activity) => activity.leadId === row.id)
+    .sort((a, b) => new Date(asIso(a.occurredAt || a.createdAt) || 0) - new Date(asIso(b.occurredAt || b.createdAt) || 0));
+  const timeline = [
+    { at: lead.received, event: "Lead received" },
+    ...activityRows.map((activity) => ({
+      at: asIso(activity.occurredAt || activity.createdAt),
+      event: activity.type === "appointment_created"
+        ? "Appointment scheduled"
+        : activity.status ? `Lead updated to ${fieldLabel(activity.status)}` : fieldLabel(activity.type || "Lead updated"),
+    })),
+  ].filter((item) => item.at);
+  const relevantAppointments = (appointments || [])
+    .filter((appointment) => appointment.leadId === row.id)
+    .sort((a, b) => new Date(asIso(b.scheduledStart || b.createdAt) || 0) - new Date(asIso(a.scheduledStart || a.createdAt) || 0));
+  const latestAppointment = relevantAppointments[0];
+  const appointment = latestAppointment ? {
+    type: fieldLabel(latestAppointment.appointment_type || latestAppointment.type || latestAppointment.title || "Appointment"),
+    when: asIso(latestAppointment.scheduledStart || latestAppointment.when),
+    salesperson: latestAppointment.salesperson || latestAppointment.assignedToName || latestAppointment.agentUid || "Link representative",
+    status: fieldLabel(latestAppointment.status || "Booked"),
+  } : null;
+  return {
+    ...lead,
+    outreachAttempts: Number(row.contactAttempts ?? row.contact_attempts ?? 0),
+    timeline,
+    qualificationAnswers,
+    events: activityRows.map((activity) => ({
+      at: asIso(activity.occurredAt || activity.createdAt),
+      action: activity.status ? `Lead updated to ${fieldLabel(activity.status)}` : fieldLabel(activity.type || "Lead updated"),
+      actor: "Link Marketing Services",
+    })),
+    appointment,
+    liveTransfer: row.liveTransfer || null,
+    score: row.score ?? row.qualificationScore ?? null,
+    salesRecipient: row.salesRecipient || row.routedClientContactName || null,
+    customerAcceptance: row.customerAcceptance || "Pending",
+    billingEligible: row.billingEligible === true,
+    disputeStatus: row.disputeStatus || "None",
+    notes: row.latestNote || row.notes || "",
+  };
 };
 const normalizeDocumentRow = (row) => ({ ...row, uploaded: asIso(row.uploaded || row.createdAt), updated: asIso(row.updated || row.updatedAt || row.createdAt), uploadedBy: row.uploadedBy || row.createdBy || "Portal user", size: row.size ?? row.sizeBytes ?? 0, access: row.access || "Tenant members", version: row.version || "1.0" });
 const normalizeSupportRow = (row) => ({ ...row, type: row.type || row.category || "General", priority: row.priority || "Normal", status: row.status ? `${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}` : "Open", assigned: row.assigned || "Queued - Link team", created: asIso(row.created || row.createdAt), updated: asIso(row.updated || row.updatedAt || row.createdAt), thread: Array.isArray(row.thread) ? row.thread : [] });
@@ -320,7 +374,16 @@ function getLeads(params = {}) {
 
 const getLead = async (id) => {
   if (isDataFixtureMode()) return delay().then(() => sampleLeads.find((l) => l.id === id) || null);
-  if (isFirebaseMode) { const tenantId = await getActiveTenantId(); if (!tenantId) return null; const snapshot = await getDoc(doc(firebaseDb, `tenants/${tenantId}/leads/${id}`)); return snapshot.exists() ? normalizeLeadRow({ id: snapshot.id, ...snapshot.data() }) : null; }
+  if (isFirebaseMode) {
+    const tenantId = await getActiveTenantId();
+    if (!tenantId) return null;
+    const [snapshot, activities, appointments] = await Promise.all([
+      getDoc(doc(firebaseDb, `tenants/${tenantId}/leads/${id}`)),
+      getTenantRows("customerActivity"),
+      getTenantRows("appointments"),
+    ]);
+    return snapshot.exists() ? normalizeLeadDetail({ id: snapshot.id, ...snapshot.data() }, activities, appointments) : null;
+  }
   return request("GET", `/leads/${id}`);
 };
 const getAppointments = async () => {

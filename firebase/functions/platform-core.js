@@ -484,19 +484,23 @@ function percentage(numerator, denominator) {
 }
 
 function leadStatus(lead) {
-  return String(lead.stage || lead.status || lead.disposition || '').trim().toLowerCase();
+  return String(lead.stage || lead.status || lead.disposition || '').trim().toLowerCase().replace(/[_-]+/g, ' ');
+}
+
+function leadQualificationStatus(lead) {
+  return String(lead.qualificationStatus || lead.qualification_status || '').trim().toLowerCase().replace(/[_-]+/g, ' ');
 }
 
 function hasContact(lead) {
-  return Boolean(lead.contactedAt || lead.firstResponseAt || lead.conversationCompletedAt || ['contacted', 'qualified', 'appointment set', 'handed off', 'closed', 'closed-won', 'closed won'].includes(leadStatus(lead)));
+  return Boolean(Number(lead.contactAttempts || lead.contact_attempts || 0) > 0 || lead.contactedAt || lead.firstResponseAt || lead.conversationCompletedAt || ['contact attempted', 'contacted', 'connected', 'qualified', 'appointment set', 'appointment scheduled', 'handed off', 'closed', 'closed won'].includes(leadStatus(lead)));
 }
 
 function isQualified(lead) {
-  return Boolean(lead.qualifiedAt || ['qualified', 'appointment set', 'handed off', 'closed', 'closed-won', 'closed won'].includes(leadStatus(lead)));
+  return Boolean(lead.qualifiedAt || leadQualificationStatus(lead) === 'qualified' || ['qualified', 'appointment set', 'appointment scheduled', 'warm transfer', 'warm transfer completed', 'handed off', 'closed', 'closed won'].includes(leadStatus(lead)));
 }
 
 function isHandedOff(lead) {
-  return Boolean(lead.handedOffAt || lead.liveTransferAt || ['handed off', 'appointment set', 'closed', 'closed-won', 'closed won'].includes(leadStatus(lead)));
+  return Boolean(lead.handedOffAt || lead.liveTransferAt || ['handed off', 'appointment set', 'appointment scheduled', 'warm transfer', 'warm transfer completed', 'closed', 'closed won'].includes(leadStatus(lead)));
 }
 
 function isAccepted(appointment) {

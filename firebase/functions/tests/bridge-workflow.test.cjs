@@ -203,12 +203,18 @@ test('provisioning, ingestion, Agent workflow, Customer projection, and Brand is
     data: { data: () => appointmentSnapshot.data() },
   });
 
+  await leadRef.update({ status: 'appointment_scheduled', qualificationStatus: 'qualified', contactAttempts: 1 });
+
   const dashboard = await functions.getDashboardWorkspace.run(clientRequest({}));
   const report = await functions.getLiveReport.run(clientRequest({ range: 'Workflow test' }));
   assert.equal(dashboard.metrics.leadsReceived.value, 2);
+  assert.equal(dashboard.metrics.conversations.value, 1);
+  assert.equal(dashboard.metrics.qualifiedOpportunities.value, 1);
+  assert.equal(dashboard.metrics.qualificationRate.value, 100);
   assert.equal(dashboard.metrics.appointmentsAndTransfers.value, 1);
   assert.equal(report.metrics.leadVolume.value, 2);
-  assert.equal(report.metrics.appointmentRate.value, 50);
+  assert.equal(report.metrics.qualificationRate.value, 100);
+  assert.equal(report.metrics.appointmentRate.value, 100);
 
   const [activities, audits, notifications] = await Promise.all([
     db.collection(`tenants/${tenantId}/customerActivity`).get(),
