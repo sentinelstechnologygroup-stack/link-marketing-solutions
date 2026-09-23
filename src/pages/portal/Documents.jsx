@@ -18,6 +18,7 @@ export default function Documents() {
   const [uploading, setUploading] = useState(false);
   const [selected, setSelected] = useState(null);
   const [downloadError, setDownloadError] = useState("");
+  const [downloadNotice, setDownloadNotice] = useState("");
   const { data, loading, error, retry } = usePortalData(() => portalAdapter.getDocuments(), []);
 
   const rows = useMemo(() => {
@@ -50,6 +51,7 @@ export default function Documents() {
 
   const handleDownload = async (documentRecord) => {
     setDownloadError("");
+    setDownloadNotice("");
     try {
       const blob = await portalAdapter.downloadDocument(documentRecord);
       if (!blob) return;
@@ -61,6 +63,7 @@ export default function Documents() {
       anchor.click();
       anchor.remove();
       setTimeout(() => URL.revokeObjectURL(url), 0);
+      setDownloadNotice(`Download prepared: ${documentRecord.name}`);
     } catch (error) {
       setDownloadError(error?.message || "The document could not be downloaded.");
     }
@@ -88,6 +91,7 @@ export default function Documents() {
           <ShieldCheck className="w-3.5 h-3.5" style={{ color: "var(--teal)" }} /> Files are private to your account and never served as public media.
         </div>
         {downloadError && <p className="mt-2 text-[12px]" role="alert" style={{ color: "var(--danger)" }}>{downloadError}</p>}
+        {downloadNotice && <p className="mt-2 text-[12px]" role="status" style={{ color: "var(--teal)" }}>{downloadNotice}</p>}
       </div>
 
       {uploadOpen && (
