@@ -43,7 +43,7 @@ service cloud.firestore {
     }
 
     function customerReadable(collection) {
-      return collection in ['dashboard', 'leads', 'appointments', 'reports', 'billing', 'invoices', 'documents', 'support', 'supportRequests', 'notifications'];
+      return collection in ['dashboard', 'leads', 'appointments', 'reports', 'billing', 'invoices', 'documents', 'support', 'supportRequests', 'notifications', 'customerActivity'];
     }
 
     function staffRole(tenantId) {

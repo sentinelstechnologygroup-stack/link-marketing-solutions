@@ -164,13 +164,18 @@ test('client, client supervisor, and client admin stay inside their tenant', asy
       await setDoc(doc(db, `tenants/tenant-role/members/${uid}`), { uid, tenantId: 'tenant-role', role, active: true });
     }
     await setDoc(doc(db, 'tenants/tenant-role/leads/lead-role'), { tenantId: 'tenant-role', status: 'new' });
+    await setDoc(doc(db, 'tenants/tenant-role/customerActivity/activity-role'), { tenantId: 'tenant-role', leadId: 'lead-role', type: 'lead_updated' });
     await setDoc(doc(db, 'tenants/tenant-private/leads/lead-private'), { tenantId: 'tenant-private', status: 'new' });
+    await setDoc(doc(db, 'tenants/tenant-private/customerActivity/activity-private'), { tenantId: 'tenant-private', leadId: 'lead-private', type: 'lead_updated' });
   });
 
   for (const uid of ['client-user', 'client-supervisor', 'client-admin']) {
     const db = env.authenticatedContext(uid).firestore();
     await assertSucceeds(getDoc(doc(db, 'tenants/tenant-role/leads/lead-role')));
+    await assertSucceeds(getDoc(doc(db, 'tenants/tenant-role/customerActivity/activity-role')));
     await assertFails(getDoc(doc(db, 'tenants/tenant-private/leads/lead-private')));
+    await assertFails(getDoc(doc(db, 'tenants/tenant-private/customerActivity/activity-private')));
+    await assertFails(setDoc(doc(db, 'tenants/tenant-role/customerActivity/activity-forged'), { tenantId: 'tenant-role', leadId: 'lead-role', type: 'lead_updated' }));
   }
 });
 
