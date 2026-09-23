@@ -135,7 +135,16 @@ const normalizeReports = (value) => {
 const asIso = (value) => {
   if (!value) return null;
   if (typeof value?.toDate === "function") return value.toDate().toISOString();
+  if (typeof value?.toMillis === "function") return new Date(value.toMillis()).toISOString();
   if (value instanceof Date) return value.toISOString();
+  if (typeof value === "object") {
+    const seconds = Number(value.seconds ?? value._seconds);
+    const nanoseconds = Number(value.nanoseconds ?? value._nanoseconds ?? 0);
+    if (Number.isFinite(seconds) && Number.isFinite(nanoseconds)) {
+      return new Date((seconds * 1000) + (nanoseconds / 1e6)).toISOString();
+    }
+    return null;
+  }
   return String(value);
 };
 const normalizeLeadRow = (row) => ({
@@ -145,8 +154,8 @@ const normalizeLeadRow = (row) => ({
   campaign: row.campaign || row.campaignName || row.campaignId || "—",
   service: row.service || row.serviceName || row.industry || row.industryId || "—",
   location: row.location || row.market || row.city || "—",
-  stage: row.stage || row.status || "New",
-  qualification: row.qualification || row.qualificationStatus || "In progress",
+  stage: row.status || row.stage || "New",
+  qualification: row.qualificationStatus || row.qualification || "In progress",
   handoffType: row.handoffType || row.handoff || "None",
   disposition: row.disposition || "Open",
   received: asIso(row.received || row.receivedAt || row.createdAt),

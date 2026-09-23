@@ -82,7 +82,7 @@ export default function LeadDetail() {
           </SectionCard>
 
           {/* Qualification */}
-          <SectionCard title="Qualification answers" subtitle={lead.score != null ? `Qualification score ${lead.score}/100` : "Qualification in progress"}>
+          <SectionCard title="Qualification answers" subtitle={lead.score != null ? `Qualification score ${lead.score}/100` : String(lead.qualification || "").toLowerCase() === "qualified" ? "Qualified" : "Qualification in progress"}>
             {lead.qualificationAnswers?.length ? (
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {lead.qualificationAnswers.map((a) => (
