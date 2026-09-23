@@ -44,7 +44,7 @@ import { firebaseAuth, firebaseConfigured, firebaseFunctions, firebaseDb, fireba
 import { httpsCallable } from "firebase/functions";
 import { sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
-import { getBlob, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const API_URL = (import.meta.env && import.meta.env.VITE_CUSTOMER_PORTAL_API_URL) || "";
 const PREVIEW_DATA_ENABLED = (import.meta.env && import.meta.env.VITE_PORTAL_PREVIEW_DATA === "true");
@@ -447,7 +447,12 @@ const createDocument = async (formData) => {
 };
 const downloadDocument = async (documentRecord) => {
   if (isDataFixtureMode()) return null;
-  if (isFirebaseMode && documentRecord?.storagePath) return getBlob(ref(firebaseStorage, documentRecord.storagePath));
+  if (isFirebaseMode && documentRecord?.storagePath) {
+    const downloadUrl = await getDownloadURL(ref(firebaseStorage, documentRecord.storagePath));
+    const response = await fetch(downloadUrl, { cache: "no-store" });
+    if (!response.ok) throw new PortalApiError(response.status, "The document could not be downloaded");
+    return response.blob();
+  }
   return null;
 };
 const getSupport = async () => {
