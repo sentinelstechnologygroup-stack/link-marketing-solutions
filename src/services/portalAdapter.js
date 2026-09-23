@@ -44,7 +44,7 @@ import { firebaseAuth, firebaseConfigured, firebaseFunctions, firebaseDb, fireba
 import { httpsCallable } from "firebase/functions";
 import { sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getBlob, ref, uploadBytes } from "firebase/storage";
 
 const API_URL = (import.meta.env && import.meta.env.VITE_CUSTOMER_PORTAL_API_URL) || "";
 const PREVIEW_DATA_ENABLED = (import.meta.env && import.meta.env.VITE_PORTAL_PREVIEW_DATA === "true");
@@ -445,9 +445,9 @@ const createDocument = async (formData) => {
   await uploadBytes(ref(firebaseStorage, storagePath), file, { contentType: file.type || "application/octet-stream" });
   return callTenantFunction("createDocumentMetadata", { documentId, name: file.name, category: formData.get("category") || "Customer-uploaded files", storagePath, contentType: file.type, sizeBytes: file.size });
 };
-const downloadDocument = async (document) => {
+const downloadDocument = async (documentRecord) => {
   if (isDataFixtureMode()) return null;
-  if (isFirebaseMode && document?.storagePath) return getDownloadURL(ref(firebaseStorage, document.storagePath));
+  if (isFirebaseMode && documentRecord?.storagePath) return getBlob(ref(firebaseStorage, documentRecord.storagePath));
   return null;
 };
 const getSupport = async () => {

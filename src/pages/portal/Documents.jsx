@@ -17,6 +17,7 @@ export default function Documents() {
   const [uploadOpen, setUploadOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [downloadError, setDownloadError] = useState("");
   const { data, loading, error, retry } = usePortalData(() => portalAdapter.getDocuments(), []);
 
   const rows = useMemo(() => {
@@ -47,6 +48,24 @@ export default function Documents() {
     }
   };
 
+  const handleDownload = async (documentRecord) => {
+    setDownloadError("");
+    try {
+      const blob = await portalAdapter.downloadDocument(documentRecord);
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const anchor = globalThis.document.createElement("a");
+      anchor.href = url;
+      anchor.download = documentRecord.name || "document";
+      globalThis.document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch (error) {
+      setDownloadError(error?.message || "The document could not be downloaded.");
+    }
+  };
+
   return (
     <div>
       <PageHeader
@@ -68,6 +87,7 @@ export default function Documents() {
         <div className="mt-2 flex items-center gap-2 text-[11.5px]" style={{ color: "var(--muted-ink)" }}>
           <ShieldCheck className="w-3.5 h-3.5" style={{ color: "var(--teal)" }} /> Files are private to your account and never served as public media.
         </div>
+        {downloadError && <p className="mt-2 text-[12px]" role="alert" style={{ color: "var(--danger)" }}>{downloadError}</p>}
       </div>
 
       {uploadOpen && (
@@ -107,7 +127,7 @@ export default function Documents() {
                     <td className="px-3 py-3">{d.uploadedBy}</td>
                     <td className="px-3 py-3 whitespace-nowrap">{fmtFileSize(d.size)}</td>
                     <td className="px-3 py-3 text-[11.5px]" style={{ color: "var(--muted-ink)" }}>{d.access}</td>
-                    <td className="px-3 py-3 text-right"><button aria-label={`Download ${d.name}`} onClick={async () => { const url = await portalAdapter.downloadDocument(d); if (url) window.open(url, "_blank", "noopener,noreferrer"); }} className="touch-target w-9 h-9 rounded-lg inline-flex items-center justify-center focus-ring" style={{ color: "var(--teal)" }}><Download className="w-4 h-4" /></button></td>
+                    <td className="px-3 py-3 text-right"><button aria-label={`Download ${d.name}`} onClick={() => handleDownload(d)} className="touch-target w-9 h-9 rounded-lg inline-flex items-center justify-center focus-ring" style={{ color: "var(--teal)" }}><Download className="w-4 h-4" /></button></td>
                   </tr>
                 ))}
               </tbody>
@@ -116,12 +136,12 @@ export default function Documents() {
         </div>
       )}
 
-      {selected && <DocumentDrawer doc={selected} onClose={() => setSelected(null)} />}
+      {selected && <DocumentDrawer doc={selected} onClose={() => setSelected(null)} onDownload={handleDownload} />}
     </div>
   );
 }
 
-function DocumentDrawer({ doc, onClose }) {
+function DocumentDrawer({ doc, onClose, onDownload }) {
   return (
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-label={doc.name}>
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
@@ -146,7 +166,7 @@ function DocumentDrawer({ doc, onClose }) {
               <li className="flex justify-between"><span style={{ color: "var(--muted-ink)" }}>v1.0</span><span style={{ color: "var(--muted-ink)" }}>{fmtDate(doc.uploaded)} · {doc.uploadedBy}</span></li>
             </ul>
           </div>
-          <button onClick={() => alert(`Download of "${doc.name}" is handled by the production API. (preview)`)} className="touch-target w-full inline-flex items-center justify-center gap-2 px-4 rounded-lg text-[13px] font-semibold text-white focus-ring" style={{ background: "var(--shell)" }}><Download className="w-4 h-4" /> Download</button>
+          <button onClick={() => onDownload(doc)} className="touch-target w-full inline-flex items-center justify-center gap-2 px-4 rounded-lg text-[13px] font-semibold text-white focus-ring" style={{ background: "var(--shell)" }}><Download className="w-4 h-4" /> Download</button>
         </div>
       </div>
     </div>
