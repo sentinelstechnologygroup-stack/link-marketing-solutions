@@ -197,13 +197,15 @@ test('provisioning, ingestion, Agent workflow, Customer projection, and Brand is
   const appointmentSnapshot = await db.doc(`tenants/${tenantId}/appointments/${appointment.id}`).get();
   assert.equal(appointmentSnapshot.data().brandId, brandId);
   assert.equal(appointmentSnapshot.data().tenantId, tenantId);
+  const leadAfterAppointment = await leadRef.get();
+  assert.equal(leadAfterAppointment.data().status, 'appointment_scheduled');
 
   await functions.projectAppointmentActivity.run({
     params: { tenantId, appointmentId: appointment.id },
     data: { data: () => appointmentSnapshot.data() },
   });
 
-  await leadRef.update({ status: 'appointment_scheduled', qualificationStatus: 'qualified', contactAttempts: 1 });
+  await leadRef.update({ qualificationStatus: 'qualified', contactAttempts: 1 });
 
   const dashboard = await functions.getDashboardWorkspace.run(clientRequest({}));
   const report = await functions.getLiveReport.run(clientRequest({ range: 'Workflow test' }));
