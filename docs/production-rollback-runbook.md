@@ -198,3 +198,15 @@ The 2026-09-21 drill changed no production state.
 Repeat the drill after real communications providers are activated and again
 after the `.com` domain cutover. Those later drills must record the provider and
 domain recovery points added at that time.
+
+## Core bridge recovery candidate - 2026-09-23
+
+Use this recovery point for the accepted non-calling Golden Cross core bridge:
+
+- Root source: `1bf0eba`
+- Agent CRM source: `e474bbe`
+- Customer Portal deployment: `dpl_849T5rhCJFwJBV8RyGL8VynjVJoV`
+- Agent CRM deployment: `dpl_9KTJGEpLa4r26JCKCJzZmYmXRTE8`
+- Recovery tag: `release/golden-cross-core-pilot-20260923`
+
+If only the latest Customer presentation release must be reversed, promote Customer deployment `dpl_5p9wADGVmbLVrSqLBzmZTTx12hJj`. If only the Agent adapter release must be reversed, promote Agent deployment `dpl_8gg9tbd72X6sRZD2o9s2HndHokGX`. Do not delete or rewrite Golden Cross beta data during an application rollback. The synthetic pilot status repair is preserved by audit event `UsFnyKEu2FNUelQzA0Qv` and may be reversed only through a separately reviewed data correction.
