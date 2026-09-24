@@ -119,6 +119,7 @@ exports.provisionClient = onCall({ enforceAppCheck: true }, async (request) => {
   const industryId = clean(input.industryId || 'general', 100).toLowerCase().replace(/[^a-z0-9-]+/g, '-');
   const adminEmail = clean(input.adminEmail, 320).toLowerCase();
   const routeKey = clean(input.routeKey || tenantId.replace(/^tenant-/, ''), 120).toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+  const recordingPolicy = ['record_all', 'record_on_consent', 'do_not_record'].includes(input.recordingPolicy) ? input.recordingPolicy : 'do_not_record';
   if (!clientName || !brandName || !adminEmail || !routeKey) throw new HttpsError('invalid-argument', 'Client, Brand, administrator email, and route key are required.');
   const tenantRef = db.doc(`tenants/${tenantId}`);
   if ((await tenantRef.get()).exists) throw new HttpsError('already-exists', 'This tenant already exists.');
@@ -134,7 +135,7 @@ exports.provisionClient = onCall({ enforceAppCheck: true }, async (request) => {
     qualificationFormId: clean(input.qualificationFormId || 'qualification-default', 120),
     consentPolicyId: clean(input.consentPolicyId || 'consent-standard', 120),
     retentionPolicyId: clean(input.retentionPolicyId || 'retention-standard', 120),
-    notificationProfileId: clean(input.notificationProfileId || 'notification-default', 120),
+    notificationProfileId: clean(input.notificationProfileId || 'notification-default', 120), recordingPolicy,
     assignedAgentUids: Array.isArray(input.assignedAgentUids) ? input.assignedAgentUids.filter(Boolean) : [],
     status: 'active', createdAt: now, updatedAt: now, createdBy: caller.uid,
   };
@@ -155,7 +156,7 @@ exports.provisionClient = onCall({ enforceAppCheck: true }, async (request) => {
   batch.set(db.doc(`tenants/${tenantId}/scripts/${route.scriptSetId}`), workflowArtifacts.script);
   batch.set(db.doc(`tenants/${tenantId}/qualificationForms/${route.qualificationFormId}`), workflowArtifacts.qualificationForm);
   batch.set(db.doc(`tenants/${tenantId}/routingRules/${route.routingProfileId}`), { tenantId, brandId, name: 'Default client contact rotation', status: 'active', priority: 1, conditions: [], destination: { type: 'client_contact_rotation' }, createdAt: now, updatedAt: now });
-  batch.set(db.doc(`tenants/${tenantId}/config/workflow`), { ...route, notificationChannels: input.notificationChannels || ['in_app', 'email'], retentionDays: Number(input.retentionDays) || 2555, createdAt: now, updatedAt: now });
+  batch.set(db.doc(`tenants/${tenantId}/config/workflow`), { ...route, notificationChannels: input.notificationChannels || ['in_app', 'email'], retentionDays: Number(input.retentionDays) || 2555, recordingPolicy, recordingConsentRequired: recordingPolicy === 'record_on_consent', createdAt: now, updatedAt: now });
   batch.set(db.doc(`industryConfigs/${industryId}`), { industryId, workflowVersion: route.workflowVersion, scriptSetId: route.scriptSetId, qualificationFormId: route.qualificationFormId, routingProfileId: route.routingProfileId, consentPolicyId: route.consentPolicyId, retentionPolicyId: route.retentionPolicyId, updatedAt: now, updatedBy: caller.uid }, { merge: true });
   batch.set(db.doc(`ingestionRoutes/${routeKey}`), route);
 

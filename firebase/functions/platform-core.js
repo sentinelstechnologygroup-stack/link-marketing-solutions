@@ -2,9 +2,12 @@ const crypto = require('node:crypto');
 const { initializeApp } = require('firebase-admin/app');
 const { getAuth } = require('firebase-admin/auth');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const { getStorage } = require('firebase-admin/storage');
 const { defineSecret } = require('firebase-functions/params');
 const { HttpsError, onCall, onRequest } = require('firebase-functions/v2/https');
 const { setGlobalOptions } = require("firebase-functions/v2");
+const twilio = require('twilio');
+const { buildOutboundCallParams, normalizeCallStatus, normalizeRecordingPolicy, recordingStoragePath, terminalCallStatus } = require('./telephony-contract.cjs');
 
 initializeApp();
 setGlobalOptions({ region: 'us-central1', maxInstances: 10 });
@@ -741,12 +744,51 @@ exports.appointmentWorkflow = onCall({ enforceAppCheck: true }, async (request) 
   return result;
 });
 
+async function telephonyConfiguration(tenantId, brandId) {
+  const [numbers, workflow] = await Promise.all([
+    db.collection(`tenants/${tenantId}/phoneNumbers`).where('status', '==', 'active').limit(100).get(),
+    db.doc(`tenants/${tenantId}/config/workflow`).get(),
+  ]);
+  const phone = numbers.docs
+    .map((item) => item.data())
+    .find((item) => !brandId || recordBrandId(item) === brandId) || null;
+  const fromNumber = phone?.phoneNumber || phone?.phone_number || process.env.TWILIO_FROM_NUMBER || '';
+  const voiceWebhookUrl = process.env.TWILIO_VOICE_WEBHOOK_URL || '';
+  const recordingPolicy = normalizeRecordingPolicy(phone?.recordingPolicy || phone?.recording_policy || workflow.data()?.recordingPolicy);
+  return {
+    configured: twilioConfigured() && Boolean(fromNumber && voiceWebhookUrl),
+    fromNumber,
+    voiceWebhookUrl,
+    recordingPolicy,
+  };
+}
+
+async function findCallRecord(callSid) {
+  const snapshot = await db.collectionGroup('callRecords').where('providerCallId', '==', callSid).limit(2).get();
+  if (snapshot.empty) return null;
+  if (snapshot.size > 1) throw new Error('Call ownership is ambiguous.');
+  return snapshot.docs[0];
+}
+
 exports.communications = onCall({ enforceAppCheck: true, secrets: [twilioAccountSid, twilioAuthToken] }, async (request) => {
   const { tenantId, action, params = {}, adminCheck = false } = request.data || {};
   const roles = adminCheck ? ['admin', 'supervisor'] : ['admin', 'supervisor', 'agent'];
   const { caller, assignment } = await requireAgentAssignment(request, tenantId, roles);
   if (!['health_check', 'start_call', 'end_call', 'hold_call', 'resume_call', 'warm_transfer'].includes(action)) throw new HttpsError('invalid-argument', 'Unsupported communications action.');
-  if (action === 'health_check') return { ok: true, configured: twilioConfigured(), provider: 'twilio', actorUid: caller.uid };
+  if (action === 'health_check') {
+    const brandId = assignment.brandId || assignment.brandIds?.[0] || null;
+    const config = await telephonyConfiguration(tenantId, brandId);
+    return {
+      ok: true,
+      configured: config.configured,
+      healthy: config.configured,
+      mode: config.configured ? 'production' : 'unavailable',
+      provider: 'twilio',
+      actorUid: caller.uid,
+      recordingPolicy: config.recordingPolicy,
+      warning: config.configured ? null : 'Twilio credentials, an approved Brand number, and the voice webhook must be configured.',
+    };
+  }
   const callSid = typeof params.callId === 'string' ? params.callId : '';
   if (!callSid && action !== 'start_call') throw new HttpsError('invalid-argument', 'A callId is required.');
   let result;
@@ -764,8 +806,17 @@ exports.communications = onCall({ enforceAppCheck: true, secrets: [twilioAccount
     if (!params.to || !normalizedPhone(leadData.phone) || normalizedPhone(params.to) !== normalizedPhone(leadData.phone)) {
       throw new HttpsError('permission-denied', 'The call destination must match the authorized lead phone.');
     }
-    if (!process.env.TWILIO_FROM_NUMBER) throw new HttpsError('failed-precondition', 'Telephony is not configured.');
-    result = await twilioRequest('/Calls.json', 'POST', { To: params.to, From: process.env.TWILIO_FROM_NUMBER, Url: params.twimlUrl || process.env.TWILIO_VOICE_WEBHOOK_URL });
+    const config = await telephonyConfiguration(tenantId, brandId);
+    if (!config.configured) throw new HttpsError('failed-precondition', 'Telephony is not configured.');
+    const recordingConsentCaptured = params.recordingConsent === true;
+    const outbound = buildOutboundCallParams({
+      to: params.to,
+      from: config.fromNumber,
+      voiceWebhookUrl: config.voiceWebhookUrl,
+      recordingPolicy: config.recordingPolicy,
+      consentCaptured: recordingConsentCaptured,
+    });
+    result = await twilioRequest('/Calls.json', 'POST', outbound.params);
     callId = result.sid;
     if (!callId) throw new HttpsError('internal', 'The telephony provider did not return a call identifier.');
     callRef = db.doc(`tenants/${tenantId}/callRecords/${callId}`);
@@ -773,6 +824,10 @@ exports.communications = onCall({ enforceAppCheck: true, secrets: [twilioAccount
       tenantId, brandId, leadId, agentUid: caller.uid, provider: 'twilio', providerCallId: callId,
       clientContactId: leadData.routedClientContactId || null,
       direction: 'outbound', destination: String(params.to).slice(0, 80), status: result.status || 'queued',
+      recordingPolicy: outbound.policy, recordingExpected: outbound.shouldRecord,
+      recordingConsentCaptured: outbound.policy === 'record_on_consent' ? recordingConsentCaptured : null,
+      recordingConsentCapturedBy: outbound.policy === 'record_on_consent' && recordingConsentCaptured ? caller.uid : null,
+      recordingConsentCapturedAt: outbound.policy === 'record_on_consent' && recordingConsentCaptured ? FieldValue.serverTimestamp() : null,
       startedAt: FieldValue.serverTimestamp(), endedAt: null, createdBy: caller.uid,
       createdAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp(),
     });
@@ -828,15 +883,68 @@ exports.communications = onCall({ enforceAppCheck: true, secrets: [twilioAccount
   return { ok: true, action, callId, status: result.status || 'accepted' };
 });
 
-exports.twilioWebhook = onRequest({ cors: false, secrets: [twilioAuthToken] }, async (request, response) => {
+exports.twilioWebhook = onRequest({ cors: false, secrets: [twilioAccountSid, twilioAuthToken] }, async (request, response) => {
   if (request.method !== 'POST') return response.status(405).send('Method not allowed');
   const authToken = twilioAuthToken.value();
   if (!authToken || authToken === 'not-configured') return response.status(503).send('Telephony is not configured');
   const signature = request.get('X-Twilio-Signature') || '';
   const url = `${request.protocol}://${request.get('host')}${request.originalUrl}`;
   const params = request.body || {};
-  const data = url + Object.keys(params).sort().map((key) => `${key}${params[key]}`).join('');
-  const expected = crypto.createHmac('sha1', authToken).update(data).digest('base64');
-  if (signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return response.status(403).send('Invalid signature');
+  if (!twilio.validateRequest(authToken, signature, url, params)) return response.status(403).send('Invalid signature');
+  const eventType = String(request.query?.event || 'voice');
+  const callSid = String(params.CallSid || '');
+  if (eventType === 'status') {
+    const call = callSid ? await findCallRecord(callSid) : null;
+    if (!call) return response.status(404).send('Call not found');
+    const callData = call.data();
+    const status = normalizeCallStatus(params.CallStatus);
+    await call.ref.update({
+      status,
+      providerStatus: String(params.CallStatus || ''),
+      durationSeconds: Number(params.CallDuration) || null,
+      updatedAt: FieldValue.serverTimestamp(),
+      ...(terminalCallStatus(status) ? { endedAt: FieldValue.serverTimestamp() } : {}),
+    });
+    await recordAudit({ tenantId: callData.tenantId, actorUid: 'twilio-webhook', action: 'telephony.status.updated', target: callSid, metadata: { brandId: recordBrandId(callData), leadId: callData.leadId || null, status } });
+    return response.status(204).send('');
+  }
+  if (eventType === 'recording') {
+    const call = callSid ? await findCallRecord(callSid) : null;
+    if (!call) return response.status(404).send('Call not found');
+    const callData = call.data();
+    if (callData.recordingExpected !== true) return response.status(409).send('Recording was not authorized');
+    const recordingSid = String(params.RecordingSid || '');
+    const recordingStatus = String(params.RecordingStatus || '').toLowerCase();
+    if (recordingStatus === 'absent') {
+      await call.ref.update({ recordingStatus: 'absent', updatedAt: FieldValue.serverTimestamp() });
+      return response.status(204).send('');
+    }
+    if (recordingStatus !== 'completed' || !recordingSid || !params.RecordingUrl) return response.status(202).send('Recording is not ready');
+    const recordingUrl = new URL(String(params.RecordingUrl));
+    if (recordingUrl.protocol !== 'https:' || recordingUrl.hostname !== 'api.twilio.com') return response.status(400).send('Invalid recording URL');
+    const accountSid = twilioAccountSid.value();
+    if (!accountSid || accountSid === 'not-configured') return response.status(503).send('Telephony is not configured');
+    const mediaResponse = await fetch(`${recordingUrl.toString()}.mp3`, { headers: { Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString('base64')}` } });
+    if (!mediaResponse.ok) return response.status(502).send('Recording download failed');
+    const audio = Buffer.from(await mediaResponse.arrayBuffer());
+    const brandId = recordBrandId(callData);
+    const storagePath = recordingStoragePath({ tenantId: callData.tenantId, brandId, callSid, recordingSid });
+    await getStorage().bucket().file(storagePath).save(audio, {
+      resumable: false,
+      metadata: { contentType: 'audio/mpeg', metadata: { tenantId: callData.tenantId, brandId, callSid, recordingSid } },
+    });
+    await call.ref.update({
+      providerRecordingId: recordingSid,
+      recordingStatus: 'available',
+      recordingStoragePath: storagePath,
+      recordingContentType: 'audio/mpeg',
+      recordingSizeBytes: audio.length,
+      recordingDurationSeconds: Number(params.RecordingDuration) || null,
+      recordingAvailableAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+    await recordAudit({ tenantId: callData.tenantId, actorUid: 'twilio-webhook', action: 'telephony.recording.available', target: callSid, metadata: { brandId, leadId: callData.leadId || null, recordingSid, storagePath } });
+    return response.status(204).send('');
+  }
   response.type('text/xml').send('<Response><Say>Link Marketing Services call connected.</Say></Response>');
 });
