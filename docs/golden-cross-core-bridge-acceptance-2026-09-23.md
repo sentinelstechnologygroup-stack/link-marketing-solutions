@@ -130,6 +130,13 @@ Storage acceptance: **PASS**.
 - The `.com` primary-domain cutover remains external to this release until the Namecheap transfer and DNS/TLS setup are complete.
 - Duplicate legacy Agent assignments exist for selected test identities. They do not broaden tenant or Brand access, but cleanup requires a separately approved production-data maintenance action.
 
+### External readiness recheck
+
+- `https://linkmarketingservices.co`, `https://customer.linkmarketingservices.co`, and `https://agent.linkmarketingservices.co` each completed TLS and returned HTTP 200.
+- `linkmarketingservices.com`, `customer.linkmarketingservices.com`, and `agent.linkmarketingservices.com` still resolve to the prior parking infrastructure and did not complete a usable TLS request during this check.
+- Deployed Functions `communications`, `twilioWebhook`, and `deliverNotificationEmail` are `ACTIVE` and have the expected Secret Manager bindings.
+- `RESEND_API_KEY`, `TWILIO_ACCOUNT_SID`, and `TWILIO_AUTH_TOKEN` remain deliberate `not-configured` placeholder versions. No provider call will be represented as accepted until real credentials, sender identity, phone number, and callback configuration are installed and exercised.
+
 ### Current release decision
 
 Core backend, tenant isolation, emulator authorization, Website ingestion, Golden Cross data bridging, Customer Portal reads and writes, exports, Storage, mobile layout, App Check enforcement, and deployment gates pass. Full production readiness is not yet declared because provider-backed live communications and final browser-level production-role revalidation remain open.
