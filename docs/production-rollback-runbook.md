@@ -210,3 +210,11 @@ Use this recovery point for the accepted non-calling Golden Cross core bridge:
 - Recovery tag: `release/golden-cross-core-pilot-20260923`
 
 If only the latest Customer presentation release must be reversed, promote Customer deployment `dpl_5p9wADGVmbLVrSqLBzmZTTx12hJj`. If only the Agent adapter release must be reversed, promote Agent deployment `dpl_8gg9tbd72X6sRZD2o9s2HndHokGX`. Do not delete or rewrite Golden Cross beta data during an application rollback. The synthetic pilot status repair is preserved by audit event `UsFnyKEu2FNUelQzA0Qv` and may be reversed only through a separately reviewed data correction.
+
+## Customer Portal Storage release - 2026-09-23
+
+- Recovery source commit: `efa3da2`
+- Verified deployment: `dpl_D5WUN1noe9R6SUqctenykHLV9GJR`
+- Recovery tag: `release/golden-cross-storage-acceptance-20260923`
+- Storage CORS rollback: `gcloud storage buckets update gs://linkmarketing-agent-portal-crm.firebasestorage.app --clear-cors`
+- If the Customer Portal must be rolled back, promote the previous stable Vercel deployment and restore the matching source tag. Do not delete tenant data, Storage objects, audit records, or permanent demo fixtures during rollback.

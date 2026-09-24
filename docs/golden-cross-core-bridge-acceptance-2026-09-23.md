@@ -68,3 +68,20 @@ The non-calling Golden Cross core bridge pilot passed. This record does not decl
 - Rotate or disable temporary acceptance credentials.
 - Complete the `.com` DNS, TLS, primary-domain, and `.co` redirect cutover after transfer.
 - Perform the final post-provider and post-domain rollback drill.
+
+## Production Storage acceptance - 2026-09-23
+
+- Customer Portal source commit: `efa3da2`
+- Vercel production deployment: `dpl_D5WUN1noe9R6SUqctenykHLV9GJR`
+- Production alias: `https://customer.linkmarketingservices.co`
+- Firebase Storage bucket: `linkmarketing-agent-portal-crm.firebasestorage.app`
+- Golden Cross tenant: `tenant-golden-cross-beta`
+- Authenticated upload created `lms-golden-cross-storage-acceptance.txt` at a tenant-scoped path.
+- Firestore metadata records the matching tenant, storage path, `text/plain` content type, 149-byte size, available status, and authenticated creator UID.
+- The live Customer Portal completed the authorized byte fetch and displayed `Download prepared` without the prior CORS failure.
+- Independent bucket retrieval confirmed the 149-byte object, SHA-256 `07C4B78BBA6A44DC852CCE24091728E8FD9E8900C79D40EA2E30B0EDB97096A8`, and the expected non-sensitive acceptance marker.
+- Tenant audit event `document.metadata.created` targets the matching document ID.
+- Bucket CORS is restricted to the LMS website, Customer Portal, Agent Portal, and local development origins for `GET` and `HEAD` only.
+- Customer lint and production build passed before deployment.
+
+Storage acceptance: **PASS**.
