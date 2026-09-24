@@ -260,3 +260,28 @@ After clearing the policy, protected browser downloads will stop working until a
 - Twilio, email-provider, and SMS configuration must be rolled back in the provider console and corresponding server secrets together.
 - Do not expose provider credentials in Vercel logs, Firebase logs, browser configuration, or this runbook.
 - During the future `.com` cutover, retain working `.co` aliases until HTTPS, authentication, App Check, direct routes, and redirects pass on every application.
+## Twilio deployment rollback checkpoint
+
+Recorded September 23, 2026 (CDT).
+
+### Source checkpoints
+
+- Platform pre-Twilio tag: `rollback/pre-twilio-platform-20260923` at `84f9268`.
+- Platform deployed tag: `release/twilio-safe-scaffold-platform-20260923` at `cfcfbd9`.
+- Agent pre-Twilio tag: `rollback/pre-twilio-agent-20260923` at `e474bbe`.
+- Agent deployed tag: `release/twilio-safe-scaffold-agent-20260923` at `fea3537`.
+
+### Deployment checkpoints
+
+- Current Agent production deployment: `https://link-marketing-solutions-agent-9tgnwkw70.vercel.app`.
+- Previous Agent production deployment: `https://link-marketing-solutions-agent-4s7v8r4tf.vercel.app`.
+- Current Firebase revisions: `communications-00019-quv`, `twiliowebhook-00018-cih`, and `provisionclient-00010-hig`.
+- Previous Firebase revisions: `communications-00018-qak`, `twiliowebhook-00017-peg`, and `provisionclient-00009-pid`.
+
+### Restore procedure
+
+1. Immediately disable outbound calling by removing or replacing the deployed Twilio credentials and originating-number configuration if provider traffic must stop.
+2. Restore the Agent CRM by promoting the previous production deployment in Vercel, or deploy `rollback/pre-twilio-agent-20260923`.
+3. Restore Firebase Functions by deploying the platform source at `rollback/pre-twilio-platform-20260923`. Do not redirect Cloud Run traffic manually unless the corresponding source and environment configuration are confirmed.
+4. Confirm the Agent login and preserved CRM layouts still load, then verify that unsigned Twilio webhook traffic is rejected.
+5. Review Firebase and Vercel logs before reopening calling. Preserve call, audit, and recording metadata for incident review; do not delete tenant records during rollback.

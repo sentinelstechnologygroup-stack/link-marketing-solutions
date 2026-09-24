@@ -149,3 +149,20 @@ Storage acceptance: **PASS**.
 ### Current release decision
 
 Core backend, tenant isolation, emulator authorization, Website ingestion, Golden Cross data bridging, Customer Portal reads and writes, exports, Storage, mobile layout, App Check enforcement, and deployment gates pass. Full production readiness is not yet declared because provider-backed live communications and final browser-level production-role revalidation remain open.
+## Twilio safe-scaffold deployment checkpoint
+
+Recorded September 23, 2026 (CDT).
+
+- Platform source: `cfcfbd9` on `master`.
+- Agent CRM source: `fea3537` on `codex/agent-crm-preview-bypass-20260914`.
+- Agent production deployment: `dpl_CvQctZvoJnKVJ97fWLYZHVAJ4aiC` at `https://link-marketing-solutions-agent-9tgnwkw70.vercel.app`, aliased to `https://agent.linkmarketingservices.co`.
+- Firebase `communications`: revision `communications-00019-quv`, ACTIVE.
+- Firebase `twilioWebhook`: revision `twiliowebhook-00018-cih`, ACTIVE.
+- Firebase `provisionClient`: revision `provisionclient-00010-hig`, ACTIVE.
+- Unsigned webhook probe was rejected with HTTP 503 while provider credentials remain intentionally unconfigured.
+- Agent lint and production build passed.
+- Firebase authorization, bridge, Storage, and telephony contract suite passed 24 of 24 tests.
+
+The deployed implementation now keeps the originating tenant and Brand on call records, derives provider callbacks on the server, applies a safe `do_not_record` default, requires explicit consent for `record_on_consent`, validates Twilio signatures with the official SDK, persists call status callbacks, and stores permitted recordings under protected tenant/Brand paths.
+
+This checkpoint is not live-calling acceptance. Production calling remains disabled until the Twilio production credentials, an approved originating number, the public voice webhook configuration, a browser agent-audio runtime, and the Golden Cross recording policy are configured and verified with real calls. Provider callbacks, transfers, recordings, and notifications must then pass the Golden Cross pilot and cross-tenant denial checks.
