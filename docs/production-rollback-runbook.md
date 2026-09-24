@@ -249,9 +249,11 @@ After clearing the policy, protected browser downloads will stop working until a
 
 ### App Check rollback
 
-- Enable enforcement only after monitor traffic confirms valid tokens from the LMS Website, Customer Portal, and Agent CRM Web Apps.
-- If legitimate production traffic is rejected, disable enforcement for the affected Firebase product while leaving App Check registration and monitoring intact.
+- Firestore, Cloud Storage, and Firebase Authentication baseline protection are currently enforced.
+- The LMS Website, Customer Portal, and Agent CRM each use a separate reCAPTCHA Enterprise registration with a one-hour token TTL.
+- If legitimate production traffic is rejected, disable enforcement only for the affected Firebase product while leaving App Check registration and monitoring intact.
 - Verify Website ingestion, authenticated Customer reads, Agent operations, and protected Storage downloads after any enforcement change.
+- The Website uses server-authorized ingestion and is not expected to produce direct Firestore, Storage, or Authentication App Check verification traffic.
 
 ### Provider and domain rollback boundaries
 

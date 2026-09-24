@@ -115,11 +115,12 @@ Storage acceptance: **PASS**.
 ### Monitoring and open gates
 
 - Bounded Vercel log checks returned no runtime entries for the Website, Customer Portal, or Agent CRM in the queried window. Firebase function history showed no deployment or startup error signal. The Golden Cross pilot must still be observed under active production traffic.
-- App Check remains in monitor-first rollout. Enforcement must follow verified legitimate traffic for all three registered Web Apps.
+- App Check is enforced for Firestore, Cloud Storage, and Firebase Authentication. The LMS Website, Customer Portal, and Agent CRM each have a separate reCAPTCHA Enterprise registration with a one-hour token TTL.
+- Seven-day service metrics showed 162 valid Customer Portal requests and 44 valid Agent CRM authentication requests allowed. Invalid and outdated-token requests were denied. The Website correctly showed no direct Firebase verification traffic because its public ingestion path is server-authorized.
 - Live calling, transfers, callbacks, recordings, production email, and optional SMS remain provider-dependent acceptance gates.
 - The `.com` primary-domain cutover remains external to this release until the Namecheap transfer and DNS/TLS setup are complete.
 - Duplicate legacy Agent assignments exist for selected test identities. They do not broaden tenant or Brand access, but cleanup requires a separately approved production-data maintenance action.
 
 ### Current release decision
 
-Core backend, tenant isolation, emulator authorization, Website ingestion, Customer Portal reads and writes, exports, Storage, mobile layout, and deployment gates pass. Full production readiness is not yet declared because live communication providers, App Check enforcement, complete browser-level role acceptance, and the final observed Golden Cross pilot remain open.
+Core backend, tenant isolation, emulator authorization, Website ingestion, Customer Portal reads and writes, exports, Storage, mobile layout, App Check enforcement, and deployment gates pass. Full production readiness is not yet declared because live communication providers, complete browser-level role acceptance, and the final observed Golden Cross pilot remain open.
