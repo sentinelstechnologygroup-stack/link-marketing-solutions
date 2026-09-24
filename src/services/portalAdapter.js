@@ -147,6 +147,35 @@ const asIso = (value) => {
   }
   return String(value);
 };
+const normalizeAccount = (value) => {
+  const normalized = normalizeLive(sampleAccount, value);
+  return {
+    ...normalized,
+    program: {
+      ...normalized.program,
+      startDate: asIso(normalized.program?.startDate),
+    },
+    user: value?.user ? {
+      ...value.user,
+      createdAt: asIso(value.user.createdAt),
+      updatedAt: asIso(value.user.updatedAt),
+      lastActive: asIso(value.user.lastActive),
+    } : null,
+    permissions: value?.permissions || {},
+    users: (normalized.users || []).map((user) => ({
+      ...user,
+      lastActive: asIso(user.lastActive),
+    })),
+    invitations: (normalized.invitations || []).map((invitation) => ({
+      ...invitation,
+      sent: asIso(invitation.sent || invitation.createdAt),
+    })),
+    activity: (normalized.activity || []).map((activity) => ({
+      ...activity,
+      at: asIso(activity.at || activity.occurredAt || activity.createdAt),
+    })),
+  };
+};
 const normalizeLeadRow = (row) => ({
   ...row,
   name: row.name || [row.firstName, row.lastName].filter(Boolean).join(" ") || row.email || "Unnamed lead",
@@ -484,7 +513,7 @@ const getAccount = async () => {
   if (isDataFixtureMode()) return delay().then(() => sampleAccount);
   if (isFirebaseMode) {
     const live = (await callTenantFunction("getAccountWorkspace", {})) || {};
-    return { ...normalizeLive(sampleAccount, live), user: live.user || null, permissions: live.permissions || {} };
+    return normalizeAccount(live);
   }
   return request("GET", "/account");
 };

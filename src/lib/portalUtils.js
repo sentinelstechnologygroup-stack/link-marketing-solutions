@@ -1,22 +1,43 @@
 // Small formatting helpers shared across the portal.
+function toDate(value) {
+  if (!value) return null;
+  if (value instanceof Date) return value;
+  if (typeof value?.toDate === "function") return value.toDate();
+  if (typeof value?.toMillis === "function") return new Date(value.toMillis());
+  if (typeof value === "object") {
+    const seconds = Number(value.seconds ?? value._seconds);
+    const nanoseconds = Number(value.nanoseconds ?? value._nanoseconds ?? 0);
+    if (Number.isFinite(seconds) && Number.isFinite(nanoseconds)) {
+      return new Date((seconds * 1000) + (nanoseconds / 1e6));
+    }
+    return null;
+  }
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function invalidDateFallback(value) {
+  return typeof value === "string" || typeof value === "number" ? String(value) : "—";
+}
+
 export function fmtDateTime(iso) {
   if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
+  const d = toDate(iso);
+  if (!d || Number.isNaN(d.getTime())) return invalidDateFallback(iso);
   return d.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
 }
 
 export function fmtDate(iso) {
   if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
+  const d = toDate(iso);
+  if (!d || Number.isNaN(d.getTime())) return invalidDateFallback(iso);
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 export function fmtTime(iso) {
   if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
+  const d = toDate(iso);
+  if (!d || Number.isNaN(d.getTime())) return invalidDateFallback(iso);
   return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 }
 
@@ -47,7 +68,9 @@ export function changeBadge(change, lowerIsBetter = false) {
 
 export function relativeTime(iso) {
   if (!iso) return "—";
-  const diff = Date.now() - new Date(iso).getTime();
+  const date = toDate(iso);
+  if (!date || Number.isNaN(date.getTime())) return invalidDateFallback(iso);
+  const diff = Date.now() - date.getTime();
   const mins = Math.round(diff / 60000);
   if (mins < 1) return "just now";
   if (mins < 60) return `${mins}m ago`;
