@@ -53,16 +53,16 @@ export default function Documents() {
     setDownloadError("");
     setDownloadNotice("");
     try {
-      const blob = await portalAdapter.downloadDocument(documentRecord);
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
+      const downloadUrl = await portalAdapter.downloadDocument(documentRecord);
+      if (!downloadUrl) return;
       const anchor = globalThis.document.createElement("a");
-      anchor.href = url;
+      anchor.href = downloadUrl;
       anchor.download = documentRecord.name || "document";
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
       globalThis.document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 0);
       setDownloadNotice(`Download prepared: ${documentRecord.name}`);
     } catch (error) {
       setDownloadError(error?.message || "The document could not be downloaded.");
