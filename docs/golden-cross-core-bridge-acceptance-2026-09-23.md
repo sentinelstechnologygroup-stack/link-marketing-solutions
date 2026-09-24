@@ -112,6 +112,15 @@ Storage acceptance: **PASS**.
 - The Firebase emulator authorization suite passed 21 of 21 tests, including immutable ownership, canonical server routing, all required roles, browser tenant-spoofing denial, cross-tenant and cross-Brand denial, Storage boundaries, workflow artifacts, and LMS Super Admin claim protection.
 - Website, Customer Portal, and Agent CRM lint and production builds passed for this acceptance cycle.
 
+### Golden Cross core pilot trace
+
+- Lead `nPo7Py3MPx8uLIE9Akkt` was re-audited from the production database after the release deployments.
+- The lead is owned by `tenant-golden-cross-beta` and `brand-golden-cross-realty`, uses the Golden Cross pilot source and campaign, retains the standard consent and retention policies, and was created by `server:website-ingestion`.
+- The record is assigned to an existing Agent profile, is qualified, and has status `appointment_scheduled`.
+- Related tenant records include booked appointment `MeZJ22elGsVl6TVBeTpo`, completed call record `c5N3tiaFxOUYFmR7NJ9N`, customer activity for lead updates and appointment creation, new/received/appointment notifications, and ingestion and CRM update audit events.
+- Every related workflow artifact inspected remains under `tenants/tenant-golden-cross-beta` and carries Golden Cross tenant and Brand ownership where applicable.
+- This passes the core data bridge from server-authorized ingestion through Agent workflow and Customer Portal projection. Provider-backed live telephony and external message delivery remain separate release gates.
+
 ### Monitoring and open gates
 
 - Bounded Vercel log checks returned no runtime entries for the Website, Customer Portal, or Agent CRM in the queried window. Firebase function history showed no deployment or startup error signal. The Golden Cross pilot must still be observed under active production traffic.
@@ -123,4 +132,4 @@ Storage acceptance: **PASS**.
 
 ### Current release decision
 
-Core backend, tenant isolation, emulator authorization, Website ingestion, Customer Portal reads and writes, exports, Storage, mobile layout, App Check enforcement, and deployment gates pass. Full production readiness is not yet declared because live communication providers, complete browser-level role acceptance, and the final observed Golden Cross pilot remain open.
+Core backend, tenant isolation, emulator authorization, Website ingestion, Golden Cross data bridging, Customer Portal reads and writes, exports, Storage, mobile layout, App Check enforcement, and deployment gates pass. Full production readiness is not yet declared because provider-backed live communications and final browser-level production-role revalidation remain open.
