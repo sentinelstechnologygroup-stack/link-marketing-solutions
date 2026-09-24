@@ -448,7 +448,10 @@ const createDocument = async (formData) => {
 const downloadDocument = async (documentRecord) => {
   if (isDataFixtureMode()) return null;
   if (isFirebaseMode && documentRecord?.storagePath) {
-    return getDownloadURL(ref(firebaseStorage, documentRecord.storagePath));
+    const downloadUrl = await getDownloadURL(ref(firebaseStorage, documentRecord.storagePath));
+    const response = await fetch(downloadUrl, { cache: "no-store" });
+    if (!response.ok) throw new PortalApiError(response.status, "The document could not be downloaded");
+    return response.blob();
   }
   return null;
 };
