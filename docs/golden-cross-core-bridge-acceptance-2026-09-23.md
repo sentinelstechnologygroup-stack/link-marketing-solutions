@@ -137,6 +137,15 @@ Storage acceptance: **PASS**.
 - Deployed Functions `communications`, `twilioWebhook`, and `deliverNotificationEmail` are `ACTIVE` and have the expected Secret Manager bindings.
 - `RESEND_API_KEY`, `TWILIO_ACCOUNT_SID`, and `TWILIO_AUTH_TOKEN` remain deliberate `not-configured` placeholder versions. No provider call will be represented as accepted until real credentials, sender identity, phone number, and callback configuration are installed and exercised.
 
+### Live communications implementation boundary
+
+- The Agent CRM currently exposes the preserved call-control workspace, Brand phone-number configuration, recording-policy options, tenant-authorized call initiation, hold/resume/end actions, and routed Client Contact transfer validation.
+- Server authorization correctly prevents cross-tenant calls, cross-Brand calls, arbitrary lead-number substitution, and transfers to a number other than the routed Client Contact.
+- The current Twilio webhook validates provider signatures but returns connection TwiML only. It does not yet prove provider status synchronization or protected recording ingestion into tenant/Brand Storage.
+- The production agent audio path still requires the approved Twilio Flex or Voice connection method, associated Twilio resources, approved calling number, callback URLs, and provider credentials.
+- Recording activation must remain disabled until the tenant recording policy, consent capture, jurisdictional requirements, callback ingestion, protected Storage path, retention behavior, and authorized playback/download flow are connected and accepted.
+- Therefore telephony, live transfer, and recording are implemented as a guarded integration scaffold, not an accepted production communications channel.
+
 ### Current release decision
 
 Core backend, tenant isolation, emulator authorization, Website ingestion, Golden Cross data bridging, Customer Portal reads and writes, exports, Storage, mobile layout, App Check enforcement, and deployment gates pass. Full production readiness is not yet declared because provider-backed live communications and final browser-level production-role revalidation remain open.
