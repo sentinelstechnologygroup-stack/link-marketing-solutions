@@ -218,3 +218,43 @@ If only the latest Customer presentation release must be reversed, promote Custo
 - Recovery tag: `release/golden-cross-storage-acceptance-20260923`
 - Storage CORS rollback: `gcloud storage buckets update gs://linkmarketing-agent-portal-crm.firebasestorage.app --clear-cors`
 - If the Customer Portal must be rolled back, promote the previous stable Vercel deployment and restore the matching source tag. Do not delete tenant data, Storage objects, audit records, or permanent demo fixtures during rollback.
+
+## Acceptance recovery point - 2026-09-23
+
+The accepted recovery point includes:
+
+- Root repository commit containing Customer Portal timestamp normalization and the recorded platform acceptance evidence.
+- Customer Portal production deployment `dpl_3k6LLBCbcaHfwizU28MDGyn79wj1`.
+- Agent CRM production deployment `dpl_9KTJGEpLa4r26JCKCJzZmYmXRTE8` at commit `e474bbe542f528f8d26cb967324540b9f8687950`.
+- Existing recovery tags `release/golden-cross-core-pilot-20260923` and `release/golden-cross-storage-acceptance-20260923`.
+- Storage bucket `gs://linkmarketing-agent-portal-crm.firebasestorage.app` with the accepted least-privilege CORS policy.
+
+### Application rollback order
+
+1. Preserve current Firebase records and export the affected tenant records before changing production aliases.
+2. Restore the Website, Customer Portal, or Agent CRM production alias to its recorded stable deployment in Vercel.
+3. Restore Firestore, Storage, index, or Function configuration only when the incident is isolated to that layer; do not roll back tenant data to repair a frontend-only incident.
+4. Re-run authenticated direct-route, tenant-isolation, document-access, and ingestion checks after rollback.
+5. Record the incident, affected tenant and Brand, deployment IDs, audit events, and final recovery action.
+
+### Storage CORS rollback
+
+If the accepted download CORS policy causes an incident, clear it with:
+
+```powershell
+gcloud storage buckets update gs://linkmarketing-agent-portal-crm.firebasestorage.app --clear-cors
+```
+
+After clearing the policy, protected browser downloads will stop working until an approved replacement policy is applied. Upload objects and Firestore document metadata are not deleted by this command.
+
+### App Check rollback
+
+- Enable enforcement only after monitor traffic confirms valid tokens from the LMS Website, Customer Portal, and Agent CRM Web Apps.
+- If legitimate production traffic is rejected, disable enforcement for the affected Firebase product while leaving App Check registration and monitoring intact.
+- Verify Website ingestion, authenticated Customer reads, Agent operations, and protected Storage downloads after any enforcement change.
+
+### Provider and domain rollback boundaries
+
+- Twilio, email-provider, and SMS configuration must be rolled back in the provider console and corresponding server secrets together.
+- Do not expose provider credentials in Vercel logs, Firebase logs, browser configuration, or this runbook.
+- During the future `.com` cutover, retain working `.co` aliases until HTTPS, authentication, App Check, direct routes, and redirects pass on every application.

@@ -85,3 +85,41 @@ The non-calling Golden Cross core bridge pilot passed. This record does not decl
 - Customer lint and production build passed before deployment.
 
 Storage acceptance: **PASS**.
+
+## Platform acceptance update - 2026-09-23
+
+### Customer Portal release
+
+- Production timestamp normalization was completed in commit `4a67eb3` and deployed as `dpl_3k6LLBCbcaHfwizU28MDGyn79wj1`.
+- The live Golden Cross Team & Account route renders profile, business profile, authorized-user, membership, and activity-history sections without the prior Firestore timestamp crash.
+- Mobile acceptance covered Leads, Documents, Reports, Appointments, and Team & Account. Tables remain contained, direct routes render, and no page-wide horizontal overflow was observed.
+- Protected document upload and download acceptance passed against `tenants/tenant-golden-cross-beta/documents/1790206980281-bca9ca24-1615-4d00-add4-2f7a220df1eb/lms-golden-cross-storage-acceptance.txt`.
+- The accepted object is 149 bytes with SHA-256 `07C4B78BBA6A44DC852CCE24091728E8FD9E8900C79D40EA2E30B0EDB97096A8`; its tenant metadata and `document.metadata.created` audit event were confirmed.
+- CSV, XLSX, DOCX, PDF, and empty-state export checks passed through `npm run test:exports`.
+
+### Website ingestion acceptance
+
+- The public Website uses same-origin `/api/lead`; the server supplies the route key and webhook secret, and the browser cannot select a tenant, Brand, role, or routing policy.
+- Production acceptance lead `A5RpbqBB9VTZRfQ5znEM` was created under `tenant-lms-sales` with Brand `brand-link-marketing-services`, industry `business-services`, source `source-lms-website`, campaign `campaign-lms-website`, routing `routing-lms-sales`, consent `consent-standard`, and retention `retention-standard`.
+- The accepted record was created by `server:website-ingestion`, assigned through an active assignment, and produced the expected `lead.ingested` audit and `lead_received` notification.
+- Golden Cross bridge lead `nPo7Py3MPx8uLIE9Akkt` remains isolated to `tenant-golden-cross-beta` and `brand-golden-cross-realty`, with Golden Cross routing and policy metadata, a qualified disposition, and an appointment-scheduled status.
+
+### Agent CRM and authorization acceptance
+
+- Agent CRM source and production are aligned at commit `e474bbe542f528f8d26cb967324540b9f8687950`, production deployment `dpl_9KTJGEpLa4r26JCKCJzZmYmXRTE8`.
+- The Golden Cross Agent Supervisor dashboard renders the assigned queue and tenant-scoped navigation. The Client Contacts workflow is industry-neutral and uses authorized Brand options and general contact roles.
+- Production identity inventory confirms Client, Client Admin, Client Supervisor, Agent, Agent Supervisor, and LMS Super Admin accounts with tenant memberships or Agent assignments as appropriate.
+- The Firebase emulator authorization suite passed 21 of 21 tests, including immutable ownership, canonical server routing, all required roles, browser tenant-spoofing denial, cross-tenant and cross-Brand denial, Storage boundaries, workflow artifacts, and LMS Super Admin claim protection.
+- Website, Customer Portal, and Agent CRM lint and production builds passed for this acceptance cycle.
+
+### Monitoring and open gates
+
+- Bounded Vercel log checks returned no runtime entries for the Website, Customer Portal, or Agent CRM in the queried window. Firebase function history showed no deployment or startup error signal. The Golden Cross pilot must still be observed under active production traffic.
+- App Check remains in monitor-first rollout. Enforcement must follow verified legitimate traffic for all three registered Web Apps.
+- Live calling, transfers, callbacks, recordings, production email, and optional SMS remain provider-dependent acceptance gates.
+- The `.com` primary-domain cutover remains external to this release until the Namecheap transfer and DNS/TLS setup are complete.
+- Duplicate legacy Agent assignments exist for selected test identities. They do not broaden tenant or Brand access, but cleanup requires a separately approved production-data maintenance action.
+
+### Current release decision
+
+Core backend, tenant isolation, emulator authorization, Website ingestion, Customer Portal reads and writes, exports, Storage, mobile layout, and deployment gates pass. Full production readiness is not yet declared because live communication providers, App Check enforcement, complete browser-level role acceptance, and the final observed Golden Cross pilot remain open.
